@@ -1,0 +1,3 @@
+cd c:\workspace\java\Grid\Util\target\classes\
+java ch.g_7.util.socket.test.ClientApp
+java ch.g_7.util.socket.test.ServerApp
