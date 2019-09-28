@@ -9,7 +9,7 @@ public class ServerApp {
 
 
 	public static void main(String[] args) throws Exception {
-		FDTServer server = new FDTServer(1234);
+		FDTServer server = new FDTServer(4004);
 		server.open();
 		server.add(new StringReciever() {
 			
