@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
-import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.simplesocket.IConnection;
