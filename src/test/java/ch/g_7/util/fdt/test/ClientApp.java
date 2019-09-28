@@ -10,7 +10,7 @@ public class ClientApp {
 
 	public static void main(String[] args) throws Exception {
 		//192.168.1.155
-		FDTConnection connection = new FDTConnection(new SimpleSocketConnection(4004, "localhost"));
+		FDTConnection connection = new FDTConnection(new SimpleSocketConnection(4004, "192.168.1.116"));
 		connection.open();
 		StringSender stringSender = new StringSender(connection);
 		Response response = stringSender.sendString("hello mister");
