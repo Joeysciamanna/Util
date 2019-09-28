@@ -2,19 +2,21 @@ package ch.g_7.util.fdt.test;
 
 import java.net.InetAddress;
 
-import ch.g_7.util.fdt.FDTServer;
+import ch.g_7.util.fdt.FDTServerListner;
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.function.string.StringReciever;
+import ch.g_7.util.simplesocket.SimpleServerSocketListner;
 
 public class ServerApp {
 
 
 	public static void main(String[] args) throws Exception {
 		System.out.println(InetAddress.getLocalHost());
-		FDTServer server = new FDTServer(4004);
-		server.open();
-		server.add(new StringReciever() {
+		FDTServerListner fdtServerListner = new FDTServerListner();
+		SimpleServerSocketListner serverSocketListner = new SimpleServerSocketListner(4004, fdtServerListner);
+		serverSocketListner.open();
+		fdtServerListner.add(new StringReciever() {
 			
 			@Override
 			public String recieveString(String data, Metadata metadata) throws FDTException {
@@ -23,6 +25,12 @@ public class ServerApp {
 				return "See you next time";
 			}
 		});
+		
+		
+
+		
+//		serverSocketListner.close();
+
 	}
 	
 }

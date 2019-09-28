@@ -31,7 +31,7 @@ public class Request {
 		JSONObject json = new JSONObject();
 		json.put("metadata", metadata.stringify());
 		json.put("path", path);
-		json.put(data, data);
+		json.put("data", data);
 		return json.toString();
 	}
 	

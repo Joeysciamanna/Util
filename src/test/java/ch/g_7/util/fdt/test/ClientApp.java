@@ -9,11 +9,14 @@ public class ClientApp {
 
 
 	public static void main(String[] args) throws Exception {
-		FDTConnection connection = new FDTConnection(new SimpleSocketConnection(4004, "192.168.181.1"));
+		//192.168.1.155
+		FDTConnection connection = new FDTConnection(new SimpleSocketConnection(4004, "localhost"));
 		connection.open();
 		StringSender stringSender = new StringSender(connection);
 		Response response = stringSender.sendString("hello mister");
 		System.out.println("Response: " + response.getData());
 		System.out.println("Metadata: " + response.getMetadata().stringify());
+		
+		connection.close();
 	}
 }

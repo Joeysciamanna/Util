@@ -2,6 +2,7 @@ package ch.g_7.util.simplesocket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,8 +16,6 @@ public class SimpleServerSocketListner extends ActionChecker {
 	private int port;
 	private Task<byte[], byte[]> action;
 
-
-	private SecureRunner<Void, Void> handlingLogic;
 	private Socket socket;
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
@@ -30,9 +29,16 @@ public class SimpleServerSocketListner extends ActionChecker {
 	@Override
 	protected void onStart() {
 		serverSocket = new SecureRunner<>(() -> new ServerSocket(port)).run();
-		
-		handlingLogic = new SecureRunner<Void, Void>(() -> {
-			
+	}
+
+	@Override
+	protected void onClose() {
+		new SecureRunner<>(() -> serverSocket.close()).run();
+	}
+
+	@Override
+	protected void onAction() {
+		try {
 			socket = serverSocket.accept();
 			
 			//READING
@@ -47,17 +53,11 @@ public class SimpleServerSocketListner extends ActionChecker {
 			outputStream.writeInt(response.length);
 			outputStream.write(response);
 			
-		}).close(socket, inputStream, outputStream);
-	}
-
-	@Override
-	protected void onClose() {
-		new SecureRunner<>(() -> serverSocket.close()).run();
-	}
-
-	@Override
-	protected void onAction() {
-		handlingLogic.run();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			new SecureRunner<>(()->null).close(outputStream,inputStream, socket).run();
+		}
 	}
 
 	@Override

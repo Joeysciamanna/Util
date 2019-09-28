@@ -15,24 +15,19 @@ import ch.g_7.util.process.Task;
 import ch.g_7.util.simplesocket.SimpleServerSocketListner;
 import ch.g_7.util.stuff.Passable;
 
-public class FDTServer implements Passable{
+public class FDTServerListner implements Task<byte[], byte[]>{
 
-	private Passable listner;
 	private Map<String, Reciever> recievers;
 	private Metadata metadata;
-	
-	public FDTServer(int port) {
-		listner = new SimpleServerSocketListner(port, getAction());
-		recievers = new HashMap<String, Reciever>();
-	}
-	
-	public FDTServer(Passable listner) {
-		recievers = new HashMap<String, Reciever>();
-		this.listner = listner;
-	}
 
-	public Task<byte[], byte[]> getAction() {
-		return (d)-> recive(d);
+	public FDTServerListner() {
+		recievers = new HashMap<String, Reciever>();
+		metadata = new Metadata();
+	}
+	
+	@Override
+	public byte[] run(byte[] data) {
+		return recive(data);
 	}
 	
 	public byte[] recive(byte[] data) {
@@ -53,19 +48,10 @@ public class FDTServer implements Passable{
 		return response.stringify().getBytes(StandardCharsets.UTF_8);
 	}
 	
-
-	@Override
-	public void close() throws Exception {
-		listner.close();
-	}
-	
-	@Override
-	public void open() throws Exception {
-		listner.open();
-	}
-	
 	
 	public void add(Reciever reciever) {
 		recievers.put(reciever.getPath(), reciever);
 	}
+
+	
 }

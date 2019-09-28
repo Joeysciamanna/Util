@@ -1,5 +1,6 @@
 package ch.g_7.util.fdt;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import ch.g_7.util.fdt.data.Metadata;
@@ -21,12 +22,12 @@ public class FDTConnection implements Passable{
 	}
 	
 	
-	public Response send(String data, String path) throws ServerException {
+	public Response send(String data, String path) throws ServerException, IOException {
 		Request request = new Request(metadata, path, data);
 		byte[] responseBytes = connection.send(request.toJson().getBytes(StandardCharsets.UTF_8));
 		Response response = new Response(new String(responseBytes,StandardCharsets.UTF_8));
 
-		if(response.getStatusCode().equals(StatusCode.SUCCESS) ) {
+		if(response.getStatusCode() != StatusCode.SUCCESS) {
 			throw new ServerException(response.getMetadata(), response.getError(), response.getStatusCode());
 		}
 		

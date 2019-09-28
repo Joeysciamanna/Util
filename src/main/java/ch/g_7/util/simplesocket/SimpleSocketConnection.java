@@ -2,6 +2,7 @@ package ch.g_7.util.simplesocket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 import ch.g_7.util.stuff.SecureRunner;
@@ -30,9 +31,11 @@ public class SimpleSocketConnection implements IConnection{
 	@Override
 	public void open() {
 		socket = new SecureRunner<>(()->new Socket(domain, port)).run();
-		
-		sendingLogic = new SecureRunner<>((byte[] data)->{
-			
+	}
+
+	@Override
+	public byte[] send(byte[] data) {
+		try {
 			//WRITING
 			outputStream = new DataOutputStream(socket.getOutputStream());
 			outputStream.writeInt(data.length);
@@ -42,14 +45,12 @@ public class SimpleSocketConnection implements IConnection{
 			inputStream = new DataInputStream(socket.getInputStream());
 			int dataLenght = inputStream.readInt();
 			byte[] response = inputStream.readNBytes(dataLenght);
-			
 	        return response;
-		}).close(outputStream, inputStream);
-	}
-
-	@Override
-	public byte[] send(byte[] data) {
-		return sendingLogic.run(data);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			new SecureRunner<>(()->null).close(outputStream,inputStream).run();
+		}
 	}
 
 

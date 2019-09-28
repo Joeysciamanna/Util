@@ -25,7 +25,7 @@ public class Response implements Stringifyable{
 	public Response(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
 		this.metadata = new Metadata(json.getString("metadata")); 
-		this.statusCode = json.getEnum(StatusCode.class ,"status_code");
+		this.statusCode = json.getEnum(StatusCode.class ,"status-code");
 		this.error = json.getString("error");
 		this.data = json.getString("data");
 	}
@@ -35,9 +35,9 @@ public class Response implements Stringifyable{
 	public String stringify() {
 		JSONObject json = new JSONObject();
 		json.put("metadata", metadata.stringify());
-		json.put("status_code", statusCode);
+		json.put("status-code", statusCode);
 		json.put("error", error);
-		json.put(data, data);
+		json.put("data", data);
 		return json.toString();
 	}
 	
