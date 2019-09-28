@@ -7,7 +7,7 @@ import ch.g_7.util.fdt.function.Sender;
 import ch.g_7.util.parse.SerializationParserUtil;
 import ch.g_7.util.process.Task;
 
-public abstract class ObjectSender<T> extends Sender {
+public class ObjectSender<T> extends Sender {
 
 	private Task<T, String> parser;
 	private String className;
@@ -26,7 +26,7 @@ public abstract class ObjectSender<T> extends Sender {
 	
 	@Override
 	public String getName() {
-		return "object" + className;
+		return "object-" + className;
 	}
 
 	public final Response sendObject(T obj) throws ServerException {

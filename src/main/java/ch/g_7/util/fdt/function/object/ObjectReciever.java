@@ -22,7 +22,7 @@ public abstract class ObjectReciever<T> extends Reciever {
 		return recieveObject(parser.run(request.getData()), request.getMetadata());
 	}
 	
-	public abstract String recieveObject(Object object, Metadata metadata);
+	public abstract String recieveObject(T object, Metadata metadata);
 	
 	@Override
 	public String getName() {

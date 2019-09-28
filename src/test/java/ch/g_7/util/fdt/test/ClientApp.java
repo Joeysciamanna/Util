@@ -14,7 +14,7 @@ public class ClientApp {
 		connection.open();
 		StringSender stringSender = new StringSender(connection);
 		Response response = stringSender.sendString("hello mister");
-		System.out.println("Response: " + response.getData());
+		System.out.println("Response: " + response.stringify());
 		System.out.println("Metadata: " + response.getMetadata().stringify());
 		
 		connection.close();

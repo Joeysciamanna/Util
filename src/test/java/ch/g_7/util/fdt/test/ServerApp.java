@@ -23,10 +23,10 @@ public class ServerApp {
 			public String recieveString(String data, Metadata metadata) throws FDTException {
 				System.out.println("Request: " + data);
 				System.out.println("Metadata: " + metadata.stringify());
+
 				return "See you next time";
 			}
 		});
-		
 		
 
 		
