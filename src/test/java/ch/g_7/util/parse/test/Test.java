@@ -1,20 +1,24 @@
 package ch.g_7.util.parse.test;
 
-import ch.g_7.util.reflection.InterfaceInvokeListner;
-import ch.g_7.util.stuff.Passable;
+import ch.g_7.util.fdt.FDTServer;
+import ch.g_7.util.fdt.data.Metadata;
+import ch.g_7.util.fdt.exception.FDTException;
+import ch.g_7.util.fdt.function.string.StringReciever;
 
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		InterfaceInvokeListner<Passable> invokeListner = new InterfaceInvokeListner<>(Passable.class);
-		Passable passable = invokeListner.getInterface();
+		FDTServer server = new FDTServer(1234);
+		server.open();
+		server.add(new StringReciever() {
+			
+			@Override
+			public String recieveString(String data, Metadata metadata) throws FDTException {
+				System.out.println(data);
+				System.out.println(metadata.stringify());
+				return "See you next time";
+			}
+		});
 		
-		passable.close();
-		invokeListner.addCallListner((o) -> {System.out.println("close"); return null; });
-		passable.close();
-		
-		passable.open();
-		invokeListner.addCallListner((o) -> {System.out.println("open"); return null; });
-		passable.open();
 	}
 }
