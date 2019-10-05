@@ -1,4 +1,8 @@
-package ch.g_7.util.stuff;
+package ch.g_7.util.task;
+
+import ch.g_7.util.stuff.Passable;
+import ch.g_7.util.stuff.SecureRunner;
+
 
 public abstract class ActionChecker implements Runnable, Passable{
 

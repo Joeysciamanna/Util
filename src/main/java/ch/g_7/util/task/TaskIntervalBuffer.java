@@ -1,4 +1,4 @@
-package ch.g_7.util.process;
+package ch.g_7.util.task;
 
 /**
  * This Class can be used to call a task all x milliseconds,

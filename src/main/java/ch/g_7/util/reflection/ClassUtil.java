@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import ch.g_7.util.process.Task; 
+import ch.g_7.util.task.Task; 
 
 public class ClassUtil {
 

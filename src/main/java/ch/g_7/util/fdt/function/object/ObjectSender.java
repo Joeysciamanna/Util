@@ -5,7 +5,7 @@ import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.function.Sender;
 import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public class ObjectSender<T> extends Sender {
 

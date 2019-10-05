@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public class MethodCallWrapper<O> {
 

@@ -2,7 +2,7 @@ package ch.g_7.util.stuff;
 
 import java.util.ArrayList;
 
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public class SecureRunner<I,O> implements Task<I, O>{
 
@@ -70,8 +70,6 @@ public class SecureRunner<I,O> implements Task<I, O>{
 			}
 			result = throwz.run(input);
 			success = true;
-		} catch (RuntimeException e) {
-			throw e;
 		} catch (Exception e) {
 			fail(e);
 		} finally {

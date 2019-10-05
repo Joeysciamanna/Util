@@ -1,4 +1,4 @@
-package ch.g_7.util.process;
+package ch.g_7.util.task;
 
 /**
  * Simple Task

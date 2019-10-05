@@ -5,20 +5,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.sun.tools.classfile.Annotation;
-
-import ch.g_7.util.process.Task;
 import ch.g_7.util.reflection.ClassUtil;
 import ch.g_7.util.stuff.SecureRunner;
+import ch.g_7.util.task.Task;
 
 /**
  * Class used to generate parsers to pars all kind of Objects to String and back.

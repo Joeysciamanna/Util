@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import ch.g_7.util.process.Task;
-import ch.g_7.util.stuff.ActionChecker;
 import ch.g_7.util.stuff.SecureRunner;
+import ch.g_7.util.task.ActionChecker;
+import ch.g_7.util.task.Task;
 
 public class SimpleServerSocketListner extends ActionChecker {
 

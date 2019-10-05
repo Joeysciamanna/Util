@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public class InterfaceInvokeListner<T> {
 

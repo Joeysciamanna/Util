@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import ch.g_7.util.parse.Destringifyable;
 import ch.g_7.util.parse.Stringifyable;
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public class Metadata implements Stringifyable{
  

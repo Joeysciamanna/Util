@@ -5,7 +5,7 @@ import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.function.Reciever;
 import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.process.Task;
+import ch.g_7.util.task.Task;
 
 public abstract class ObjectReciever<T> extends Reciever {
 
