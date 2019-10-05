@@ -1,6 +1,7 @@
 .metadata
 .classpath
 .settings/
+.project
 .git/
 bin/
 tmp/
