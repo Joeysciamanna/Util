@@ -12,10 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-<<<<<<< HEAD
-=======
-import ch.g_7.util.process.Task;
->>>>>>> branch 'master' of https://github.com/Joeysciamanna/Util.git
 import ch.g_7.util.reflection.ClassUtil;
 import ch.g_7.util.stuff.SecureRunner;
 import ch.g_7.util.task.Task;

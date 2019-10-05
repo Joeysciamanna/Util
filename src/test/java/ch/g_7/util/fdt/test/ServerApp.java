@@ -4,7 +4,9 @@ import java.net.InetAddress;
 
 import ch.g_7.util.fdt.FDTServerListner;
 import ch.g_7.util.fdt.data.Metadata;
+import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
+import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.string.StringReciever;
 import ch.g_7.util.simplesocket.SimpleServerSocketListner;
 import ch.g_7.util.stuff.SecureRunner;
@@ -20,11 +22,11 @@ public class ServerApp {
 		fdtServerListner.add(new StringReciever() {
 			
 			@Override
-			public String recieveString(String data, Metadata metadata) throws FDTException {
+			public Response recieveString(String data, Metadata metadata) throws FDTException {
 				System.out.println("Request: " + data);
 				System.out.println("Metadata: " + metadata.stringify());
 
-				return "See you next time";
+				return new Response(StatusCode.SUCCESS, "", "See you next time");
 			}
 		});
 		

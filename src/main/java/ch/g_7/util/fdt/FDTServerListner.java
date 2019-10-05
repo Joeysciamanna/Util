@@ -41,9 +41,11 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.FUNCTION_NOT_FOUND);
 			}
 			response = reciever.recieve(request);
+			response.setMetadata(metadata);
 			
 		}catch (FDTException e) {
-			response = new Response(metadata, e.getStatusCode(), e.getMessage(), "");
+			response = new Response(e.getStatusCode(), e.getMessage(), "");
+			response.setMetadata(metadata);
 		}
 		
 		return response.stringify().getBytes(StandardCharsets.UTF_8);

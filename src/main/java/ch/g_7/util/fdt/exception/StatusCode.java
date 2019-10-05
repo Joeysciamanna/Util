@@ -8,7 +8,4 @@ public enum StatusCode {
 	INVALLID_REQUEST_PARAMS;
 	
 	
-	public static boolean ok(StatusCode code) {
-		return code == SUCCESS || code == PASSTHROUGH;
-	}
 }

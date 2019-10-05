@@ -47,7 +47,7 @@ public class FDTConnection implements Passable{
 		byte[] responseBytes = connection.send(request.toJson().getBytes(StandardCharsets.UTF_8));
 		Response response = new Response(new String(responseBytes,StandardCharsets.UTF_8));
 
-		if(!StatusCode.ok(response.getStatusCode())) {
+		if(response.getStatusCode() == StatusCode.SUCCESS || response.getStatusCode() == StatusCode.PASSTHROUGH) {
 			throw new ServerException(response.getMetadata(), response.getError(), response.getStatusCode());
 		}
 		return response;

@@ -14,8 +14,7 @@ public class Response implements Stringifyable{
 	private String data;
 	
 	
-	public Response(Metadata metadata, StatusCode statusCode, String error, String data) {
-		this.metadata = metadata;
+	public Response(StatusCode statusCode, String error, String data) {
 		this.statusCode = statusCode;
 		this.error = error;
 		this.data = data;
@@ -51,6 +50,10 @@ public class Response implements Stringifyable{
 	
 	public Metadata getMetadata() {
 		return metadata;
+	}
+	
+	public void setMetadata(Metadata metadata) {
+		this.metadata = metadata;
 	}
 	
 	public StatusCode getStatusCode() {

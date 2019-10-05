@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ch.g_7.util.fdt.data.Request;
+import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.Reciever;
@@ -19,16 +20,19 @@ public class ROMReciever extends Reciever {
 	}
 
 	@Override
-	public String recieve(Request request) throws FDTException {
+	public Response recieve(Request request) throws FDTException {
 		ROMData romData = new ROMData(request.getData());
 		if (!romObjects.containsKey(romData.getObjId())) {
 			throw new FDTException("No ROMObject with id " + romData.getObjId() + " found",
 					StatusCode.INVALLID_REQUEST_PARAMS);
 		}
 		ObjectCallWrapper romObject = romObjects.get(romData.getObjId());
-		return new SecureRunner<>(() -> romObject.call(romData.getMethodName(), romData.getArgs().toArray(new String[] {})))
-						.throwException(new FDTException("Invalid Method parameters", StatusCode.INVALLID_REQUEST_PARAMS))
-						.run();
+		return new Response(StatusCode.SUCCESS, "",
+				new SecureRunner<>(
+						() -> romObject.call(romData.getMethodName(), romData.getArgs().toArray(new String[] {})))
+								.throwException(new FDTException("Invalid Method parameters",
+										StatusCode.INVALLID_REQUEST_PARAMS))
+								.run());
 
 	}
 
