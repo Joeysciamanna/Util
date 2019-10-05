@@ -13,8 +13,8 @@ public class TaskQueue<I, O> implements Task<I, List<O>> {
 		tasks = new LinkedList<Task<I, O>>();
 	}
 
-	public void add(Task<I, O> processor) {
-		tasks.add(processor);
+	public void add(Task<I, O> task) {
+		tasks.add(task);
 	}
 
 	public Task<I, O> pullProcessor() {
@@ -33,7 +33,7 @@ public class TaskQueue<I, O> implements Task<I, List<O>> {
 	public List<O> run(I t) {
 		ArrayList<O> values = new ArrayList<O>();
 		while (!tasks.isEmpty()) {
-			values.add(tasks.poll().run(t));
+			values.add(pullProcessor().run(t));
 		}
 		return values;
 	}
