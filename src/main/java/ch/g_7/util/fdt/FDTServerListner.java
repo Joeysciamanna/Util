@@ -15,6 +15,12 @@ import ch.g_7.util.simplesocket.SimpleServerSocketListner;
 import ch.g_7.util.stuff.Passable;
 import ch.g_7.util.task.Task;
 
+/**
+ * Simple FDTServerListner
+ * Waits until run is invoked, then processes the received data;
+ * 
+ * @author Joey Sciamanna
+ */
 public class FDTServerListner implements Task<byte[], byte[]>{
 
 	private Map<String, Reciever> recievers;
@@ -27,10 +33,6 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 	
 	@Override
 	public byte[] run(byte[] data) {
-		return recive(data);
-	}
-	
-	public byte[] recive(byte[] data) {
 		Response response = null;
 		try {
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));
@@ -38,8 +40,7 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 			if(reciever == null) {
 				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.FUNCTION_NOT_FOUND);
 			}
-			String responseData = reciever.recieve(request);
-			response = new Response(metadata, StatusCode.SUCCESS, "", responseData);
+			response = reciever.recieve(request);
 			
 		}catch (FDTException e) {
 			response = new Response(metadata, e.getStatusCode(), e.getMessage(), "");
@@ -47,6 +48,8 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 		
 		return response.stringify().getBytes(StandardCharsets.UTF_8);
 	}
+	
+
 	
 	
 	public void add(Reciever reciever) {

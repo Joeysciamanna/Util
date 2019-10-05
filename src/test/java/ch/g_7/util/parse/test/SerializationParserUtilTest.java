@@ -1,9 +1,6 @@
 package ch.g_7.util.parse.test;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ch.g_7.util.parse.IDestringifyer;
