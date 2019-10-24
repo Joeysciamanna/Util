@@ -25,15 +25,22 @@ public class TaskIntervalBuffer<I> implements VoidTask<I> {
 	private boolean enabled;
 	
 	public TaskIntervalBuffer(Task<I, Void> task, long intervall, long callBuffer) {
-		this(task, intervall);
-		this.callBuffer = callBuffer;
-	}
-	
-	public TaskIntervalBuffer(Task<I, Void> task, long intervall) {
 		this.task = task;
 		this.intervall = intervall;
 		enabled = true;
 		resetLastCall();
+	}
+	
+	public TaskIntervalBuffer(VoidTask<I> task, long intervall, long callBuffer) {
+		this((Task<I, Void>)task, intervall, callBuffer);
+	}
+	
+	public TaskIntervalBuffer(Task<I, Void> task, long intervall) {
+		this(task, intervall, 0);
+	}
+	
+	public TaskIntervalBuffer(VoidTask<I> task, long intervall) {
+		this(task, intervall, 0);
 	}
 	
 	/**

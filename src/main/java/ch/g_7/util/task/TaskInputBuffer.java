@@ -15,6 +15,9 @@ public class TaskInputBuffer<I> implements SimpleTask{
 		inputs = new LinkedList<>();
 	}
 	
+	public TaskInputBuffer(VoidTask<I> task) {
+		this((Task<I, Void>) task);
+	}
 	
 	@Override
 	public void runSimple() {
