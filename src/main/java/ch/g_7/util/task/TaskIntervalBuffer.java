@@ -1,5 +1,7 @@
 package ch.g_7.util.task;
 
+import ch.g_7.util.task.Task.VoidTask;
+
 /**
  * This Class can be used to call a task all x milliseconds,
  * with on optional callBuffer which allows the Task to be called multiple Times a run
@@ -13,7 +15,7 @@ package ch.g_7.util.task;
  *
  * @author Joey Sciamanna
  */
-public class TaskIntervalBuffer<I> implements Task<I, Void> {
+public class TaskIntervalBuffer<I> implements VoidTask<I> {
 
 	private Task<I, Void> task;
 	
@@ -40,7 +42,7 @@ public class TaskIntervalBuffer<I> implements Task<I, Void> {
 	 * if the interval is not reached, the task wont be called.
 	 */
 	@Override
-	public Void run(I t) {
+	public void runVoid(I t) {
 		if(enabled) {
 			long actTime = System.currentTimeMillis();
 			long div = actTime - lastCall;
@@ -54,7 +56,6 @@ public class TaskIntervalBuffer<I> implements Task<I, Void> {
 		} else {
 			resetLastCall();
 		}
-		return null;
 	}
 
 	

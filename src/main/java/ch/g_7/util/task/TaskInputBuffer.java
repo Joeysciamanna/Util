@@ -3,7 +3,9 @@ package ch.g_7.util.task;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TaskInputBuffer<I> implements Task<Void, Void>{
+import ch.g_7.util.task.Task.SimpleTask;
+
+public class TaskInputBuffer<I> implements SimpleTask{
 
 	private Queue<I> inputs;
 	private Task<I, Void> task;
@@ -15,11 +17,10 @@ public class TaskInputBuffer<I> implements Task<Void, Void>{
 	
 	
 	@Override
-	public Void run(Void v) {
+	public void runSimple() {
 		while (!inputs.isEmpty()) {
 			task.run(inputs.poll());
 		}
-		return v;
 	}
 
 	public void add(I input) {
@@ -29,4 +30,7 @@ public class TaskInputBuffer<I> implements Task<Void, Void>{
 	public void clear() {
 		inputs.clear();
 	}
+
+
+
 }
