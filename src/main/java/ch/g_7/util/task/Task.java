@@ -1,5 +1,7 @@
 package ch.g_7.util.task;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * Simple Task
  *
@@ -54,6 +56,20 @@ public interface Task<I,O> {
 		}
 		
 		public void runSimple();
+	}
+	
+	
+	@FunctionalInterface
+	public static interface AsyncTask<I> extends VoidTask<I>{
+		
+		@Override
+		default void runVoid(I i) {
+			CompletableFuture.runAsync(() -> {
+			   runAsync(i);
+			});
+		}
+		
+		public void runAsync(I i);
 	}
 }
 
