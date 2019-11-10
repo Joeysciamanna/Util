@@ -47,7 +47,18 @@ public interface Task<I,O> {
 	
 	
 	@FunctionalInterface
-	public static interface SimpleTask extends Task<Void, Void>{
+	public static interface SimpleTask extends Task<Void, Void>, EmptyTask<Void>, VoidTask<Void>{
+		
+		@Override
+		default void runVoid(Void i) {
+			runSimple();
+		}
+		
+		@Override
+		default Void runEmpty() {
+			runSimple();
+			return null;
+		}
 		
 		@Override
 		default Void run(Void i) {
