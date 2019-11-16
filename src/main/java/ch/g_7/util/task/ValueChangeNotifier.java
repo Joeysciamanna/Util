@@ -37,6 +37,14 @@ public class ValueChangeNotifier<T> implements SimpleTask {
 		this.listners.add(listner);
 	}
 	
+	public void removeListner(Task<T, Void> listner) {
+		this.listners.remove(listner);
+	}
+	
+	public void removeAll() {
+		this.listners.clear();
+	}
+	
 	public boolean isChanged() {
 		return changed;
 	}
