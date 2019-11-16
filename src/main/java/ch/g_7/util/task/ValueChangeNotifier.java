@@ -23,8 +23,9 @@ public class ValueChangeNotifier<T> implements SimpleTask {
 	
 	@Override
 	public void runSimple() {
-		if(isChanged()) {
+		if(changed) {
 			listners.forEach((l)->l.run(value));
+			changed = false;
 		}
 	}
 
