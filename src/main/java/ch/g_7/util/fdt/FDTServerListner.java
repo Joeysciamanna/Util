@@ -11,8 +11,6 @@ import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.Reciever;
-import ch.g_7.util.simplesocket.SimpleServerSocketListner;
-import ch.g_7.util.stuff.Passable;
 import ch.g_7.util.task.Task;
 
 /**

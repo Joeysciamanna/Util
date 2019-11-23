@@ -1,9 +1,7 @@
 package ch.g_7.util.task;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import ch.g_7.util.task.Task.SimpleTask;
 

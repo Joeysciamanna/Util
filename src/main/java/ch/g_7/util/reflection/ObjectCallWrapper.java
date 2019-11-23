@@ -3,11 +3,7 @@ package ch.g_7.util.reflection;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.stream.Collectors;
-
-import ch.g_7.util.stuff.Openable;
 
 public class ObjectCallWrapper {
 
