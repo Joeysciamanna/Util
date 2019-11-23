@@ -25,4 +25,11 @@ public class TaskList<I> implements VoidTask<I> {
 		tasks.forEach((t) -> t.run(null));
 	}
 
+	public void add(Task<I, Void> task) {
+		tasks.add(task);
+	}
+	
+	public void remove(Task<I, Void> task) {
+		tasks.remove(task);
+	}
 }
