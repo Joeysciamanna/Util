@@ -29,6 +29,11 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 		metadata = new Metadata();
 	}
 	
+	/**
+	 * Method to handle incoming requests
+	 * @param data the incoming data
+	 * @return the response
+	 */
 	@Override
 	public byte[] run(byte[] data) {
 		Response response = null;
@@ -36,7 +41,7 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));
 			Reciever reciever = recievers.get(request.getPath());
 			if(reciever == null) {
-				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.FUNCTION_NOT_FOUND);
+				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.RECEIVER_NOT_FOUND);
 			}
 			response = reciever.recieve(request);
 			response.setMetadata(metadata);
@@ -50,12 +55,18 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 	}
 	
 
-	
-	
+	/**
+	 * Adds an receiver to handle incoming requests 
+	 * @param reciever The new receiver
+	 */
 	public void add(Reciever reciever) {
 		recievers.put(reciever.getPath(), reciever);
 	}
 
+	/**
+	 * Removes an receiver
+	 * @param reciever The receiver to remove
+	 */
 	public void remove(Reciever reciever) {
 		recievers.remove(reciever.getPath());
 	}

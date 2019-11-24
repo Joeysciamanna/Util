@@ -3,8 +3,14 @@ package ch.g_7.util.fdt.data;
 import org.json.JSONObject;
 
 import ch.g_7.util.parse.Destringifyable;
+import ch.g_7.util.parse.Stringifyable;
 
-public class Request {
+/**
+ * Request Object, contains metadata, path (destination) and the data
+ * 
+ * @author Joey Sciamannaw
+ */
+public class Request implements Stringifyable{
 
 	private Metadata metadata;
 	private String path;
@@ -17,6 +23,10 @@ public class Request {
 		this.data = data;
 	}
 	
+	/**
+	 * Create a request object from JSON string
+	 * @param jsonString
+	 */
 	@Destringifyable
 	public Request(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
@@ -25,9 +35,11 @@ public class Request {
 		this.data = json.getString("data");
 	}
 	
-	
-	
-	public String toJson() {
+	/**
+	 * Parses this to a JSON object
+	 */
+	@Override
+	public String stringify() {
 		JSONObject json = new JSONObject();
 		json.put("metadata", metadata.stringify());
 		json.put("path", path);

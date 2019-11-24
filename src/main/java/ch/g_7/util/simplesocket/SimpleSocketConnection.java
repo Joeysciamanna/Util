@@ -13,7 +13,6 @@ public class SimpleSocketConnection implements IConnection{
 	private String domain;
 	private int port;
 	
-	private SecureRunner<byte[], byte[]> sendingLogic;
 	private DataOutputStream outputStream;
 	private DataInputStream inputStream;
 	

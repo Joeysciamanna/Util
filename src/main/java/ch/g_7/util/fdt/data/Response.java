@@ -20,6 +20,10 @@ public class Response implements Stringifyable{
 		this.data = data;
 	}
 	
+	/**
+	 * Create a response object from JSON string
+	 * @param jsonString
+	 */
 	@Destringifyable
 	public Response(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
@@ -29,8 +33,10 @@ public class Response implements Stringifyable{
 		this.data = json.getString("data");
 	}
 	
-	
-
+	/**
+	 * Parses this to a JSON string
+	 */
+	@Override
 	public String stringify() {
 		JSONObject json = new JSONObject();
 		json.put("metadata", metadata.stringify());

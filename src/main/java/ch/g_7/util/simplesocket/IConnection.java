@@ -8,4 +8,9 @@ public interface IConnection extends Passable{
 
 	public byte[] send(byte[] data) throws IOException;
 	
+	@Override
+	void close() throws IOException;
+	
+	@Override
+	void open() throws IOException;
 }

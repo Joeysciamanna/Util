@@ -44,7 +44,7 @@ public class FDTConnection implements Passable{
 	 */
 	public Response send(String data, String path) throws ServerException, IOException {
 		Request request = new Request(metadata, path, data);
-		byte[] responseBytes = connection.send(request.toJson().getBytes(StandardCharsets.UTF_8));
+		byte[] responseBytes = connection.send(request.stringify().getBytes(StandardCharsets.UTF_8));
 		Response response = new Response(new String(responseBytes,StandardCharsets.UTF_8));
 
 		if(response.getStatusCode() == StatusCode.SUCCESS || response.getStatusCode() == StatusCode.PASSTHROUGH) {
@@ -53,20 +53,29 @@ public class FDTConnection implements Passable{
 		return response;
 	}
 	
-	
+	/**
+	 * Returns the default Metadata, more attributes can be added to this
+	 * @return The default Metadata
+	 */
 	public Metadata getMetadata() {
 		return metadata;
 	}
 
 
+	/**
+	 * Closes the connection
+	 */
 	@Override
-	public void close() throws Exception {
+	public void close() throws IOException {
 		connection.close();
 	}
 
 
+	/**
+	 * Opens the connection
+	 */
 	@Override
-	public void open() throws Exception {
+	public void open() throws IOException {
 		connection.open();
 	}
 	

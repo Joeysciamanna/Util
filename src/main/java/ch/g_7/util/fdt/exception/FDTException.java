@@ -1,5 +1,11 @@
 package ch.g_7.util.fdt.exception;
 
+/**
+ * Exception for whenever something goes wrong during handling the request,
+ * thrown serverside.
+ * 
+ * @author Joey Sciamanna
+ */
 public class FDTException extends RuntimeException{
 
 	private static final long serialVersionUID = 3596204354046325528L;
