@@ -124,7 +124,7 @@ public class SerializationParserUtil {
 	
 	/**
 	 * Set the global Destringifyer used to destringify all Stringifyable Objects,
-	 * which don't have a Constructor with argument String an Destringifyable {@link Annotation#}
+	 * which don't have a Constructor with argument String and Destringifyable annotation
 	 * @param destringifyer the global Destringifyer
 	 */
 	public static void setDestringifyer(IDestringifyer destringifyer) {

@@ -28,7 +28,7 @@ public abstract class Sender extends Function{
 	 * Sends the given data
 	 * @param data The data to send
 	 * @return The response
-	 * @throws ServerException
+	 * @throws ServerException Thrown when a error occurs at the server
 	 */
 	protected final Response send(String data) throws ServerException {
 		try {

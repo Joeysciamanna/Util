@@ -22,7 +22,7 @@ public class Response implements Stringifyable{
 	
 	/**
 	 * Create a response object from JSON string
-	 * @param jsonString
+	 * @param jsonString The JSON string
 	 */
 	@Destringifyable
 	public Response(String jsonString) {

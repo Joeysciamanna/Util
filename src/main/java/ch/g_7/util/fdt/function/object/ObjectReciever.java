@@ -9,7 +9,7 @@ import ch.g_7.util.parse.SerializationParserUtil;
 import ch.g_7.util.task.Task;
 
 /**
- * Receiver to handle object requests with objects of Class<T> 
+ * Receiver to handle object requests with objects of type T 
  * @param <T> The type of the object
  * 
  * @author Joey Sciamanna

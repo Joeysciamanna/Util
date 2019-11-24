@@ -8,7 +8,7 @@ import ch.g_7.util.parse.SerializationParserUtil;
 import ch.g_7.util.task.Task;
 
 /**
- * Sender to send objects of Class<T>
+ * Sender to send objects of type T
  * @param <T> The type of the object
  * 
  * @author Joey Sciamanna
@@ -39,7 +39,7 @@ public class ObjectSender<T> extends Sender {
 	 * Parses and sends the given object
 	 * @param obj The object to send
 	 * @return The response from the server
-	 * @throws ServerException
+	 * @throws ServerException Thrown when a error occurs at the server 
 	 */
 	public final Response sendObject(T obj) throws ServerException {
 		return send(parser.run(obj));

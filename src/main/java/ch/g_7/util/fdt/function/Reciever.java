@@ -15,7 +15,7 @@ public abstract class Reciever extends Function {
 	 * Called whenever a request to this is received
 	 * @param request The received request
 	 * @return The response
-	 * @throws FDTException
+	 * @throws FDTException Thrown when a error occurs
 	 */
 	public abstract Response recieve(Request request) throws FDTException;
 }

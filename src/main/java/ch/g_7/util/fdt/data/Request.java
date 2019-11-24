@@ -25,7 +25,7 @@ public class Request implements Stringifyable{
 	
 	/**
 	 * Create a request object from JSON string
-	 * @param jsonString
+	 * @param jsonString The JSON string
 	 */
 	@Destringifyable
 	public Request(String jsonString) {

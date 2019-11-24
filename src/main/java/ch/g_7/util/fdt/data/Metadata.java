@@ -28,7 +28,7 @@ public class Metadata implements Stringifyable{
 	
 	/**
 	 * Create a metadata object from JSON string
-	 * @param jsonString
+	 * @param jsonString The JSON string
 	 */
 	@Destringifyable
 	public Metadata(String jsonString) {
