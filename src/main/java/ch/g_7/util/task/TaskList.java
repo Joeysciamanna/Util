@@ -32,4 +32,8 @@ public class TaskList<I> implements VoidTask<I> {
 	public void remove(Task<I, Void> task) {
 		tasks.remove(task);
 	}
+	
+	public void clear() {
+		tasks.clear();
+	}
 }
