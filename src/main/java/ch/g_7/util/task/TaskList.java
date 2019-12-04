@@ -22,7 +22,7 @@ public class TaskList<I> implements VoidTask<I> {
 
 	@Override
 	public void runVoid(I i) {
-		tasks.forEach((t) -> t.run(null));
+		tasks.forEach((t) -> t.run(i));
 	}
 
 	public void add(Task<I, Void> task) {
@@ -35,5 +35,9 @@ public class TaskList<I> implements VoidTask<I> {
 	
 	public void clear() {
 		tasks.clear();
+	}
+	
+	public boolean isEmpty() {
+		return tasks.isEmpty();
 	}
 }
