@@ -9,15 +9,19 @@ import java.io.OutputStream;
 
 public final class IOUtil {
 
-	public static byte[] readInternalBytes(String path, Object resourceLocator) throws IOException {
-		return toBytes(getInternalInputStream(path, resourceLocator));
+	public static byte[] readInternalBytes(String path, Object resourceLocator) {
+		try {
+			return toBytes(getInternalInputStream(path, resourceLocator));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public static String readInternalString(String path, Object resourceLocator) throws IOException {
+	public static String readInternalString(String path, Object resourceLocator) {
 		return new String(readInternalBytes(path, resourceLocator));
 	}
 
-	public static InputStream getInternalInputStream(String path, Object resourceLocator) throws IOException {
+	public static InputStream getInternalInputStream(String path, Object resourceLocator) {
 		return resourceLocator.getClass().getClassLoader().getResourceAsStream(path);
 	}
 	
@@ -58,12 +62,15 @@ public final class IOUtil {
 	
 	public static OutputStream getExternalOutputStream(String path) throws IOException {
 		File file = new File(path);
-		FileOutputStream fop = new FileOutputStream(file);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
+		FileOutputStream fop = new FileOutputStream(file);
 		return fop;
 	}
 	
+	public static boolean doesFileExist(String path) {
+		return new File(path).exists();
+	}
 
 }
