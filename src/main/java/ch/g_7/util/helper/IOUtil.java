@@ -63,6 +63,7 @@ public final class IOUtil {
 	public static OutputStream getExternalOutputStream(String path) throws IOException {
 		File file = new File(path);
 		if (!file.exists()) {
+			file.getParentFile().mkdirs();
 			file.createNewFile();
 		}
 		FileOutputStream fop = new FileOutputStream(file);
