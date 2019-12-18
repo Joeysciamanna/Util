@@ -1,4 +1,4 @@
-package ch.g_7.util.logging;
+ package ch.g_7.util.logging;
 
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;

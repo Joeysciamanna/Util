@@ -5,13 +5,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import ch.g_7.util.able.Openable;
-import ch.g_7.util.able.Passable;
 
 public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 
 	private Exception cause;
 	private boolean success = false;
-	private boolean throwRunntime = true;
 	private RuntimeException exception;
 	
 	private ThrowingTask<I, O> throwz;
@@ -34,14 +32,7 @@ public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 	public SecureRunner(ThrowingEmptyTask<O> throwz) {
 		this((o) -> throwz.run());
 	}
-	
-	public SecureRunner<I,O> open(Passable... passables) {
-		for (Passable passable : passables) {
-			openables.add(passable);
-			closeables.add(passable);	
-		}
-		return this;
-	}
+
 	
 	public SecureRunner<I,O> open(Openable...openables) {
 		for (Openable openable : openables) {
@@ -81,10 +72,8 @@ public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 						closeable.close();	
 					}
 				}
-			} catch (RuntimeException e) {
-				throw e;
 			} catch (Exception e) {
-				fail(e);
+				throw new RuntimeException(e);
 			}
 		}
 		return result;
@@ -93,15 +82,10 @@ public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 	private void fail(Exception e) {
 		cause = e;
 		success = false;
-		if(throwRunntime) {
+		if(exception != null) {
 			exception.initCause(e);
 			throw exception;
 		}
-	}
-
-	public SecureRunner<I,O> throwRunntime(boolean throwRunntime) {
-		this.throwRunntime = throwRunntime;
-		return this;
 	}
 	
 	public SecureRunner<I, O> throwException(RuntimeException exception){

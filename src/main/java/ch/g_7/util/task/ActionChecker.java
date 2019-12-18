@@ -1,9 +1,11 @@
 package ch.g_7.util.task;
 
-import ch.g_7.util.able.Passable;
+import java.io.Closeable;
+
+import ch.g_7.util.able.Openable;
 
 
-public abstract class ActionChecker implements Runnable, Passable, Task{
+public abstract class ActionChecker implements Runnable, Openable, Closeable, Task{
 
 	private boolean running;
 	private boolean pause;
@@ -13,7 +15,7 @@ public abstract class ActionChecker implements Runnable, Passable, Task{
 	
 	
 	public ActionChecker() {
-		sleeper = new SecureRunner<Void, Void>(()->Thread.sleep(intervall));
+		sleeper = new SecureRunner<Void, Void>(()->Thread.sleep(intervall)).throwException(null);
 	}
 	
 
@@ -61,12 +63,12 @@ public abstract class ActionChecker implements Runnable, Passable, Task{
 	}
 	
 	@Override
-	public void close() throws Exception {
+	public void close() {
 		setRunning(false);
 	}
 	
 	@Override
-	public void open() throws Exception {
+	public void open() {
 		setRunning(true);
 	}
 
