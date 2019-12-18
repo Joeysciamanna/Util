@@ -11,7 +11,7 @@ import ch.g_7.util.fdt.exception.ServerException;
  * 
  * @author Joey Sciamanna
  */
-public abstract class Sender extends Function{
+public abstract class Sender extends EndPoint{
 
 	private FDTConnection connection;
 	

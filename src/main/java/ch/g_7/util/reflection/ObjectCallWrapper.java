@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-import ch.g_7.util.stuff.Initializable;
+import ch.g_7.util.able.Initializable;
 
 public class ObjectCallWrapper implements Initializable{
 

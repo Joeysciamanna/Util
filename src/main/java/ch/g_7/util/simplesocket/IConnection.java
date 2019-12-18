@@ -2,7 +2,7 @@ package ch.g_7.util.simplesocket;
 
 import java.io.IOException;
 
-import ch.g_7.util.stuff.Passable;
+import ch.g_7.util.able.Passable;
 
 public interface IConnection extends Passable{
 

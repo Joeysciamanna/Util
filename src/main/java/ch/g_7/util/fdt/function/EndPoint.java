@@ -5,15 +5,15 @@ package ch.g_7.util.fdt.function;
  * 
  * @author Joey Sciamanna
  */
-public abstract class Function {
+public abstract class EndPoint {
 
 	private String endpoint;
 	
-	public Function(String endpoint) {
+	public EndPoint(String endpoint) {
 		this.endpoint = endpoint;
 	}
 	
-	public Function() {
+	public EndPoint() {
 		this("default");
 	}
 	

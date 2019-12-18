@@ -1,6 +1,6 @@
 package ch.g_7.util.task;
 
-import ch.g_7.util.stuff.Passable;
+import ch.g_7.util.able.Passable;
 
 
 public abstract class ActionChecker implements Runnable, Passable, Task{
