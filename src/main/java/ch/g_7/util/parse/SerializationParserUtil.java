@@ -11,10 +11,10 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import ch.g_7.util.reflection.ClassUtil;
-import ch.g_7.util.stuff.SecureRunner;
-import ch.g_7.util.task.Task;
+import ch.g_7.util.task.SecureRunner;
 
 /**
  * Class used to generate parsers to pars all kind of Objects to String and back.
@@ -36,7 +36,7 @@ public class SerializationParserUtil {
 	 * @param from The Class of the Object
 	 * @return A parser able to parse Objects of the given Class to String
 	 */
-	public static <I> Task<I, String> getToStringParser(Class<I> from) {
+	public static <I> Function<I, String> getToStringParser(Class<I> from) {
 		if (Stringifyable.class.isAssignableFrom(from)) {
 			return (I i) -> ((Stringifyable) i).stringify();
 		}
@@ -57,7 +57,7 @@ public class SerializationParserUtil {
 	 * @return A parser able to parse A String into a Object of the given Class
 	 */
 	@SuppressWarnings("unchecked")
-	public static <O> Task<String, O> getFromStringParser(Class<O> to) {
+	public static <O> Function<String, O> getFromStringParser(Class<O> to) {
 		if (Stringifyable.class.isAssignableFrom(to)) {
 			for(Constructor<?> constructor : to.getConstructors()){
 				if(constructor.getAnnotation(Destringifyable.class) != null && constructor.getParameterCount() == 1) {

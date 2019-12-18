@@ -2,13 +2,12 @@ package ch.g_7.util.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-import ch.g_7.util.task.Task.SimpleTask;
-
-public class ValueChangeNotifier<T> implements SimpleTask {
+public class ValueChangeNotifier<T> {
 
 	
-	private List<Task<T, Void>> listners;
+	private List<Consumer<T>> listners;
 	
 	private T value;
 	private boolean changed;
@@ -19,10 +18,9 @@ public class ValueChangeNotifier<T> implements SimpleTask {
 	}
 	
 	
-	@Override
-	public void runSimple() {
+	public void run() {
 		if(changed) {
-			listners.forEach((l)->l.run(value));
+			listners.forEach((l)->l.accept(value));
 			changed = false;
 		}
 	}
@@ -32,11 +30,11 @@ public class ValueChangeNotifier<T> implements SimpleTask {
 		this.changed  = true;
 	}
 
-	public void addListner(Task<T, Void> listner) {
+	public void addListner(Consumer<T> listner) {
 		this.listners.add(listner);
 	}
 	
-	public void removeListner(Task<T, Void> listner) {
+	public void removeListner(Consumer<T> listner) {
 		this.listners.remove(listner);
 	}
 	

@@ -9,7 +9,7 @@ import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.Reciever;
 import ch.g_7.util.reflection.ObjectCallWrapper;
-import ch.g_7.util.stuff.SecureRunner;
+import ch.g_7.util.task.SecureRunner;
 
 public class ROMReciever extends Reciever {
 
@@ -32,7 +32,7 @@ public class ROMReciever extends Reciever {
 						() -> romObject.call(romData.getMethodName(), romData.getArgs().toArray(new String[] {})))
 								.throwException(new FDTException("Invalid Method parameters",
 										StatusCode.INVALLID_REQUEST_PARAMS))
-								.run());
+								.get());
 
 	}
 

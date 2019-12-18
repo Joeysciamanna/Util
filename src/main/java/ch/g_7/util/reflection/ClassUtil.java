@@ -3,12 +3,9 @@ package ch.g_7.util.reflection;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import ch.g_7.util.task.Task; 
+import java.util.function.BiFunction;
+import java.util.stream.Collectors; 
 
 public class ClassUtil {
 
@@ -39,11 +36,11 @@ public class ClassUtil {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static <I> I implemment(Class<I> clazz, Task<Entry<Method, Object[]>, Object> task) {
+	public static <I> I implemment(Class<I> clazz, BiFunction<Method, Object[], Object> task) {
 		return (I) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] {clazz}, new InvocationHandler() {
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-				return task.run(new AbstractMap.SimpleEntry<>(method, args));
+				return task.apply(method, args);
 			}
 		});
 	}

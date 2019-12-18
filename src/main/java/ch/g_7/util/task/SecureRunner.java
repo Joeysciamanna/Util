@@ -1,10 +1,13 @@
-package ch.g_7.util.stuff;
+package ch.g_7.util.task;
 
 import java.util.ArrayList;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-import ch.g_7.util.task.Task;
+import ch.g_7.util.stuff.Openable;
+import ch.g_7.util.stuff.Passable;
 
-public class SecureRunner<I,O> implements Task<I, O>{
+public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 
 	private Exception cause;
 	private boolean success = false;
@@ -55,12 +58,11 @@ public class SecureRunner<I,O> implements Task<I, O>{
 	}
 	
 	
-	public O run() {
-		return run(null);
+	public O get() {
+		return apply(null);
 	}
 	
-	@Override
-	public O run(I input) {
+	public O apply(I input) {
 		O result = null;
 		try {
 			for (Openable openable : openables) {

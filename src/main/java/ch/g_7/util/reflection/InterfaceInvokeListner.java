@@ -5,33 +5,32 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import ch.g_7.util.task.Task;
+import java.util.function.Function;
 
 public class InterfaceInvokeListner<T> {
 
 	private T interfase;
-	private Map<String, Entry<MethodArgParser, Task<?,?>>> methodCallHandlers;
+	private Map<String, Entry<MethodArgParser, Function<?,?>>> methodCallHandlers;
 	private Method lastCalled;
 	
 	public InterfaceInvokeListner(Class<T> clazz) {
-		methodCallHandlers = new HashMap<String, Entry<MethodArgParser, Task<?,?>>>();
-		interfase = ClassUtil.implemment(clazz, (e) -> onCall(e.getKey(), e.getValue()));
+		methodCallHandlers = new HashMap<String, Entry<MethodArgParser, Function<?,?>>>();
+		interfase = ClassUtil.implemment(clazz, (m, args) -> onCall(m, args));
 	}
 	
 	@SuppressWarnings("unchecked")
 	private Object onCall(Method method, Object...args) {
 		String methodName = ClassUtil.createUniqueMethodString(method);
 		if(methodCallHandlers.containsKey(methodName)) {
-			Entry<MethodArgParser, Task<?,?>> entry = methodCallHandlers.get(methodName);
+			Entry<MethodArgParser, Function<?,?>> entry = methodCallHandlers.get(methodName);
 			MethodArgParser parser = entry.getKey();
-			Task<?,?> callListner = entry.getValue();
+			Function<?,?> callListner = entry.getValue();
 			if(parser == null) {
-				return ((Task<Object[], Object>)callListner).run(args);
+				return ((Function<Object[], Object>)callListner).apply(args);
 			}else if(!parser.isInitialized()){
 				parser.init(method);
 			}
-			return parser.parse(((Task<String[],String>)callListner).run(parser.parse(args)));
+			return parser.parse(((Function<String[],String>)callListner).apply(parser.parse(args)));
 		}else {
 			lastCalled = method;
 			return null;
@@ -39,11 +38,11 @@ public class InterfaceInvokeListner<T> {
 	}
 	
 	
-	public void addStringifyabledCallListner(Task<String[], String> callListner) {
+	public void addStringifyabledCallListner(Function<String[], String> callListner) {
 		methodCallHandlers.put(ClassUtil.createUniqueMethodString(lastCalled), new AbstractMap.SimpleEntry<>(new MethodArgParser(), callListner));
 	}
 	
-	public void addCallListner(Task<Object[], Object> callListner) {
+	public void addCallListner(Function<Object[], Object> callListner) {
 		methodCallHandlers.put(ClassUtil.createUniqueMethodString(lastCalled), new AbstractMap.SimpleEntry<>(null, callListner));
 	}
 	

@@ -5,7 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class ObjectCallWrapper {
+import ch.g_7.util.stuff.Initializable;
+
+public class ObjectCallWrapper implements Initializable{
 
 	private Object synchronizable;
 	private HashMap<String, MethodCallWrapper<?>> methods;
@@ -20,7 +22,7 @@ public class ObjectCallWrapper {
 		this(synchronizable, null);
 	}
 
-
+	@Override
 	public void init() {
 		for(Method method : synchronizable.getClass().getMethods()) {
 			if(annotation == null || method.isAnnotationPresent(annotation)) {

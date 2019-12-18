@@ -1,10 +1,9 @@
 package ch.g_7.util.task;
 
 import ch.g_7.util.stuff.Passable;
-import ch.g_7.util.stuff.SecureRunner;
 
 
-public abstract class ActionChecker implements Runnable, Passable{
+public abstract class ActionChecker implements Runnable, Passable, Task{
 
 	private boolean running;
 	private boolean pause;
@@ -25,7 +24,7 @@ public abstract class ActionChecker implements Runnable, Passable{
 			if(check() && !pause) {
 				onAction();
 			}
-			sleeper.run();
+			sleeper.get();
 		}
 		onClose();
 	}

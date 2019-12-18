@@ -33,7 +33,7 @@ public class ROMSender extends Sender{
 	
 	public <I> I add(Class<I> interfaseClass, long objId) {
 		Map<String, MethodArgParser> argParsers = new HashMap<String, MethodArgParser>();
-		I interfase = ClassUtil.implemment(interfaseClass, (e)->sendROM(objId, ClassUtil.createUniqueMethodString(e.getKey()), e.getValue()));
+		I interfase = ClassUtil.implemment(interfaseClass, (m, args)->sendROM(objId, ClassUtil.createUniqueMethodString(m), args));
 		
 		for(Method method : interfaseClass.getMethods()) {
 			MethodArgParser argParser = new MethodArgParser();
