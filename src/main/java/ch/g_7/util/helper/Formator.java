@@ -1,10 +1,14 @@
 package ch.g_7.util.helper;
 
+import java.util.function.Supplier;
+
 public final class Formator {
 	
 	private final static Properties PROPERTIES = Properties.getInstance();
 	
-	public static String format(String text){
+	@SafeVarargs
+	public static String format(String text, BiValue<String, Supplier<String>>... values){
+		
 		StringBuilder textBuilder = new StringBuilder();
 		for(int i = 0; i<text.length(); i++){
 			char c = text.charAt(i);
@@ -16,9 +20,16 @@ public final class Formator {
 					c = text.charAt(++i);
 				}
 				
-				if(PROPERTIES.contains(identifier.toString())) {
-					textBuilder.append(PROPERTIES.get(identifier.toString(), "").getValue());
+				String value = "";
+				for (BiValue<String, Supplier<String>> biValue : values) {
+					if(biValue.getKey().equals(identifier.toString())) {
+						value = biValue.getValue().get();
+					}
 				}
+				if(value.isEmpty() && PROPERTIES.contains(identifier.toString())) {
+					value = PROPERTIES.get(identifier.toString(), "").getValue();
+				}
+				textBuilder.append(PROPERTIES.get(identifier.toString(), "").getValue());
 				
 			}else{
 				textBuilder.append(c);

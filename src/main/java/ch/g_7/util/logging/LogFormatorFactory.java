@@ -17,8 +17,11 @@ public final class LogFormatorFactory {
 		return new ILogFormator() {
 			@Override
 			public String format(LogLevel level, LogMessage message) {
-				return  "[" + level + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
-						message.getSimpleMessage() + ":\n" + message.getDetails();
+				String details = message.getDetails();
+				String simpleMessage = message.getSimpleMessage();
+				String date = new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date());
+				return  "[" + level + "] " + "["+ date +"]  " +
+				simpleMessage + (details.isBlank() ? "\n" : (":\n" + details));
 			}
 		};
 	}
@@ -49,6 +52,22 @@ public final class LogFormatorFactory {
 			@Override
 			public String format(LogLevel level, LogMessage message) {
 				return "[" + level + "] " + message.getSimpleMessage() + ":\n" + message.getDetails();
+			}
+		};
+	}
+	
+	/**
+	 * [ERROR] [dd-MM-yyy HH:mm] [user123221]@[TrMigrationReport] Some simple error message:
+	 * Caused by IOException....
+	 * 
+	 * @return
+	 */
+	public static ILogFormator getCustom(String pattern) {
+		return new ILogFormator() {
+			@Override
+			public String format(LogLevel level, LogMessage message) {
+				return "[" + level + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
+						message.getSimpleMessage() + ":\n" + message.getDetails();
 			}
 		};
 	}
