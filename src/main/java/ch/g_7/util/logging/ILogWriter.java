@@ -1,8 +1,9 @@
 package ch.g_7.util.logging;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public interface ILogWriter {
+public interface ILogWriter extends Closeable {
 
 	boolean isWriting(LogLevel level);
 	

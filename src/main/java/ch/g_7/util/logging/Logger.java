@@ -1,11 +1,12 @@
  package ch.g_7.util.logging;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logger implements UncaughtExceptionHandler {
+public class Logger implements UncaughtExceptionHandler, Closeable {
 
 	private List<ILogWriter> writers;
 	private final static Logger instance = new Logger();
@@ -58,6 +59,13 @@ public class Logger implements UncaughtExceptionHandler {
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
 		log(LogLevel.FATAL, e);
+	}
+	
+	@Override
+	public void close() throws IOException {
+		for (ILogWriter logWriter : writers) {
+			logWriter.close();
+		}
 	}
 
 }

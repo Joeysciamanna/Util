@@ -66,5 +66,7 @@ public abstract class AbstractLogWriter implements ILogWriter {
 		return name;
 	}
 	
-
+	@Override
+	public void close() throws IOException {}
+	
 }
