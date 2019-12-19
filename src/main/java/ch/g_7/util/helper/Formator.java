@@ -6,9 +6,14 @@ public final class Formator {
 	
 	private final static Properties PROPERTIES = Properties.getInstance();
 	
-	@SafeVarargs
-	public static String format(String text, BiValue<String, Supplier<String>>... values){
-		
+	/**
+	 * 
+	 * @param text
+	 * @param values lenght must be %2==0, pattern: key, value, key, value...
+	 * @return
+	 */
+	public static String format(String text, String... values){
+		if (values.length % 2 != 0) throw new IllegalArgumentException("Ivalid number of key / values");
 		StringBuilder textBuilder = new StringBuilder();
 		for(int i = 0; i<text.length(); i++){
 			char c = text.charAt(i);
@@ -21,9 +26,9 @@ public final class Formator {
 				}
 				
 				String value = "";
-				for (BiValue<String, Supplier<String>> biValue : values) {
-					if(biValue.getKey().equals(identifier.toString())) {
-						value = biValue.getValue().get();
+				for (int v = 0; v<values.length; v+=2) {
+					if(values[v].equals(identifier.toString())) {
+						value = values[v+1];
 					}
 				}
 				if(value.isEmpty() && PROPERTIES.contains(identifier.toString())) {
