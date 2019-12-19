@@ -3,7 +3,6 @@ package ch.g_7.util.logging;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ch.g_7.util.helper.BiValue;
 import ch.g_7.util.helper.Formator;
 
 public final class LogFormatorFactory {
