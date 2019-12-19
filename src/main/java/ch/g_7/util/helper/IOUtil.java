@@ -22,7 +22,11 @@ public final class IOUtil {
 	}
 
 	public static InputStream getInternalInputStream(String path, Object resourceLocator) {
-		return resourceLocator.getClass().getClassLoader().getResourceAsStream(path);
+		InputStream inputStream = resourceLocator.getClass().getClassLoader().getResourceAsStream(path);
+		if(inputStream == null) {
+			throw new RuntimeException("File not found");
+		}
+		return inputStream;
 	}
 	
 	
@@ -31,7 +35,7 @@ public final class IOUtil {
 	}
 	
 	public static String readExternalString(String path) throws IOException {
-		return new String(readExternalString(path));
+		return new String(readExternalBytes(path));
 	}
 	
 	public static byte[] toBytes(InputStream inputStream) throws IOException {

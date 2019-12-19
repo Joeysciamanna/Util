@@ -8,7 +8,7 @@ public class StreamWriter extends AbstractLogWriter implements Closeable {
 
 	private OutputStream outputStream;
 	
-	public StreamWriter(OutputStream outputStream, String name, LogLevel[] levels) {
+	public StreamWriter(OutputStream outputStream, String name, LogLevel... levels) {
 		super(name, levels);
 		this.outputStream = outputStream;
 	}
