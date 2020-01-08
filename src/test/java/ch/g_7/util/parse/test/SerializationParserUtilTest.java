@@ -3,18 +3,18 @@ package ch.g_7.util.parse.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+import ch.g_7.util.helper.ReflectionUtil;
 import ch.g_7.util.parse.IDestringifyer;
 import ch.g_7.util.parse.SerializationParserUtil;
 import ch.g_7.util.parse.Stringifyable;
-import ch.g_7.util.reflection.ClassUtil;
 
 public class SerializationParserUtilTest {
 
 	
 	@Test
 	public void getStringifyParserTest() {
-		Stringifyable stringifyable = ClassUtil.implemment(Stringifyable.class, (m, args) -> "this string identifiese the stringifyable");
-		SerializationParserUtil.setDestringifyer(ClassUtil.implemment(IDestringifyer.class, (m, args) -> stringifyable));
+		Stringifyable stringifyable = ReflectionUtil.implemment(Stringifyable.class, (m, args) -> "this string identifiese the stringifyable");
+		SerializationParserUtil.setDestringifyer(ReflectionUtil.implemment(IDestringifyer.class, (m, args) -> stringifyable));
 		
 		String value = parseString(Stringifyable.class, stringifyable);
 		Stringifyable stringifyable2 = parseObject(Stringifyable.class, value);

@@ -1,4 +1,4 @@
-package ch.g_7.util.reflection;
+package ch.g_7.util.helper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors; 
 
-public class ClassUtil {
+public class ReflectionUtil {
 
 	public static final Class<?>[] PRIMITIVE_WRAPPERS = {Boolean.class, Byte.class, Character.class, Double.class, Float.class, Integer.class, Long.class, Short.class, Void.class};
 	
@@ -45,11 +45,7 @@ public class ClassUtil {
 		});
 	}
 	
-	
-	public static String createUniqueMethodString(Method method) {
-		return  method.getName() + "(" + Arrays.stream(method.getParameterTypes()).map((c) -> c.getSimpleName()).collect(Collectors.joining(",")) + ")";
-	}
-	
+
 
 
 }

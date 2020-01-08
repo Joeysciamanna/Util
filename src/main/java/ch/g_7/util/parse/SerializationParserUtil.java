@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.g_7.util.reflection.ClassUtil;
+import ch.g_7.util.helper.ReflectionUtil;
 import ch.g_7.util.task.SecureRunner;
 
 /**
@@ -40,7 +40,7 @@ public class SerializationParserUtil {
 		if (Stringifyable.class.isAssignableFrom(from)) {
 			return (I i) -> ((Stringifyable) i).stringify();
 		}
-		if (ClassUtil.isPrimitiveOrWrapper(from) || String.class.isAssignableFrom(from)) {
+		if (ReflectionUtil.isPrimitiveOrWrapper(from) || String.class.isAssignableFrom(from)) {
 			return (I i) -> Objects.toString(i);
 		}
 		return (I i) -> serialize(i);
@@ -69,7 +69,7 @@ public class SerializationParserUtil {
 		if (String.class.isAssignableFrom(to)) {
 			return (String s) -> (O) s;
 		}
-		if (ClassUtil.isPrimitiveOrWrapper(to)) {
+		if (ReflectionUtil.isPrimitiveOrWrapper(to)) {
 			try {
 				Method method;
 				if(!WRAPPER_PARSER_METHODS.containsKey(to.getSimpleName())){

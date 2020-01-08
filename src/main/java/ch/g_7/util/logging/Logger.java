@@ -6,6 +6,8 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.g_7.util.logging.writer.ILogWriter;
+
 public class Logger implements UncaughtExceptionHandler, Closeable {
 
 	private List<ILogWriter> writers;

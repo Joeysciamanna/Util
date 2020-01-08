@@ -1,6 +1,11 @@
-package ch.g_7.util.logging;
+package ch.g_7.util.logging.writer;
 
 import java.io.IOException;
+
+import ch.g_7.util.logging.ILogFormator;
+import ch.g_7.util.logging.LogFormatorFactory;
+import ch.g_7.util.logging.LogLevel;
+import ch.g_7.util.logging.LogMessage;
 
 public abstract class AbstractLogWriter implements ILogWriter {
 
