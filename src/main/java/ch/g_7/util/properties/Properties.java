@@ -3,7 +3,6 @@ package ch.g_7.util.properties;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -108,18 +107,40 @@ public final class Properties {
 		return value.orElseThrow(()->new IllegalArgumentException("No property with name " + key));
 	}
 	
+	/**
+	 * Sets an App Property
+	 * @param key
+	 * @param value
+	 */
 	public void set(String key, Supplier<String> value) {
 		appProperties.add(new Prop(key, value, ""));
 	}
 	
+	/**
+	 * Sets an App Property
+	 * @param key
+	 * @param value
+	 */
 	public void set(String key, String value) {
 		appProperties.add(new Prop(key, value, ""));
 	}
 	
+	/**
+	 * Adds an Property to the Properties (File)
+	 * @param key
+	 * @param value
+	 */
 	public Prop put(String key, String value) {
 		return put(key, value, null);
 	}
-	
+
+	/**
+	 * Adds an Property to the Properties (File)
+	 * @param key
+	 * @param value
+	 * @param comment
+	 * @return
+	 */
 	public Prop put(String key, String value, String comment) {
 		Prop prop = new Prop(key, value, comment); 
 		properties.add(prop); 
