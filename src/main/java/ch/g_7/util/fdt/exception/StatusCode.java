@@ -6,6 +6,7 @@ package ch.g_7.util.fdt.exception;
  * 
  * @author Joey Sciamanna
  */
+//TODO adapt http error codes
 public enum StatusCode {
 	
 	/**

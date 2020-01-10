@@ -1,5 +1,7 @@
 package ch.g_7.util.helper;
 
+import ch.g_7.util.properties.Properties;
+
 public final class Formator {
 	
 	private final static Properties PROPERTIES = Properties.getInstance();

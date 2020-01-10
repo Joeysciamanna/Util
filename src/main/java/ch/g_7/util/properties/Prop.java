@@ -1,4 +1,4 @@
-package ch.g_7.util.helper;
+package ch.g_7.util.properties;
 
 import java.util.function.Supplier;
 

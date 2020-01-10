@@ -1,4 +1,4 @@
-package ch.g_7.util.helper;
+package ch.g_7.util.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import ch.g_7.util.helper.Formator;
+import ch.g_7.util.helper.IOUtil;
 
 public final class Properties {
 
@@ -42,17 +45,6 @@ public final class Properties {
 		
 	public static Properties read(String txt) {
 		return getInstance(parse(txt));
-	}
-	
-	
-	public void initTimeProperties() {
-		set("DT.mm", ()->Formator.fill(Calendar.getInstance().get(Calendar.MINUTE), '0', 2));
-		set("DT.ss", ()->Formator.fill(Calendar.getInstance().get(Calendar.SECOND), '0', 2));
-		set("DT.hh", ()->Formator.fill(Calendar.getInstance().get(Calendar.HOUR_OF_DAY), '0', 2));
-		set("DT.dd", ()->Formator.fill(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), '0', 2));
-		set("DT.MM", ()->Formator.fill(Calendar.getInstance().get(Calendar.MONTH)+1, '0', 2));
-		set("DT.yyyy", ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-		set("DT.yy",   ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2));
 	}
 	
 	
