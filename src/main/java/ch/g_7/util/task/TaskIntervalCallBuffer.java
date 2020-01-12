@@ -1,6 +1,7 @@
 package ch.g_7.util.task;
 
-import ch.g_7.util.task.Task.VoidTask;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 /**
  * This Class can be used to call a task all x milliseconds,
@@ -11,35 +12,27 @@ import ch.g_7.util.task.Task.VoidTask;
  * Task, if the interval is then reached, the Task will be called.
  * If the Wrapped Task missed calls, then the Task will be called for every missed call.
  *
- * @param <I> the Input type of this Task
+ * @param <T> the Input type of this Task
  *
  * @author Joey Sciamanna
  */
-public class TaskIntervalBuffer<I> implements VoidTask<I> {
+public class TaskIntervalCallBuffer<T>  {
 
-	private Task<I, Void> task;
+	private Consumer<T> task;
 	
 	private long intervall;
 	private long callBuffer;
 	private long lastCall;
 	private boolean enabled;
 	
-	public TaskIntervalBuffer(Task<I, Void> task, long intervall, long callBuffer) {
+	public TaskIntervalCallBuffer(Consumer<T> task, long intervall, long callBuffer) {
 		this.task = task;
 		this.intervall = intervall;
 		enabled = true;
 		resetLastCall();
 	}
 	
-	public TaskIntervalBuffer(VoidTask<I> task, long intervall, long callBuffer) {
-		this((Task<I, Void>)task, intervall, callBuffer);
-	}
-	
-	public TaskIntervalBuffer(Task<I, Void> task, long intervall) {
-		this(task, intervall, 0);
-	}
-	
-	public TaskIntervalBuffer(VoidTask<I> task, long intervall) {
+	public TaskIntervalCallBuffer(Consumer<T> task, long intervall) {
 		this(task, intervall, 0);
 	}
 	
@@ -48,15 +41,14 @@ public class TaskIntervalBuffer<I> implements VoidTask<I> {
 	 * if the interval is reached the Task will be called for every missed call.
 	 * if the interval is not reached, the task wont be called.
 	 */
-	@Override
-	public void runVoid(I t) {
+	public synchronized void run(T t) {
 		if(enabled) {
 			long actTime = System.currentTimeMillis();
 			long div = actTime - lastCall;
 			long missedCalls;
 			if((missedCalls = div/intervall)>0) {
 				for(int i = 0; i < (missedCalls+callBuffer); i++) {
-					task.run(t);
+					task.accept(t);
 				}
 				lastCall = actTime - (div%intervall) + (callBuffer*intervall);
 			}
@@ -65,61 +57,65 @@ public class TaskIntervalBuffer<I> implements VoidTask<I> {
 		}
 	}
 
-	
+	public synchronized void runAsync(T t) {
+		CompletableFuture.runAsync(() -> {
+			run(t);
+		});
+	}
 	
 	/**
 	 * @return the intervall
 	 */
-	public long getIntervall() {
+	public synchronized long getIntervall() {
 		return intervall;
 	}
 
 	/**
 	 * @param intervall the intervall to set
 	 */
-	public void setIntervall(long intervall) {
+	public synchronized void setIntervall(long intervall) {
 		this.intervall = intervall;
 	}
 
 	/**
 	 * @return the callBuffer
 	 */
-	public long getCallBuffer() {
+	public synchronized long getCallBuffer() {
 		return callBuffer;
 	}
 
 	/**
 	 * @param callBuffer the callBuffer to set
 	 */
-	public void setCallBuffer(long callBuffer) {
+	public synchronized void setCallBuffer(long callBuffer) {
 		this.callBuffer = callBuffer;
 	}
 
 	/**
 	 * @return the lastCall
 	 */
-	public long getLastCall() {
+	public synchronized long getLastCall() {
 		return lastCall;
 	}
 
 	/**
 	 * @return the enabled
 	 */
-	public boolean isEnabled() {
+	public synchronized boolean isEnabled() {
 		return enabled;
 	}
 
 	/**
 	 * @param enabled the enabled to set
 	 */
-	public void setEnabled(boolean enabled) {
+	public synchronized void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
 	/**
 	 * Reset the last call to now.
 	 */
-	public void resetLastCall() {
+	public synchronized void resetLastCall() {
 		lastCall =  System.currentTimeMillis();
 	}
 }

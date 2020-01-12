@@ -1,15 +1,16 @@
 package ch.g_7.util.fdt;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import ch.g_7.util.able.Openable;
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.simplesocket.IConnection;
-import ch.g_7.util.stuff.Passable;
 
 /**
  * Simple FDTConnection
@@ -18,7 +19,7 @@ import ch.g_7.util.stuff.Passable;
  * 
  * @author Joey Sciamanna
  */
-public class FDTConnection implements Passable{
+public class FDTConnection implements Openable, Closeable{
 
 	private IConnection connection;
 	private Metadata metadata;

@@ -3,12 +3,12 @@ package ch.g_7.util.fdt.data;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 import org.json.JSONObject;
 
 import ch.g_7.util.parse.Destringifyable;
 import ch.g_7.util.parse.Stringifyable;
-import ch.g_7.util.task.Task;
 
 /**
  * Metadata of every request / response, multiple attributes can be set.
@@ -17,7 +17,7 @@ import ch.g_7.util.task.Task;
  */
 public class Metadata implements Stringifyable{
  
-	private Map<String, Task<Void, String>> dynamicData;
+	private Map<String, Supplier<String>> dynamicData;
 	private JSONObject json;
 
 	
@@ -40,8 +40,8 @@ public class Metadata implements Stringifyable{
 	 * Parses the attributes to a JSON String
 	 */
 	public String stringify() {
-		for (Entry<String, Task<Void, String>> entry : dynamicData.entrySet()) {
-			json.put(entry.getKey(), entry.getValue().run(null));
+		for (Entry<String, Supplier<String>> entry : dynamicData.entrySet()) {
+			json.put(entry.getKey(), entry.getValue().get());
 		}
 		return json.toString();
 	}
@@ -61,7 +61,7 @@ public class Metadata implements Stringifyable{
 	 * @param key The key of the data
 	 * @param dataBuilder the data builder.
 	 */
-	public void addDynamicData(String key, Task<Void, String> dataBuilder) {
+	public void addDynamicData(String key, Supplier<String> dataBuilder) {
 		dynamicData.put(key, dataBuilder);
 	}
 	
@@ -72,7 +72,7 @@ public class Metadata implements Stringifyable{
 	 */
 	public String get(String key) {
 		if(dynamicData.containsKey(key)) {
-			return dynamicData.get(key).run(null);
+			return dynamicData.get(key).get();
 		}
 		return json.getString(key);
 	}

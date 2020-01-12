@@ -9,7 +9,7 @@ import ch.g_7.util.fdt.exception.FDTException;
  * 
  * @author Joey Sciamanna
  */
-public abstract class Reciever extends Function {
+public abstract class Reciever extends EndPoint {
 
 	/**
 	 * Called whenever a request to this is received

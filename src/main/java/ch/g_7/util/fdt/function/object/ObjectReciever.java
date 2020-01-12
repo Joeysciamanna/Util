@@ -1,12 +1,13 @@
 package ch.g_7.util.fdt.function.object;
 
+import java.util.function.Function;
+
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.function.Reciever;
 import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.task.Task;
 
 /**
  * Receiver to handle object requests with objects of type T 
@@ -16,7 +17,7 @@ import ch.g_7.util.task.Task;
  */
 public abstract class ObjectReciever<T> extends Reciever {
 
-	private Task<String, T> parser;
+	private Function<String, T> parser;
 	private String className;
 
 	
@@ -30,7 +31,7 @@ public abstract class ObjectReciever<T> extends Reciever {
 	 */
 	@Override
 	public Response recieve(Request request) throws FDTException {
-		return recieveObject(parser.run(request.getData()), request.getMetadata());
+		return recieveObject(parser.apply(request.getData()), request.getMetadata());
 	}
 	
 	/**

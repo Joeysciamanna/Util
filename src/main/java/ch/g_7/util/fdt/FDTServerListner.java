@@ -4,6 +4,7 @@ package ch.g_7.util.fdt;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
@@ -11,7 +12,6 @@ import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.Reciever;
-import ch.g_7.util.task.Task;
 
 /**
  * Simple FDTServerListner
@@ -19,7 +19,7 @@ import ch.g_7.util.task.Task;
  * 
  * @author Joey Sciamanna
  */
-public class FDTServerListner implements Task<byte[], byte[]>{
+public class FDTServerListner implements Function<byte[], byte[]>{
 
 	private Map<String, Reciever> recievers;
 	private Metadata metadata;
@@ -35,7 +35,7 @@ public class FDTServerListner implements Task<byte[], byte[]>{
 	 * @return the response
 	 */
 	@Override
-	public byte[] run(byte[] data) {
+	public byte[] apply(byte[] data) {
 		Response response = null;
 		try {
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));

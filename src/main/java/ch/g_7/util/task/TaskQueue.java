@@ -1,27 +1,27 @@
 package ch.g_7.util.task;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
-public class TaskQueue<I, O> implements Task<I, List<O>> {
+public class TaskQueue<T> {
 	
-	private Queue<Task<I, O>> tasks;
+	private Queue<Consumer<T>> tasks;
 	
 	public TaskQueue() {
-		tasks = new LinkedList<Task<I, O>>();
+		tasks = new LinkedList<Consumer<T>>();
 	}
 
-	public void add(Task<I, O> task) {
+	public void add(Consumer<T> task) {
 		tasks.add(task);
 	}
 
-	public Task<I, O> pullProcessor() {
+	public Consumer<T> pullProcessor() {
 		return tasks.poll();
 	}
 
-	public Queue<Task<I, O>> getProcessors() {
+	public Queue<Consumer<T>> getProcessors() {
 		return tasks;
 	}
 
@@ -29,13 +29,16 @@ public class TaskQueue<I, O> implements Task<I, List<O>> {
 		tasks.clear();
 	}
 
-	@Override
-	public List<O> run(I t) {
-		ArrayList<O> values = new ArrayList<O>();
+	public void runAsync(T i) {
+		CompletableFuture.runAsync(() -> {
+			run(i);
+		});
+	}
+	
+	public void run(T t) {
 		while (!tasks.isEmpty()) {
-			values.add(pullProcessor().run(t));
+			pullProcessor().accept(t);
 		}
-		return values;
 	}
 
 }

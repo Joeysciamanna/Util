@@ -5,22 +5,22 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.function.Function;
 
-import ch.g_7.util.stuff.SecureRunner;
 import ch.g_7.util.task.ActionChecker;
-import ch.g_7.util.task.Task;
+import ch.g_7.util.task.SecureRunner;
 
 public class SimpleServerSocketListner extends ActionChecker {
 
 	private ServerSocket serverSocket;
 	private int port;
-	private Task<byte[], byte[]> action;
+	private Function<byte[], byte[]> action;
 
 	private Socket socket;
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
 
-	public SimpleServerSocketListner(int port, Task<byte[], byte[]> action) {
+	public SimpleServerSocketListner(int port, Function<byte[], byte[]> action) {
 		this.port = port;
 		this.action = action;
 		setIntervall(200);
@@ -28,12 +28,12 @@ public class SimpleServerSocketListner extends ActionChecker {
 
 	@Override
 	protected void onStart() {
-		serverSocket = new SecureRunner<>(() -> new ServerSocket(port)).run();
+		serverSocket = new SecureRunner<>(() -> new ServerSocket(port)).get();
 	}
 
 	@Override
 	protected void onClose() {
-		new SecureRunner<>(() -> serverSocket.close()).run();
+		new SecureRunner<>(() -> serverSocket.close()).get();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class SimpleServerSocketListner extends ActionChecker {
 			int dataLenght = inputStream.readInt();
 			byte[] request = inputStream.readNBytes(dataLenght);
 			
-			byte[] response = action.run(request);
+			byte[] response = action.apply(request);
 			
 			//WRITING
 			outputStream = new DataOutputStream(socket.getOutputStream());
@@ -56,7 +56,7 @@ public class SimpleServerSocketListner extends ActionChecker {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
-			new SecureRunner<>(()->null).close(outputStream,inputStream, socket).run();
+			new SecureRunner<>(()->null).close(outputStream,inputStream, socket).get();
 		}
 	}
 

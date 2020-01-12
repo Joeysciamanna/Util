@@ -1,13 +1,16 @@
 package ch.g_7.util.fdt.function.object;
 
+<<<<<<< HEAD
 import java.util.function.Consumer;
+=======
+import java.util.function.Function;
+>>>>>>> branch 'master' of https://github.com/Joeysciamanna/Util.git
 
 import ch.g_7.util.fdt.FDTConnection;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.function.Sender;
 import ch.g_7.util.parse.SerializationParserUtil;
-import ch.g_7.util.task.Task;
 
 /**
  * Sender to send objects of type T
@@ -17,7 +20,7 @@ import ch.g_7.util.task.Task;
  */
 public class ObjectSender<T> extends Sender {
 
-	private Task<T, String> parser;
+	private Function<T, String> parser;
 	private String className;
 	
 	public ObjectSender(FDTConnection connection, String endpoint, Class<T> clazz) {
@@ -44,7 +47,7 @@ public class ObjectSender<T> extends Sender {
 	 * @throws ServerException Thrown when a error occurs at the server 
 	 */
 	public final Response sendObject(T obj) throws ServerException {
-		return send(parser.run(obj));
+		return send(parser.apply(obj));
 	}
 	
 	/**

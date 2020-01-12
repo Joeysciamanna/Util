@@ -1,16 +1,12 @@
-package ch.g_7.util.reflection;
+package ch.g_7.util.helper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
+import java.util.function.BiFunction; 
 
-import ch.g_7.util.task.Task; 
-
-public class ClassUtil {
+public class ReflectionUtil {
 
 	public static final Class<?>[] PRIMITIVE_WRAPPERS = {Boolean.class, Byte.class, Character.class, Double.class, Float.class, Integer.class, Long.class, Short.class, Void.class};
 	
@@ -39,20 +35,16 @@ public class ClassUtil {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static <I> I implemment(Class<I> clazz, Task<Entry<Method, Object[]>, Object> task) {
+	public static <I> I implemment(Class<I> clazz, BiFunction<Method, Object[], Object> task) {
 		return (I) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] {clazz}, new InvocationHandler() {
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-				return task.run(new AbstractMap.SimpleEntry<>(method, args));
+				return task.apply(method, args);
 			}
 		});
 	}
 	
-	
-	public static String createUniqueMethodString(Method method) {
-		return  method.getName() + "(" + Arrays.stream(method.getParameterTypes()).map((c) -> c.getSimpleName()).collect(Collectors.joining(",")) + ")";
-	}
-	
+
 
 
 }
