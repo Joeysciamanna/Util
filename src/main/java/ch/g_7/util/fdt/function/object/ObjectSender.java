@@ -1,10 +1,8 @@
 package ch.g_7.util.fdt.function.object;
 
-<<<<<<< HEAD
+ 
 import java.util.function.Consumer;
-=======
 import java.util.function.Function;
->>>>>>> branch 'master' of https://github.com/Joeysciamanna/Util.git
 
 import ch.g_7.util.fdt.FDTConnection;
 import ch.g_7.util.fdt.data.Response;
@@ -56,7 +54,7 @@ public class ObjectSender<T> extends Sender {
 	 * @return The response from the server
 	 * @throws ServerException Thrown when a error occurs at the server 
 	 */
-	public final void sendObjectAsync(T obj,Consumer<Response> consumer) {
-		sendAsync(parser.run(obj), consumer);
+	public final void sendObjectAsync(T obj, Consumer<Response> consumer) {
+		sendAsync(parser.apply(obj), consumer);
 	}
 }

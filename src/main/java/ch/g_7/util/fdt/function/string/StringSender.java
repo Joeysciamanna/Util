@@ -1,5 +1,7 @@
 package ch.g_7.util.fdt.function.string;
 
+import java.util.function.Consumer;
+
 import ch.g_7.util.fdt.FDTConnection;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
@@ -21,8 +23,11 @@ public class StringSender extends Sender{
 	}
 
 
-	public Response sendString(String data) throws ServerException {
+	public final Response sendString(String data) throws ServerException {
 		return send(data);
 	}
 
+	public final void sendStringAsync(String data, Consumer<Response> consumer) throws ServerException {
+		sendAsync(data, consumer);
+	}
 }
