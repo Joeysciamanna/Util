@@ -61,14 +61,14 @@ public final class AppInitializer {
 	
 	public AppInitializer addConsoleLogWriters() {
 		logger.addWriter(new StreamWriter(System.err, "ERROR_CONSOLE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
-		logger.addWriter(new StreamWriter(System.out, "DEBUG_CONSOLE", LogLevel.values()));
+		logger.addWriter(new StreamWriter(System.out, "DEBUG_CONSOLE", LogLevel.INFO, LogLevel.DEBUG));
 		return this;
 	}
 	
 	public AppInitializer addFileLogWriters() throws IOException {
 		String dateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
 		StreamWriter errorWriter = new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR);
-		StreamWriter debugWriter = new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.values());
+		StreamWriter debugWriter = new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG);
 		logger.addWriter(errorWriter);
 		logger.addWriter(debugWriter);
 		return this;
