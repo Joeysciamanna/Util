@@ -1,6 +1,8 @@
 package ch.g_7.util.fdt.function;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import ch.g_7.util.fdt.FDTConnection;
 import ch.g_7.util.fdt.data.Response;
@@ -36,6 +38,18 @@ public abstract class Sender extends Function{
 		}catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	
+	protected final void sendAsync(String data, Consumer<Response> consumer) throws ServerException {
+		CompletableFuture.runAsync(() -> {
+			try {
+				consumer.accept(connection.send(data, getPath()));
+			}catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	
 	}
 
 }
