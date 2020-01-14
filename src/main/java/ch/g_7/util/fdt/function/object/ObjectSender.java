@@ -1,5 +1,7 @@
 package ch.g_7.util.fdt.function.object;
 
+ 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import ch.g_7.util.fdt.FDTConnection;
@@ -44,5 +46,15 @@ public class ObjectSender<T> extends Sender {
 	 */
 	public final Response sendObject(T obj) throws ServerException {
 		return send(parser.apply(obj));
+	}
+	
+	/**
+	 * Parses and sends the given object
+	 * @param obj The object to send
+	 * @return The response from the server
+	 * @throws ServerException Thrown when a error occurs at the server 
+	 */
+	public final void sendObjectAsync(T obj, Consumer<Response> consumer) {
+		sendAsync(parser.apply(obj), consumer);
 	}
 }
