@@ -2,7 +2,7 @@ package ch.g_7.util.task;
 
 import java.io.Closeable;
 
-import ch.g_7.util.able.Openable;
+import ch.g_7.util.common.Openable;
 
 
 public abstract class ActionChecker implements Runnable, Openable, Closeable, Task{

@@ -3,7 +3,7 @@ package ch.g_7.util.simplesocket;
 import java.io.Closeable;
 import java.io.IOException;
 
-import ch.g_7.util.able.Openable;
+import ch.g_7.util.common.Openable;
 
 public interface IConnection extends Openable, Closeable{
 

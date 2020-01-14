@@ -1,4 +1,4 @@
-package ch.g_7.util.able;
+package ch.g_7.util.common;
 
 public interface Openable {
 

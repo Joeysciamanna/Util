@@ -2,13 +2,12 @@
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.g_7.util.logging.writer.ILogWriter;
 
-public class Logger implements UncaughtExceptionHandler, Closeable {
+public class Logger implements Closeable {
 
 	private List<ILogWriter> writers;
 	private final static Logger instance = new Logger();
@@ -58,10 +57,7 @@ public class Logger implements UncaughtExceptionHandler, Closeable {
 		writers.removeIf((w)->w.getName().equals(writer.getName()));
 	}
 	
-	@Override
-	public void uncaughtException(Thread t, Throwable e) {
-		log(LogLevel.FATAL, e);
-	}
+
 	
 	@Override
 	public void close() throws IOException {

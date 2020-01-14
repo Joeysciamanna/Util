@@ -7,6 +7,7 @@ import java.util.Date;
 
 import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
+import ch.g_7.util.logging.adapter.UncaughtExceptionHandlerAdapter;
 import ch.g_7.util.logging.writer.StreamWriter;
 import ch.g_7.util.properties.Properties;
 
@@ -55,7 +56,7 @@ public final class AppInitializer {
 	
 	public AppInitializer initLogger() {
 		logger = Logger.getInstance();
-		Thread.setDefaultUncaughtExceptionHandler(logger);
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LogLevel.FATAL));
 		return this;
 	}
 	

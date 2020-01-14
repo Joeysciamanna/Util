@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ch.g_7.util.able.Openable;
+import ch.g_7.util.common.Openable;
 
 public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 
