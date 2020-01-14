@@ -6,15 +6,20 @@ import java.io.OutputStream;
 import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
 
-public class OutputSteamAdapter extends OutputStream implements ILogAdapter {
+public class OutputSteamAdapter extends OutputStream {
 
-	private Logger logger;
+	private final Logger logger;
 	private LogLevel logLevel;
 	private StringBuilder builder;
 	
-	public OutputSteamAdapter(LogLevel logLevel) {
+	public OutputSteamAdapter(Logger logger, LogLevel logLevel) {
 		this.logLevel = logLevel;
 		this.builder = new StringBuilder();
+		this.logger = logger;
+	}
+	
+	public OutputSteamAdapter(LogLevel logLevel) {
+		this(Logger.getInstance(), logLevel);
 	}
 	
 	@Override
@@ -27,12 +32,6 @@ public class OutputSteamAdapter extends OutputStream implements ILogAdapter {
 		logger.log(logLevel, builder.toString());
 		builder.setLength(0);
 	}
-	
-	@Override
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
-	
 	
 
 }

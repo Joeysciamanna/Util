@@ -3,23 +3,18 @@ package ch.g_7.util.logging.adapter;
 import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
 
-public abstract class LogAdapter implements ILogAdapter {
+public abstract class LogAdapter {
 
-	protected Logger logger;
+	protected final Logger logger;
 	protected LogLevel logLevel;
 	
-
-	public LogAdapter(LogLevel logLevel) {
-		this.logLevel = logLevel;
-	}
-	
-	public void setLogLevel(LogLevel logLevel) {
-		this.logLevel = logLevel;
-	}
-	
-	@Override
-	public void setLogger(Logger logger) {
+	public LogAdapter(Logger logger, LogLevel logLevel) {
 		this.logger = logger;
+		this.logLevel = logLevel;
+	}
+	
+	public LogAdapter(LogLevel logLevel) {
+		this(Logger.getInstance(), logLevel);
 	}
 }
 

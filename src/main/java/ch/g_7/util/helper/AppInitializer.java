@@ -56,7 +56,7 @@ public final class AppInitializer {
 	
 	public AppInitializer initLogger() {
 		logger = Logger.getInstance();
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LogLevel.FATAL));
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(logger));
 		return this;
 	}
 	
