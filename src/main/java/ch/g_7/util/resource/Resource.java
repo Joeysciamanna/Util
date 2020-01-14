@@ -1,8 +1,6 @@
 package ch.g_7.util.resource;
 
-import ch.g_7.util.common.Initializable;
-
-public abstract class Resource implements AutoCloseable, Initializable {
+public abstract class Resource implements IResource {
 
 	@Override
 	public final void init() {
