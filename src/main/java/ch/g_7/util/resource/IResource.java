@@ -12,6 +12,7 @@ public interface IResource extends Initializable, Closeable{
 	 * This method will be called internal.
 	 */
 	@Override
+	@Deprecated
 	void close();
 	
 	/**
@@ -19,6 +20,7 @@ public interface IResource extends Initializable, Closeable{
 	 * This method will be called internal.
 	 */
 	@Override
+	@Deprecated
 	void init();
 
 	

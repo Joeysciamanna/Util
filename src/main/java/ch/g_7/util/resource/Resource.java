@@ -24,6 +24,7 @@ public abstract class Resource implements IResource {
 	}
 	
 	@Override
+	@Deprecated
 	public final void init() {
 		if(initialized) {
 			throw new IllegalAccessError("Cant init resource [" + getResourceId() + "], resource alredy initialized");
@@ -32,6 +33,7 @@ public abstract class Resource implements IResource {
 	}
 
 	@Override
+	@Deprecated
 	public final void close() {
 		if(closed || RESOURCE_MANAGER.isUsed(this)) {
 			throw new IllegalAccessError("Cant close resource [" + getResourceId() + "], resource alredy closed or still in use");

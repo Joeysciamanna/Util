@@ -20,4 +20,7 @@ public interface IResourceManager {
 	
 	List<IResource> getDependencies(IDepender depender);
 	
+	boolean hasUnclosedResources();
+	
+	String getUnclosedResources();
 }

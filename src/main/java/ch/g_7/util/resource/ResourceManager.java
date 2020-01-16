@@ -21,6 +21,7 @@ public class ResourceManager implements IResourceManager {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public void bind(IDepender depender, IResource resource) {
 		if (!hasDependency(depender, resource)) {
 			if(dependencies.containsKey(resource)) {
@@ -33,8 +34,9 @@ public class ResourceManager implements IResourceManager {
 			}
 		}
 	}
-
+	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void unbind(IDepender depender, IResource resource) {
 		if (hasDependency(depender, resource)) {
 			List<IDepender> dependers = dependencies.get(resource);
@@ -86,4 +88,20 @@ public class ResourceManager implements IResourceManager {
 		return resources;
 	}
 
+	@Override
+	public boolean hasUnclosedResources() {
+		return dependencies.isEmpty();
+	}
+	
+	@Override
+	public String getUnclosedResources() {
+		StringBuilder builder = new StringBuilder();
+		for(Entry<IResource, List<IDepender>> entry : dependencies.entrySet()) {
+			builder.append(entry.getValue().size()).append(" x Resource [").append(entry.getKey().getResourceId()).append("]:\n");
+			for(IDepender depender : entry.getValue()) {
+				builder.append("\t").append(depender).append("\n");
+			}
+		}
+		return builder.toString();
+	}
 }
