@@ -2,8 +2,12 @@ package ch.g_7.util.resource;
 
 public abstract class Resource implements IResource {
 
+	private static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
+	
 	private static int resourceIdCounter;
 	private final int resourceId;
+	
+	private boolean initialized, closed;
 	
 	public Resource() {
 		this.resourceId = ++resourceIdCounter;
@@ -19,17 +23,24 @@ public abstract class Resource implements IResource {
 		return resourceId;
 	}
 	
-	protected void init(IResource resource) {
-		ResourceHandler.getInstance().addDepender(this, resource);
-	}
-	
-	
-	public void close(IResource resource) {
-		ResourceHandler.getInstance().removeDependency(this, resource);
-	}
-	
 	@Override
-	public void close() {
-		ResourceHandler.getInstance().removeDepender(this);
+	public final void init() {
+		if(initialized) {
+			throw new IllegalAccessError("Cant init resource [" + getResourceId() + "], resource alredy initialized");
+		}
+		doClose();
 	}
+
+	@Override
+	public final void close() {
+		if(closed || RESOURCE_MANAGER.isUsed(this)) {
+			throw new IllegalAccessError("Cant close resource [" + getResourceId() + "], resource alredy closed or still in use");
+		}
+		doClose();
+	}
+	
+	protected abstract void doInit();
+	
+	protected abstract void doClose();
+	
 }

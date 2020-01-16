@@ -5,6 +5,7 @@ import ch.g_7.util.common.Initializable;
 
 public interface IResource extends Initializable, Closeable{
 
+	static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
 	
 	/**
 	 * Do not call this method.
@@ -22,4 +23,13 @@ public interface IResource extends Initializable, Closeable{
 
 	
 	int getResourceId();
+	
+	
+	default void bind(IDepender depender) {
+		RESOURCE_MANAGER.bind(depender, this);
+	}
+	
+	default void unbind(IDepender depender) {
+		RESOURCE_MANAGER.unbind(depender, this);
+	}
 }
