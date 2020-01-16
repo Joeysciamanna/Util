@@ -1,6 +1,6 @@
 package ch.g_7.util.resource;
 
-public abstract class Resource implements IResource {
+public abstract class Resource implements IResource, IDepender {
 
 	private static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
 	
@@ -45,4 +45,20 @@ public abstract class Resource implements IResource {
 	
 	protected abstract void doClose();
 	
+	protected void bindTo(IResource... resources) {
+		for (IResource resource : resources) {
+			if(resource != null) {
+				resource.bind(this);
+			}
+		}
+	}
+	
+	protected void unbindForm(IResource... resources) {
+		for (IResource resource : resources) {
+			if(resource != null) {
+				resource.unbind(this);
+			}
+		}
+	}
 }
+
