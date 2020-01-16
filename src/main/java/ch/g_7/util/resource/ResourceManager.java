@@ -90,7 +90,7 @@ public class ResourceManager implements IResourceManager {
 
 	@Override
 	public boolean hasUnclosedResources() {
-		return dependencies.isEmpty();
+		return !dependencies.isEmpty();
 	}
 	
 	@Override
