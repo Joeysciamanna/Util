@@ -9,7 +9,7 @@ public interface IResource extends Initializable, Closeable{
 	
 	/**
 	 * Do not call this method.
-	 * This method will be called internal.
+	 * This method should be called internal.
 	 */
 	@Override
 	@Deprecated
@@ -17,7 +17,7 @@ public interface IResource extends Initializable, Closeable{
 	
 	/**
 	 * Do not call this method.
-	 * This method will be called internal.
+	 * This method should be called internal.
 	 */
 	@Override
 	@Deprecated

@@ -29,7 +29,7 @@ public abstract class Resource implements IResource, IDepender {
 		if(initialized) {
 			throw new IllegalAccessError("Cant init resource [" + getResourceId() + "], resource alredy initialized");
 		}
-		doClose();
+		doInit();
 	}
 
 	@Override
