@@ -18,4 +18,18 @@ public abstract class Resource implements IResource {
 	public int getResourceId() {
 		return resourceId;
 	}
+	
+	protected void init(IResource resource) {
+		ResourceHandler.getInstance().addDepender(this, resource);
+	}
+	
+	
+	public void close(IResource resource) {
+		ResourceHandler.getInstance().removeDependency(this, resource);
+	}
+	
+	@Override
+	public void close() {
+		ResourceHandler.getInstance().removeDepender(this);
+	}
 }

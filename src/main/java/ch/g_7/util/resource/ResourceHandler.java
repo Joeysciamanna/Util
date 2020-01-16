@@ -5,11 +5,17 @@ import java.util.List;
 
 public final class ResourceHandler {
 
-
+	private static final ResourceHandler instance = new ResourceHandler();
+	
 	private List<Dependency> dependencies;
+	
 	
 	private ResourceHandler() {
 		this.dependencies = new ArrayList<Dependency>();
+	}
+	
+	public static ResourceHandler getInstance() {
+		return instance;
 	}
 	
 	public void removeDepender(Object depender) {
@@ -19,6 +25,19 @@ public final class ResourceHandler {
 				dependency.close();
 				dependencies.remove(dependency);
 				return;
+			}
+		}
+	}
+	
+	public void removeDependency(Object depender, IResource resource) {
+		for (Dependency dependency : dependencies) {
+			if(dependency.dependencyEquals(resource)) {
+				dependency.removeDepender(depender);
+				if(dependency.isUnused()) {
+					dependency.close();
+					dependencies.remove(dependency);
+					return;
+				}
 			}
 		}
 	}
@@ -35,6 +54,7 @@ public final class ResourceHandler {
 		dependency.init();
 		dependencies.add(dependency);
 	}
+	
 	
 	public boolean hasUnclosedResources() {
 		return !dependencies.isEmpty();
