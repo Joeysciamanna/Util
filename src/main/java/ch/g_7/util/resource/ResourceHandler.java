@@ -1,74 +1,57 @@
 package ch.g_7.util.resource;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import ch.g_7.util.common.Closeable;
-import ch.g_7.util.common.Counter;
-import ch.g_7.util.common.Initializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ResourceHandler {
 
-	private final static Map<Object, Counter> resources = new HashMap<>();;
 
-	private ResourceHandler() {}
-
-	public static boolean shallInitialize(Object object) {
-		if (resources.containsKey(object)) {
-			resources.get(object).increase();
-			return false;
-		} else {
-			resources.put(object, new Counter().increase());
-			return true;
-		}
-
+	private List<Dependency> dependencies;
+	
+	private ResourceHandler() {
+		this.dependencies = new ArrayList<Dependency>();
 	}
-
-	public static boolean shallClose(Object object) {
-		if (!resources.containsKey(object)) {
-			throw new IllegalStateException("Resource " + object + " was never registerd/initialized or has alredy been cloesed");
-		} else {
-			if (resources.get(object).decrease().getValue() == 0) {
-				resources.remove(object);
-				return true;
+	
+	public void removeDepender(Object depender) {
+		for (Dependency dependency : dependencies) {
+			dependency.removeDepender(depender);
+			if(dependency.isUnused()) {
+				dependency.close();
+				dependencies.remove(dependency);
+				return;
 			}
-			return false;
 		}
 	}
-
-	public static void close(Closeable closeable) {
-		if(closeable != null) closeable.close();
+	
+	public void addDepender(Object depender, IResource resource) {
+		for (Dependency d : dependencies) {
+			if(d.dependencyEquals(resource)) {
+				d.addDepener(depender);
+				return;
+			}
+		}
+		Dependency dependency = new Dependency(resource);
+		dependency.addDepener(depender);
+		dependency.init();
+		dependencies.add(dependency);
 	}
 	
-	public static void init(Initializable initializable) {
-		if(initializable != null) initializable.init();
-	}
-	
-	public static boolean hasUnclosedResources() {
-		return !resources.isEmpty();
+	public boolean hasUnclosedResources() {
+		return !dependencies.isEmpty();
 	}
 
-	public static String getUnclosedResourcesTable() {
+	public String getUnclosedResourcesTable() {
 		StringBuilder stringBuilder = new StringBuilder("Unclosed Resources:\n");
-		for (Entry<Object, Counter> entry : resources.entrySet()) {
-			stringBuilder.append(entry.getValue().getValue() + "x\t" + entry.getKey().getClass().getSimpleName() + "\n");
+		for (Dependency dependency : dependencies) {
+			stringBuilder.append(dependency.getResourceId()).append(", ");
 		}
 		return stringBuilder.toString();
 	}
 	
-	
-	
 	@Deprecated
-	public static void closeAll() {
-		resources.forEach((r, c) -> {
-			if (resources instanceof Closeable) {
-				try {
-					((Closeable) resources).close();
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
+	public void closeAll() {
+		dependencies.forEach((d) -> {
+			d.close();
 		});
 	}
 

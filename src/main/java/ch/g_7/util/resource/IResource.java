@@ -5,5 +5,21 @@ import ch.g_7.util.common.Initializable;
 
 public interface IResource extends Initializable, Closeable{
 
+	
+	/**
+	 * Do not call this method.
+	 * This method will be called internal.
+	 */
+	@Override
+	void close();
+	
+	/**
+	 * Do not call this method.
+	 * This method will be called internal.
+	 */
+	@Override
+	void init();
+
+	
 	int getResourceId();
 }
