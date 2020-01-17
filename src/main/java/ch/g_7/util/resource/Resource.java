@@ -60,5 +60,9 @@ public abstract class Resource implements IResource, IDepender {
 			}
 		}
 	}
+	
+	public static int getResourceIdCounter() {
+		return resourceIdCounter;
+	}
 }
 

@@ -23,4 +23,9 @@ public interface IResourceManager {
 	boolean hasUnclosedResources();
 	
 	String getUnclosedResources();
+	
+	int getCurrentResourceCount();
+	
+	int getCurrentResourceAllocations();
+	
 }

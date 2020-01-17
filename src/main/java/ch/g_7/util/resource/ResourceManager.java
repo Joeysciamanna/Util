@@ -104,4 +104,15 @@ public class ResourceManager implements IResourceManager {
 		}
 		return builder.toString();
 	}
+	
+	@Override
+	public int getCurrentResourceCount() {
+		return dependencies.size();
+	}
+	
+	@Override
+	public int getCurrentResourceAllocations() {
+		return Resource.getResourceIdCounter();
+	}
+	
 }
