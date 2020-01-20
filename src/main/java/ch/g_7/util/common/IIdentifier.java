@@ -5,7 +5,7 @@ import java.util.Optional;
 
 
 /**
- * An Identifier with can only be implemented by an Enum.
+ * An Identifier with should only be implemented by an Enum.
  * 
  * @author Joey Sciamanna
  * @param <E> Itself
