@@ -1,6 +1,4 @@
-package ch.g_7.util.task;
-
-import ch.g_7.util.common.Timer;
+package ch.g_7.util.loop;
 
 public abstract class Loop implements Runnable {
 
@@ -18,7 +16,7 @@ public abstract class Loop implements Runnable {
 		onStart();
 		timer.reset();
 		while (running) {
-			timer.calculate();
+			timer.loop();
 			if(!paused) {
 				run(timer.getDeltaMillis());
 			}
@@ -70,7 +68,7 @@ public abstract class Loop implements Runnable {
 		return paused;
 	}
 	
-	int getLPS(){
-		return timer.getLPS();
+	public Timer getTimer() {
+		return timer;
 	}
 }

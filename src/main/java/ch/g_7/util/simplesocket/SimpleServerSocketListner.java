@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import ch.g_7.util.task.Loop;
+import ch.g_7.util.loop.Loop;
 import ch.g_7.util.task.SecureRunner;
 
 public class SimpleServerSocketListner extends Loop {

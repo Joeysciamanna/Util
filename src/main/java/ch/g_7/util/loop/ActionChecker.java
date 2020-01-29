@@ -1,4 +1,6 @@
-package ch.g_7.util.task;
+package ch.g_7.util.loop;
+
+import ch.g_7.util.task.SecureRunner;
 
 public abstract class ActionChecker extends Loop {
 
