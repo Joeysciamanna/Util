@@ -4,7 +4,6 @@ package ch.g_7.util.fdt;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
@@ -12,6 +11,7 @@ import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.fdt.function.Reciever;
+import ch.g_7.util.simplesocket.IServer;
 
 /**
  * Simple FDTServerListner
@@ -19,7 +19,7 @@ import ch.g_7.util.fdt.function.Reciever;
  * 
  * @author Joey Sciamanna
  */
-public class FDTServerListner implements Function<byte[], byte[]>{
+public class FDTServerListner implements IServer{
 
 	private Map<String, Reciever> recievers;
 	private Metadata metadata;
@@ -35,7 +35,7 @@ public class FDTServerListner implements Function<byte[], byte[]>{
 	 * @return the response
 	 */
 	@Override
-	public byte[] apply(byte[] data) {
+	public byte[] recive(byte[] data) {
 		Response response = null;
 		try {
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));

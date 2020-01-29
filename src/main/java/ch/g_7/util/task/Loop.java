@@ -1,5 +1,6 @@
-package ch.g_7.util.common;
+package ch.g_7.util.task;
 
+import ch.g_7.util.common.Timer;
 
 public abstract class Loop implements Runnable {
 
@@ -22,13 +23,13 @@ public abstract class Loop implements Runnable {
 				run(timer.getDeltaMillis());
 			}
 		}
-		onClose();
+		onStop();
 	}
 	
-	public abstract void run(float deltaMillis);
+	protected abstract void run(float deltaMillis);
 	
-	public void onStart() {}
-	public void onClose() {}
+	protected void onStart() {}
+	protected void onStop() {}
 	
 	protected final void setRunning(boolean running) {
 		if (running && !this.running) {
@@ -49,7 +50,7 @@ public abstract class Loop implements Runnable {
 		setRunning(false);
 	}
 	
-	public void setPaused(boolean paused) {
+	protected void setPaused(boolean paused) {
 		this.paused = paused;
 	}
 	
@@ -59,6 +60,14 @@ public abstract class Loop implements Runnable {
 	
 	public void resume() {
 		setPaused(false);
+	}
+	
+	public boolean isRunning() {
+		return running;
+	}
+	
+	public boolean isPaused() {
+		return paused;
 	}
 	
 	int getLPS(){

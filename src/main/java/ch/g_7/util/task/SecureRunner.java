@@ -97,7 +97,7 @@ public class SecureRunner<I,O> implements Supplier<O>, Function<I, O> {
 		return cause;
 	}
 	
-	public boolean isSuccess() {
+	public boolean wasSuccessfull() {
 		return success;
 	}
 	

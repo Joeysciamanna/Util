@@ -17,7 +17,7 @@ public class ServerApp {
 		System.out.println(InetAddress.getLocalHost());
 		FDTServerListner fdtServerListner = new FDTServerListner();
 		SimpleServerSocketListner serverSocketListner = new SimpleServerSocketListner(4004, fdtServerListner);
-		serverSocketListner.open();
+		serverSocketListner.start();
 		fdtServerListner.add(new StringReciever() {
 			
 			@Override

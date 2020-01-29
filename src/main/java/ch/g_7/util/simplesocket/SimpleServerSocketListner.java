@@ -5,25 +5,23 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.function.Function;
 
-import ch.g_7.util.task.ActionChecker;
+import ch.g_7.util.task.Loop;
 import ch.g_7.util.task.SecureRunner;
 
-public class SimpleServerSocketListner extends ActionChecker {
+public class SimpleServerSocketListner extends Loop {
 
 	private ServerSocket serverSocket;
 	private int port;
-	private Function<byte[], byte[]> action;
+	private IServer server;
 
 	private Socket socket;
 	private DataInputStream inputStream;
 	private DataOutputStream outputStream;
 
-	public SimpleServerSocketListner(int port, Function<byte[], byte[]> action) {
+	public SimpleServerSocketListner(int port, IServer server) {
 		this.port = port;
-		this.action = action;
-		setIntervall(200);
+		this.server = server;
 	}
 
 	@Override
@@ -32,12 +30,12 @@ public class SimpleServerSocketListner extends ActionChecker {
 	}
 
 	@Override
-	protected void onClose() {
+	protected void onStop() {
 		new SecureRunner<>(() -> serverSocket.close()).get();
 	}
 
 	@Override
-	protected void onAction() {
+	protected void run(float deltaMillis) {
 		try {
 			socket = serverSocket.accept();
 			
@@ -46,7 +44,7 @@ public class SimpleServerSocketListner extends ActionChecker {
 			int dataLenght = inputStream.readInt();
 			byte[] request = inputStream.readNBytes(dataLenght);
 			
-			byte[] response = action.apply(request);
+			byte[] response = server.recive(request);
 			
 			//WRITING
 			outputStream = new DataOutputStream(socket.getOutputStream());
@@ -60,9 +58,5 @@ public class SimpleServerSocketListner extends ActionChecker {
 		}
 	}
 
-	@Override
-	protected boolean check() {
-		return true;
-	}
 
 }
