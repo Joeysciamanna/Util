@@ -9,7 +9,6 @@ import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
-import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.simplesocket.IConnection;
 
 /**
@@ -21,6 +20,7 @@ import ch.g_7.util.simplesocket.IConnection;
  */
 public class FDTConnection implements Openable, Closeable{
 
+	
 	private IConnection connection;
 	private Metadata metadata;
 
@@ -48,7 +48,7 @@ public class FDTConnection implements Openable, Closeable{
 		byte[] responseBytes = connection.send(request.stringify().getBytes(StandardCharsets.UTF_8));
 		Response response = new Response(new String(responseBytes,StandardCharsets.UTF_8));
 
-		if(response.getStatusCode() == StatusCode.SUCCESS || response.getStatusCode() == StatusCode.PASSTHROUGH) {
+		if(!response.getStatusCode().isSuccessfull()) {
 			throw new ServerException(response.getMetadata(), response.getError(), response.getStatusCode());
 		}
 		return response;
