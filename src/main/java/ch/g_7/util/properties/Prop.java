@@ -1,5 +1,6 @@
 package ch.g_7.util.properties;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Prop {
@@ -48,5 +49,10 @@ public class Prop {
 	
 	public boolean equals(Prop prop) {
 		return getKey().equals(prop.getKey()) && getValue().equals(prop.getValue());
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(getKey(), getValue());
 	}
 }

@@ -1,164 +1,94 @@
 package ch.g_7.util.properties;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Supplier;
 
-import ch.g_7.util.helper.Formator;
-import ch.g_7.util.helper.IOUtil;
+public class Properties implements IProperties {
 
-public final class Properties {
-
-	private Set<Prop> appProperties;
-	private Set<Prop> properties;
-	private static Properties instance;
+	private List<Prop> properties;
 	
-	private Properties(Set<Prop> properties) {
-		this.properties = properties;
-		this.appProperties = new HashSet<Prop>();
+	@Override
+	public String get(String key) throws IllegalArgumentException {
+		return find(key).orElseThrow().getValue();
 	}
 
-	private static Properties getInstance(Set<Prop> properties) {
-		if(instance==null) {
-			instance = new Properties(properties);
-		}else {
-			throw new IllegalStateException("Properties are alredy loaded");
+	@Override
+	public <T> T get(PropKey<T> key) throws IllegalArgumentException {
+		return key.cast(get(key.name));
+	}
+
+	@Override
+	public String get(String key, String defauld) {
+		return find(key).map((p)->p.getValue()).orElseGet(()->defauld);
+	}
+
+	@Override
+	public <T> T get(PropKey<T> key, T defauld) {
+		return find(key.name).map((p)->key.cast(p.getValue())).orElseGet(()->defauld);
+	}
+
+	@Override
+	public String getOrPut(String key, String defauld) {
+		if(!contains(key)) {
+			put(key, defauld);
+			return defauld;
 		}
-		return instance;
+		return get(key);
+	}
+
+	@Override
+	public <T> T getOrPut(PropKey<T> key, T defauld) {
+		if(!contains(key)) {
+			put
+		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	public static Properties getInstance() {
-		if(instance == null) {
-			throw new IllegalStateException("Properties not jet loaded");
-		}
-		return instance;
+	
+
+	@Override
+	public Optional<Prop> find(String key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public static Properties read(InputStream inputStream) throws IOException  {
-		return getInstance(parse(IOUtil.toString(inputStream)));
-	}
+	
+	
+	@Override
+	public void put(String key, String value) {
+		// TODO Auto-generated method stub
 		
-	public static Properties read(String txt) {
-		return getInstance(parse(txt));
-	}
-	
-	
-	private static Set<Prop> parse(String txt){
-		Set<Prop> properties = new HashSet<>();
-		String[] lines = txt.split(System.getProperty("line.separator"));
-		StringBuilder comment = new StringBuilder();
-		for (String line : lines) {
-			if (!line.startsWith("#") && !line.startsWith("%") && !line.trim().isEmpty()) {
-				String[] data = line.split("\\=");
-				if (data.length == 2) {
-					properties.add(new Prop(data[0], data[1], comment.toString()));
-					comment.setLength(0);
-				}else {
-					throw new IllegalArgumentException("Invalid property: " + line);
-				}
-			}else if(line.startsWith("#")) {
-				comment.append(line);
-			}
-		}
-		return properties;
-	}
-	
-	private static String parse(Set<Prop> properties){
-		StringBuilder string = new StringBuilder();
-		for (Prop prop : properties) {
-			if(prop.getComment() != null && !prop.getComment().isEmpty()) {
-				string.append("#");
-				string.append(Formator.formatLine(prop.getComment()));
-			}
-			string.append(Formator.formatLine(prop.getKey() + "=" + prop.getValue()));
-		}
-		return string.toString();
-	}
-	
-	public void write(OutputStream outputStream) throws IOException {
-		outputStream.write(parse(properties).getBytes());
-		outputStream.close();
-	}
-	
-	public String getFormated(PropKey<String> key) {
-		return Formator.format(get(key));
-	}
-	
-	public <T> T get(PropKey<T> key) {
-		return get(key, null);
 	}
 
-	public <T> T get(PropKey<T> key, String defauld) {
-		return key.cast(get(key.name, defauld).getValue());
+	@Override
+	public void put(String key, Supplier<String> value) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public Prop get(String key, String defauld) {
-		Optional<Prop> value = properties.stream().filter((p)->p.getKey().equals(key)).findFirst();
-		if(!value.isPresent()) {
-			value = appProperties.stream().filter((p)->p.getKey().equals(key)).findFirst();
-		}
-		if(!value.isPresent() && defauld != null) {
-			value = Optional.of(new Prop(key, defauld, ""));
-		}
-		return value.orElseThrow(()->new IllegalArgumentException("No property with name " + key));
-	}
-	
-	/**
-	 * Sets an App Property
-	 * @param key
-	 * @param value
-	 */
-	public void set(String key, Supplier<String> value) {
-		appProperties.add(new Prop(key, value, ""));
-	}
-	
-	/**
-	 * Sets an App Property
-	 * @param key
-	 * @param value
-	 */
-	public void set(String key, String value) {
-		appProperties.add(new Prop(key, value, ""));
-	}
-	
-	/**
-	 * Adds an Property to the Properties (File)
-	 * @param key
-	 * @param value
-	 */
-	public Prop put(String key, String value) {
-		return put(key, value, null);
+	@Override
+	public void put(Prop prop) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * Adds an Property to the Properties (File)
-	 * @param key
-	 * @param value
-	 * @param comment
-	 * @return
-	 */
-	public Prop put(String key, String value, String comment) {
-		Prop prop = new Prop(key, value, comment); 
-		properties.add(prop); 
-		return prop;
-	}
-	
+	@Override
 	public boolean isEmpty() {
-		return properties.isEmpty();
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	public String getVersion() {
-		return get("VERSION", "-1").getValue();
-	}
-	
+
+	@Override
 	public boolean contains(String key) {
-		return properties.stream().anyMatch((p)->p.getKey().equals(key)) || appProperties.stream().anyMatch((p)->p.getKey().equals(key));
+		// TODO Auto-generated method stub
+		return false;
 	}
 
+	@Override
+	public boolean contains(PropKey<?> key) {
+		return contains(key.name);
+	}
 	
-
 }

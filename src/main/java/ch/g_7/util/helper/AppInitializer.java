@@ -9,12 +9,12 @@ import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
 import ch.g_7.util.logging.adapter.UncaughtExceptionHandlerAdapter;
 import ch.g_7.util.logging.writer.StreamWriter;
-import ch.g_7.util.properties.Properties;
+import ch.g_7.util.properties.Settings;
 
 public final class AppInitializer {
 
 	private Logger logger;
-	private Properties properties;
+	private Settings properties;
 
 	private boolean debugMode;
 	
@@ -27,7 +27,7 @@ public final class AppInitializer {
 	}
 	
 
-	public AppInitializer initProperties(String internalPropertiesFilePath) throws IOException {
+	public AppInitializer initPropFiles(String internalPropertiesFilePath) throws IOException {
 		String properties = "";
 		if (!IOUtil.doesFileExist(appRootPath + "/properties.prop")) {
 			logger.log(LogLevel.DEBUG, "No existing properties file, new will be created");
@@ -37,7 +37,7 @@ public final class AppInitializer {
 			logger.log(LogLevel.DEBUG, "existing properties file found");
 			properties = IOUtil.readExternalString(appRootPath + "/properties.prop");
 		}
-		this.properties = Properties.read(properties);
+		this.properties = Settings.read(properties);
 		return this;
 	}
 	
@@ -60,7 +60,7 @@ public final class AppInitializer {
 		return this;
 	}
 	
-	public AppInitializer addConsoleLogWriters() {
+	public AppInitializer addConsoleLoggers() {
 		logger.addWriter(new StreamWriter(System.err, "ERROR_CONSOLE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
 		
 		if(debugMode) {
@@ -72,7 +72,7 @@ public final class AppInitializer {
 		return this;
 	}
 	
-	public AppInitializer addFileLogWriters() throws IOException {
+	public AppInitializer addFileLoggers() throws IOException {
 		String dateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
 		logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
 		

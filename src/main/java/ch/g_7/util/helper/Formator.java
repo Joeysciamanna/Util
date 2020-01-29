@@ -1,10 +1,10 @@
 package ch.g_7.util.helper;
 
-import ch.g_7.util.properties.Properties;
+import ch.g_7.util.properties.Settings;
 
 public final class Formator {
 	
-	private final static Properties PROPERTIES = Properties.getInstance();
+	private final static Settings PROPERTIES = Settings.getInstance();
 	
 	/**
 	 * 
