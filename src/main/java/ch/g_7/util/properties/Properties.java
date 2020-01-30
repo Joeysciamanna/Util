@@ -150,7 +150,7 @@ public class Properties implements IProperties, Stringifyable {
 	@Override
 	public boolean isSet(String key, String value) {
 		for (Prop prop : properties) {
-			if(prop.getKey().equals(key) && prop.equals(value)) {
+			if(prop.getKey().equals(key) && prop.getValue().equals(value)) {
 				return true;
 			}
 		}
