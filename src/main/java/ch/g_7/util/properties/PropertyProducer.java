@@ -10,11 +10,11 @@ public class PropertyProducer {
 	private final static IProperties APP_CONFIG = new Properties();
 	private static IProperties DEFAULT_PROPERTIES;
 	
-	public IProperties getProperties(InputStream inputStream) throws IOException {
+	public static IProperties getProperties(InputStream inputStream) throws IOException {
 		return new Properties(PropertyParser.fromString(IOUtil.toString(inputStream)));
 	}
 	
-	public IProperties getProperties(String txt) {
+	public static IProperties getProperties(String txt) {
 		return new Properties(PropertyParser.fromString(txt));
 	}
 	
@@ -26,6 +26,9 @@ public class PropertyProducer {
 	}
 	
 	public static IProperties getDefaultProperties() {
+		if(DEFAULT_PROPERTIES == null) {
+			throw new IllegalStateException("Default Properties not set");
+		}
 		return DEFAULT_PROPERTIES;
 	}
 	

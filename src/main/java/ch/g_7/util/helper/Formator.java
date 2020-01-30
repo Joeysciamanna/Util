@@ -1,10 +1,7 @@
 package ch.g_7.util.helper;
 
-import ch.g_7.util.properties.Settings;
-
 public final class Formator {
 	
-	private final static Settings PROPERTIES = Settings.getInstance();
 	
 	/**
 	 * 
@@ -29,12 +26,10 @@ public final class Formator {
 				for (int v = 0; v<values.length; v+=2) {
 					if(values[v].equals(identifier.toString())) {
 						value = values[v+1];
+						break;
 					}
 				}
-				if(value.isEmpty() && PROPERTIES.contains(identifier.toString())) {
-					value = PROPERTIES.get(identifier.toString(), "").getValue();
-				}
-				textBuilder.append(PROPERTIES.get(identifier.toString(), "").getValue());
+				textBuilder.append(value);
 				
 			}else{
 				textBuilder.append(c);
