@@ -2,12 +2,12 @@ package ch.g_7.util.common;
 
 import java.util.function.Supplier;
 
-public class ProducerType<T> {
+public class GenericProducerType<T> {
 
 	private Supplier<T> supplier;
 	private T instance;
 	
-	public ProducerType(Supplier<T> supplier) {
+	public GenericProducerType(Supplier<T> supplier) {
 		this.supplier = supplier;
 	}
 	
@@ -27,5 +27,11 @@ public class ProducerType<T> {
 		return false;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public GenericProducerType<T> cast(GenericProducerType<?> type){
+		if(instance == null || type.typeEquals(instance.getClass())) {
+			return (GenericProducerType<T>) type;
+		}
+		throw new IllegalArgumentException("ProducerType cant be casted, types do not match");
+	}
 }
