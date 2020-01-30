@@ -28,10 +28,10 @@ public class GenericProducerType<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public GenericProducerType<T> cast(GenericProducerType<?> type){
-		if(instance == null || type.typeEquals(instance.getClass())) {
-			return (GenericProducerType<T>) type;
+	public T cast(Object type){
+		if(typeEquals(type.getClass())) {
+			return (T) type;
 		}
-		throw new IllegalArgumentException("ProducerType cant be casted, types do not match");
+		throw new IllegalArgumentException("Type cant be casted, type doesnt match");
 	}
 }
