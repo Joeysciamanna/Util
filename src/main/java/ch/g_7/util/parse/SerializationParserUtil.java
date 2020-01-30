@@ -61,6 +61,7 @@ public class SerializationParserUtil {
 		if (Stringifyable.class.isAssignableFrom(to)) {
 			for(Constructor<?> constructor : to.getConstructors()){
 				if(constructor.getAnnotation(Destringifyable.class) != null && constructor.getParameterCount() == 1) {
+					constructor.setAccessible(true);
 					return new SecureRunner<>((String s) -> (O) constructor.newInstance(s));
 				}
 			}
