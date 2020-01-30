@@ -1,16 +1,41 @@
 package ch.g_7.util.properties;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
-public class Properties implements IProperties {
+import ch.g_7.util.parse.Destringifyable;
+import ch.g_7.util.parse.Stringifyable;
 
-	private List<Prop> properties;
+public class Properties implements IProperties, Stringifyable {
+
+	private Set<Prop> properties;
+	
+	public Properties(Set<Prop> properties) {
+		this.properties = properties;
+	}
+	
+	public Properties() {
+		this(new HashSet<Prop>());
+	}
+	
+	@Deprecated
+	@Destringifyable
+	public Properties(String txt) {
+		this(PropertyParser.fromString(txt));
+	}
+	
+	@Override
+	public String stringify() {
+		return PropertyParser.toString(properties);
+	}
 	
 	@Override
 	public String get(String key) throws IllegalArgumentException {
-		return find(key).orElseThrow().getValue();
+		return find(key)
+				.orElseThrow(()-> new IllegalArgumentException("No value for key ["+key+"] found"))
+				.getValue();
 	}
 
 	@Override
@@ -31,7 +56,7 @@ public class Properties implements IProperties {
 	@Override
 	public String getOrPut(String key, String defauld) {
 		if(!contains(key)) {
-			put(key, defauld);
+			put(new Prop(key, defauld, null));
 			return defauld;
 		}
 		return get(key);
@@ -39,50 +64,71 @@ public class Properties implements IProperties {
 
 	@Override
 	public <T> T getOrPut(PropKey<T> key, T defauld) {
-		if(!contains(key)) {
-			put
-		}
-		// TODO Auto-generated method stub
-		return null;
+		return key.cast(getOrPut(key.name, String.valueOf(defauld)));
 	}
-	
-	
 
 	@Override
 	public Optional<Prop> find(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		for (Prop prop : properties) {
+			if(prop.getKey().equals(key)) {
+				return Optional.of(prop);
+			}
+		}
+		return Optional.empty();
 	}
 
+	@Override
+	public void set(String key, String value) {
+		set(key, ()->value);
+	}
+
+	@Override
+	public void set(String key, Supplier<String> value) {
+		set(new Prop(key, value, null));
+	}
+
+	@Override
+	public void set(Prop prop) {
+		if(contains(prop.getKey())) {
+			Prop setable = find(prop.getKey()).get();
+			setable.setValue(prop.getValue());
+			if(prop.getComment() != null) {
+				setable.setComment(prop.getComment());
+			}
+		}else {
+			properties.add(prop);
+		}
+		
+	}
 	
+	@Override
+	public void put(Prop prop) throws IllegalArgumentException {
+		if(contains(prop.getKey())) {
+			throw new IllegalArgumentException("Property ["+prop.getKey()+"] alredy set");
+		}
+		properties.add(prop);
+	}
+
+	@Override
+	public void remove(PropKey<?> key) throws IllegalArgumentException {
+		remove(key.name);
+	}
 	
 	@Override
-	public void put(String key, String value) {
-		// TODO Auto-generated method stub
-		
+	public void remove(String key) throws IllegalArgumentException {
+		if(!contains(key)) {
+			throw new IllegalArgumentException("Property ["+key+"] not set");
+		}
+		properties.removeIf((p)->p.getKey().equals(key));
 	}
-
-	@Override
-	public void put(String key, Supplier<String> value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void put(Prop prop) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean contains(String key) {
-		// TODO Auto-generated method stub
+		for (Prop prop : properties) {
+			if(prop.getKey().equals(key)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -91,4 +137,29 @@ public class Properties implements IProperties {
 		return contains(key.name);
 	}
 	
+	@Override
+	public boolean isSet(Prop prop) {
+		return isSet(prop.getKey(), prop.getValue());
+	}
+	
+	@Override
+	public boolean isSet(PropKey<?> key, String value) {
+		return isSet(key.name, value);
+	}
+	
+	@Override
+	public boolean isSet(String key, String value) {
+		for (Prop prop : properties) {
+			if(prop.getKey().equals(key) && prop.equals(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return properties.isEmpty();
+	}
+
 }

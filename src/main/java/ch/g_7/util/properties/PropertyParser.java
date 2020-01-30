@@ -30,7 +30,7 @@ public class PropertyParser {
 	public static String toString(Set<Prop> properties) {
 		StringBuilder string = new StringBuilder();
 		for (Prop prop : properties) {
-			if (prop.getComment() != null && !prop.getComment().isEmpty()) {
+			if (prop.getComment() != null && !prop.getComment().isBlank()) {
 				string.append("#");
 				string.append(Formator.formatLine(prop.getComment()));
 			}

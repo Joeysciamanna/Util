@@ -7,23 +7,31 @@ import ch.g_7.util.helper.IOUtil;
 
 public class PropertyProducer {
 
-	private static Settings DEFAULT_PROPERTIES;
+	private final static IProperties APP_CONFIG = new Properties();
+	private static IProperties DEFAULT_PROPERTIES;
 	
-	public Settings getProperties(InputStream inputStream) throws IOException {
-		return new Settings(PropertyParser.fromString(IOUtil.toString(inputStream)));
+	public IProperties getProperties(InputStream inputStream) throws IOException {
+		return new Properties(PropertyParser.fromString(IOUtil.toString(inputStream)));
 	}
 	
-	public Settings getProperties(String txt) {
-		return new Settings(PropertyParser.fromString(txt));
+	public IProperties getProperties(String txt) {
+		return new Properties(PropertyParser.fromString(txt));
 	}
 	
-	public static void setDefaultProperties(Settings properties) {
+	public static void setDefaultProperties(IProperties properties) {
 		if(DEFAULT_PROPERTIES != null) {
 			throw new IllegalStateException("Default Properties alredy set");
 		}
 		DEFAULT_PROPERTIES = properties;
 	}
 	
+	public static IProperties getDefaultProperties() {
+		return DEFAULT_PROPERTIES;
+	}
+	
+	public static IProperties getAppConfig() {
+		return APP_CONFIG;
+	}
 
 	
 }
