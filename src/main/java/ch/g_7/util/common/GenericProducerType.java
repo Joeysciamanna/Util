@@ -20,10 +20,10 @@ public class GenericProducerType<T> {
 	}
 	
 	public boolean typeEquals(Class<?> clazz) {
-		if(instance != null) {
+		if(used()) {
 			return instance.getClass().equals(clazz);
 		}
-		// Can't equal if never created
+		// Can't equal if never used ( created
 		return false;
 	}
 	

@@ -30,6 +30,7 @@ public abstract class Resource implements IResource, IDepender {
 			throw new IllegalAccessError("Cant init resource [" + getResourceId() + "], resource alredy initialized");
 		}
 		doInit();
+		initialized = true;
 	}
 
 	@Override
@@ -39,6 +40,7 @@ public abstract class Resource implements IResource, IDepender {
 			throw new IllegalAccessError("Cant close resource [" + getResourceId() + "], resource alredy closed or still in use");
 		}
 		doClose();
+		closed = true;
 	}
 	
 	protected abstract void doInit();
