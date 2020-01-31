@@ -15,23 +15,47 @@ public class Notifier<T extends IEvent> {
 		events = new LinkedList<>();
 	}
 	
-	public void notifyListners() {
+	public void reportAll() {
 		while (!events.isEmpty()) {
 			T event = events.poll();
 			for (IListner<T> listner : listners) {
 				listner.onAction(event);
 			}
-			
 		}
 	}
 	
+	public void reportLatest() {
+		T event = events.poll();
+		for (IListner<T> listner : listners) {
+			listner.onAction(event);
+		}
+		events.clear();
+	}
+	
+	/**
+	 * Adds the given Event to the event queue
+	 * @param event
+	 */
 	public void addEvent(T event) {
 		events.add(event);
 	}
 	
 	public void addAndNotify(T event) {
 		addEvent(event);
-		notifyListners();
+		reportAll();
+	}
+	
+	/**
+	 * Clears the event queue, and adds the given event to it
+	 */
+	public void putEvent(T event) {
+		events.clear();
+		addEvent(event);
+	}
+	
+	public void putEventAndNotifiy(T event) { 
+		events.clear();
+		addAndNotify(event);
 	}
 	
 	public void addListner(IListner<T> listner) {
