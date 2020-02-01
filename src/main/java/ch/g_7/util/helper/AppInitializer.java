@@ -75,14 +75,14 @@ public final class AppInitializer {
 	}
 	
 	public AppInitializer addFileLoggers() throws IOException {
-		String dateTime = new SimpleDateFormat("HH:mm_dd-MM-yyyy").format(new Date());
-		logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR_"+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
+		String dateTime = new SimpleDateFormat("HH꞉mm dd-MM-yyyy").format(new Date());
+		logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
 		
 		
 		if(debugMode) {
-			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG_"+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG));
+			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG));
 		}else {
-			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG_"+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO));
+			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO));
 		}
 		return this;
 	}
