@@ -75,7 +75,7 @@ public final class AppInitializer {
 	}
 	
 	public AppInitializer addFileLoggers() throws IOException {
-		String dateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
+		String dateTime = new SimpleDateFormat("HH꞉mm dd-MM-yyyy").format(new Date());
 		logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
 		
 		
