@@ -32,6 +32,21 @@ public class BitKey {
 		return (bitKey1 & bitKey2) != 0;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof BitKey ? ((BitKey)obj).value == value : false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return value;
+	}
+	
+	@Override
+	public String toString() {
+		return Integer.toBinaryString(value);
+	}
+	
 	public int getValue() {
 		return value;
 	}
