@@ -4,7 +4,7 @@ public final class Formator {
 	
 	
 	/**
-	 * 
+	 *
 	 * @param text
 	 * @param values lenght must be %2==0, pattern: key, value, key, value...
 	 * @return
@@ -38,7 +38,6 @@ public final class Formator {
 		return textBuilder.toString();
 	}
 
-	
 
 	public static String formatLine(String text) {
 		if(text.endsWith("\n")) {
@@ -48,8 +47,7 @@ public final class Formator {
 		}
 	}
 	
-	public static String fill(Object o, char c, int len){
-		String s = o.toString();
+	public static String fill(String s, char c, int len){
 		while (s.length()<len) {
 			s = c + s;
 		}
