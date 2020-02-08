@@ -10,7 +10,7 @@ import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
-import ch.g_7.util.fdt.function.Reciever;
+import ch.g_7.util.fdt.function.Receiver;
 import ch.g_7.util.simplesocket.IServer;
 
 /**
@@ -21,11 +21,11 @@ import ch.g_7.util.simplesocket.IServer;
  */
 public class FDTServerListner implements IServer{
 
-	private Map<String, Reciever> recievers;
+	private Map<String, Receiver> recievers;
 	private Metadata metadata;
 
 	public FDTServerListner() {
-		recievers = new HashMap<String, Reciever>();
+		recievers = new HashMap<String, Receiver>();
 		metadata = new Metadata();
 	}
 	
@@ -39,7 +39,7 @@ public class FDTServerListner implements IServer{
 		Response response = null;
 		try {
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));
-			Reciever reciever = recievers.get(request.getPath());
+			Receiver reciever = recievers.get(request.getPath());
 			if(reciever == null) {
 				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.RECEIVER_NOT_FOUND);
 			}
@@ -59,7 +59,7 @@ public class FDTServerListner implements IServer{
 	 * Adds an receiver to handle incoming requests 
 	 * @param reciever The new receiver
 	 */
-	public void add(Reciever reciever) {
+	public void add(Receiver reciever) {
 		recievers.put(reciever.getPath(), reciever);
 	}
 
@@ -67,7 +67,7 @@ public class FDTServerListner implements IServer{
 	 * Removes an receiver
 	 * @param reciever The receiver to remove
 	 */
-	public void remove(Reciever reciever) {
+	public void remove(Receiver reciever) {
 		recievers.remove(reciever.getPath());
 	}
 }

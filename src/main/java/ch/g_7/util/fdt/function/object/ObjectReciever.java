@@ -6,7 +6,7 @@ import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
-import ch.g_7.util.fdt.function.Reciever;
+import ch.g_7.util.fdt.function.Receiver;
 import ch.g_7.util.parse.SerializationParserUtil;
 
 /**
@@ -15,7 +15,7 @@ import ch.g_7.util.parse.SerializationParserUtil;
  * 
  * @author Joey Sciamanna
  */
-public abstract class ObjectReciever<T> extends Reciever {
+public abstract class ObjectReciever<T> extends Receiver {
 
 	private Function<String, T> parser;
 	private String className;

@@ -7,6 +7,11 @@ import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.function.Sender;
 
+/**
+ * Sender for Strings, will send the Strings to the StringReceiver.
+ * 
+ * @author Joey Sciamanna
+ */
 public class StringSender extends Sender{
 
 	public StringSender(FDTConnection connection, String endpoint) {

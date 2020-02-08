@@ -1,5 +1,10 @@
 package ch.g_7.util.bitkey;
 
+/**
+ * A Key that can be multiple values in the same time.
+ * 
+ * @author Joey Sciamanna
+ */
 public class BitKey {
 
 	private final int value;

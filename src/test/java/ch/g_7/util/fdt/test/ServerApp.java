@@ -7,7 +7,7 @@ import ch.g_7.util.fdt.data.Metadata;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.exception.StatusCode;
-import ch.g_7.util.fdt.function.string.StringReciever;
+import ch.g_7.util.fdt.function.string.StringReceiver;
 import ch.g_7.util.simplesocket.SimpleServerSocketListner;
 
 
@@ -19,7 +19,7 @@ public class ServerApp {
 		FDTServerListner fdtServerListner = new FDTServerListner();
 		SimpleServerSocketListner serverSocketListner = new SimpleServerSocketListner(4004, fdtServerListner);
 		serverSocketListner.start();
-		fdtServerListner.add(new StringReciever() {
+		fdtServerListner.add(new StringReceiver() {
 			
 			@Override
 			public Response recieveString(String data, Metadata metadata) throws FDTException {

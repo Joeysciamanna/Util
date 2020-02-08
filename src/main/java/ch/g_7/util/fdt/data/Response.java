@@ -6,6 +6,11 @@ import ch.g_7.util.fdt.exception.StatusCode;
 import ch.g_7.util.parse.Destringifyable;
 import ch.g_7.util.parse.Stringifyable;
 
+/**
+ * Response Object, containing metadata, statusCode, error (if something went wrong), and the data.
+ * 
+ * @author Joey Sciamanna
+ */
 public class Response implements Stringifyable{
 
 	private Metadata metadata;

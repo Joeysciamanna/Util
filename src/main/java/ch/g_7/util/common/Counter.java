@@ -1,5 +1,10 @@
 package ch.g_7.util.common;
 
+/**
+ * Simple int counter.
+ * 
+ * @author Joey Sciamanna
+ */
 public class Counter {
 
 	private int value = 0;

@@ -2,6 +2,14 @@ package ch.g_7.util.common;
 
 import java.util.function.Supplier;
 
+/**
+ * A Factory like Producer producing the suppliers value.
+ * Also has some helper methods like typeEquals, cast and used.
+ * 
+ * @author Joey Sciamanna
+ * 
+ * @param <T> The type witch will be produced
+ */
 public class GenericProducerType<T> {
 
 	private Supplier<T> supplier;
