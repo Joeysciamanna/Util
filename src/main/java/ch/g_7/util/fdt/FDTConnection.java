@@ -67,7 +67,7 @@ public class FDTConnection implements Openable, Closeable{
 	 * Closes the connection
 	 */
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		connection.close();
 	}
 
@@ -76,7 +76,7 @@ public class FDTConnection implements Openable, Closeable{
 	 * Opens the connection
 	 */
 	@Override
-	public void open() throws IOException {
+	public void open() {
 		connection.open();
 	}
 	

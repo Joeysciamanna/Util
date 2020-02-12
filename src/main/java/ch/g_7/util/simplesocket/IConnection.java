@@ -10,8 +10,8 @@ public interface IConnection extends Openable, Closeable{
 	public byte[] send(byte[] data) throws IOException;
 	
 	@Override
-	void close() throws IOException;
+	void close();
 	
 	@Override
-	void open() throws IOException;
+	void open();
 }
