@@ -44,11 +44,11 @@ public final class AppInitializer {
 	
 	public AppInitializer addDefaultAppConfigParams() {
 		IProperties appConfig = PropertyProducer.getAppConfig();
-		appConfig.set("DT.mm", ()->Formator.fill(Calendar.getInstance().get(Calendar.MINUTE), '0', 2));
-		appConfig.set("DT.ss", ()->Formator.fill(Calendar.getInstance().get(Calendar.SECOND), '0', 2));
-		appConfig.set("DT.hh", ()->Formator.fill(Calendar.getInstance().get(Calendar.HOUR_OF_DAY), '0', 2));
-		appConfig.set("DT.dd", ()->Formator.fill(Calendar.getInstance().get(Calendar.DAY_OF_MONTH), '0', 2));
-		appConfig.set("DT.MM", ()->Formator.fill(Calendar.getInstance().get(Calendar.MONTH)+1, '0', 2));
+		appConfig.set("DT.mm", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)), '0', 2));
+		appConfig.set("DT.ss", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.SECOND)), '0', 2));
+		appConfig.set("DT.hh", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)), '0', 2));
+		appConfig.set("DT.dd", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)), '0', 2));
+		appConfig.set("DT.MM", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1), '0', 2));
 		appConfig.set("DT.yyyy", ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 		appConfig.set("DT.yy",   ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2));
 		appConfig.set("app.root", appRootPath);
