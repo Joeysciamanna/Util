@@ -43,7 +43,7 @@ public abstract class Resource implements IResource, IDepender {
 
 	protected final void bindTo(IResource... resources){
 		for (IResource resource : resources) {
-			if(resource != null) resource.unbind(this);
+			if(resource != null) resource.bind(this);
 		}
 	}
 
