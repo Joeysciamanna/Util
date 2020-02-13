@@ -59,5 +59,10 @@ public abstract class Resource implements IResource, IDepender {
 	public int hashCode() {
 		return Objects.hash(resourceId);
 	}
+
+	@Override
+	public int getResourceId() {
+		return resourceId;
+	}
 }
 
