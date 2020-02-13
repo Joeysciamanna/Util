@@ -24,7 +24,7 @@ public final class IOUtil {
 	public static InputStream getInternalInputStream(String path, Object resourceLocator) {
 		InputStream inputStream = resourceLocator.getClass().getClassLoader().getResourceAsStream(path);
 		if(inputStream == null) {
-			throw new RuntimeException("File not found");
+			throw new RuntimeException("File ["+path+"] not found");
 		}
 		return inputStream;
 	}

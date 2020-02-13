@@ -14,82 +14,65 @@ import ch.g_7.util.properties.PropertyProducer;
 
 public final class AppInitializer {
 
-	private Logger logger;
-	
+	private static final Logger LOGGER = Logger.getInstance();
 
-	private boolean debugMode;
-	
+	private final String appRootFolder;
+	private final boolean debugMode;
 	private final String appRootPath;
 	private final Object sourceLocator;
 	
-	public AppInitializer(String appRootPath, Object sourceLocator) {
-		this.appRootPath = appRootPath;
+	public AppInitializer(boolean debugMode, String name, Object sourceLocator) {
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LOGGER));
+		this.appRootFolder  = System.getenv("APPDATA") + "/name/";
+		this.debugMode = debugMode;
+		this.appRootPath = name;
 		this.sourceLocator = sourceLocator;
 	}
-	
 
-	public AppInitializer initDefaultPropFiles(String internalPropertiesFilePath) throws IOException {
+
+	public void runDefaults() {
+		try {
+			if(debugMode)
+				addConsoleLoggers();
+			addFileLoggers();
+			initPropFiles("properties.prop");
+			addAppConfigParams();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		if(debugMode)
+			LOGGER.log(LogLevel.WARNING, "Starting in debug mode");
+	}
+
+	public void initPropFiles(String internalPropertiesFilePath) throws IOException {
 		String properties = "";
 		if (!IOUtil.doesFileExist(appRootPath + "/properties.prop")) {
-			logger.log(LogLevel.DEBUG, "No existing properties file, new will be created");
+			LOGGER.log(LogLevel.DEBUG, "No existing properties file, new will be created");
 			properties = IOUtil.readInternalString(internalPropertiesFilePath, sourceLocator);
 			IOUtil.writeExternalString(appRootPath + "/properties.prop", properties);
 		} else {
-			logger.log(LogLevel.DEBUG, "existing properties file found");
+			LOGGER.log(LogLevel.DEBUG, "existing properties file found");
 			properties = IOUtil.readExternalString(appRootPath + "/properties.prop");
 		}
 		PropertyProducer.setDefaultProperties(PropertyProducer.getProperties(properties));
-		return this;
 	}
 	
-	public AppInitializer addDefaultAppConfigParams() {
+	public void addAppConfigParams() {
 		IProperties appConfig = PropertyProducer.getAppConfig();
-		appConfig.set("DT.mm", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)), '0', 2));
-		appConfig.set("DT.ss", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.SECOND)), '0', 2));
-		appConfig.set("DT.hh", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)), '0', 2));
-		appConfig.set("DT.dd", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)), '0', 2));
-		appConfig.set("DT.MM", ()->Formator.fill(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1), '0', 2));
-		appConfig.set("DT.yyyy", ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-		appConfig.set("DT.yy",   ()->String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2));
 		appConfig.set("app.root", appRootPath);
 		appConfig.set("app.debug", String.valueOf(debugMode));
-		return this;
-	}
-	
-	public AppInitializer initLogger() {
-		logger = Logger.getInstance();
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(logger));
-		return this;
-	}
-	
-	public AppInitializer addConsoleLoggers() {
-		logger.addWriter(new StreamWriter(System.err, "ERROR_CONSOLE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
-		
-		if(debugMode) {
-			logger.addWriter(new StreamWriter(System.out, "DEBUG_CONSOLE", LogLevel.INFO, LogLevel.DEBUG));
-		}else {
-			logger.addWriter(new StreamWriter(System.out, "DEBUG_CONSOLE", LogLevel.INFO));
-		}
-		
-		return this;
-	}
-	
-	public AppInitializer addFileLoggers() throws IOException {
-		String dateTime = new SimpleDateFormat("HH꞉mm dd-MM-yyyy").format(new Date());
-		logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
-		
-		
-		if(debugMode) {
-			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG));
-		}else {
-			logger.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO));
-		}
-		return this;
 	}
 
-	public AppInitializer setDebugMode(boolean debugMode) {
-		this.debugMode = debugMode;
-		return this;
+	
+	public void addConsoleLoggers() {
+		LOGGER.addWriter(new StreamWriter(System.err, "ERROR_CONSOLE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
+		LOGGER.addWriter(new StreamWriter(System.out, "DEBUG_CONSOLE", LogLevel.INFO, LogLevel.DEBUG));
 	}
 	
+	public void addFileLoggers() throws IOException {
+		String dateTime = new SimpleDateFormat("HH꞉mm dd-MM-yyyy").format(new Date());
+		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
+		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG));
+	}
+
 }
