@@ -1,5 +1,7 @@
 package ch.g_7.util.resource;
 
+import java.util.Objects;
+
 public abstract class Resource implements IResource, IDepender {
 
 	private static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
@@ -12,59 +14,50 @@ public abstract class Resource implements IResource, IDepender {
 	public Resource() {
 		this.resourceId = ++resourceIdCounter;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof Resource ? ((Resource)obj).resourceId == resourceId : false;
-	}
-	
-	@Override
-	public int getResourceId() {
-		return resourceId;
-	}
-	
+
 	@Override
 	@Deprecated
 	public final void init() {
 		if(initialized) {
-			throw new IllegalAccessError("Cant init resource [" + getResourceId() + "], resource alredy initialized");
+			throw new IllegalAccessError("Cant init resource [" + this + "], resource alredy initialized");
 		}
 		doInit();
 		initialized = true;
+		closed = false;
 	}
 
 	@Override
 	@Deprecated
 	public final void close() {
 		if(closed || RESOURCE_MANAGER.isUsed(this)) {
-			throw new IllegalAccessError("Cant close resource [" + getResourceId() + "], resource alredy closed or still in use");
+			throw new IllegalAccessError("Cant close resource [" + this + "], resource alredy closed or still in use");
 		}
 		doClose();
 		closed = true;
+		initialized = false;
 	}
-	
+
+	@Override
+	public final void bind(IDepender depender) {
+		IResource.super.bind(depender);
+	}
+
+	@Override
+	public void unbind(IDepender depender) {
+		IResource.super.unbind(depender);
+	}
+
 	protected abstract void doInit();
 	
 	protected abstract void doClose();
 	
-	protected void bindTo(IResource... resources) {
-		for (IResource resource : resources) {
-			if(resource != null) {
-				resource.bind(this);
-			}
-		}
-	}
-	
-	protected void unbindForm(IResource... resources) {
-		for (IResource resource : resources) {
-			if(resource != null) {
-				resource.unbind(this);
-			}
-		}
-	}
-	
 	public static int getResourceIdCounter() {
 		return resourceIdCounter;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(resourceId);
 	}
 }
 

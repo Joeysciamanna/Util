@@ -46,7 +46,7 @@ public class ResourceManager implements IResourceManager {
 				dependencies.remove(resource);
 			}
 		} else {
-			throw new IllegalStateException("There is no closable dependency betwen resourec [" + resource.getResourceId() + "] and depender [" + depender + "]");
+			throw new IllegalStateException("There is no closable dependency betwen resourec [" + resource+ "] and depender [" + depender + "]");
 		}
 	}
 

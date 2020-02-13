@@ -23,10 +23,8 @@ public interface IResource extends Initializable, Closeable{
 	@Deprecated
 	void init();
 
-	
 	int getResourceId();
-	
-	
+
 	default void bind(IDepender depender) {
 		RESOURCE_MANAGER.bind(depender, this);
 	}
