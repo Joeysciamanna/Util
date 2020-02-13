@@ -12,6 +12,13 @@ public class ResourceManager implements IResourceManager {
 
 	private Map<IResource, List<IDepender>> dependencies;
 
+	private static int resourceIdCounter = 0;
+
+	public static int createResourceId(){
+		return ++resourceIdCounter;
+	}
+
+
 	private ResourceManager() {
 		this.dependencies = new HashMap<IResource, List<IDepender>>();
 	}
@@ -112,7 +119,7 @@ public class ResourceManager implements IResourceManager {
 	
 	@Override
 	public int getCurrentResourceAllocations() {
-		return Resource.getResourceIdCounter();
+		return resourceIdCounter;
 	}
 	
 }

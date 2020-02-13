@@ -5,14 +5,12 @@ import java.util.Objects;
 public abstract class Resource implements IResource, IDepender {
 
 	private static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
-	
-	private static int resourceIdCounter;
+
 	private final int resourceId;
-	
 	private boolean initialized, closed;
 	
 	public Resource() {
-		this.resourceId = ++resourceIdCounter;
+		this.resourceId = ResourceManager.createResourceId();
 	}
 
 	@Override
@@ -37,6 +35,18 @@ public abstract class Resource implements IResource, IDepender {
 		initialized = false;
 	}
 
+	protected final void unbindFrom(IResource... resources){
+		for (IResource resource : resources) {
+			if(resource != null) resource.unbind(this);
+		}
+	}
+
+	protected final void bindTo(IResource... resources){
+		for (IResource resource : resources) {
+			if(resource != null) resource.unbind(this);
+		}
+	}
+
 	@Override
 	public final void bind(IDepender depender) {
 		IResource.super.bind(depender);
@@ -50,10 +60,6 @@ public abstract class Resource implements IResource, IDepender {
 	protected abstract void doInit();
 	
 	protected abstract void doClose();
-	
-	public static int getResourceIdCounter() {
-		return resourceIdCounter;
-	}
 
 	@Override
 	public int hashCode() {

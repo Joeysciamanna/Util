@@ -3,7 +3,7 @@ package ch.g_7.util.resource;
 import ch.g_7.util.common.Closeable;
 import ch.g_7.util.common.Initializable;
 
-public interface IResource extends Initializable, Closeable{
+public interface IResource extends Initializable, Closeable, IDepender{
 
 	static final IResourceManager RESOURCE_MANAGER = ResourceManager.getInstance();
 	
@@ -23,13 +23,17 @@ public interface IResource extends Initializable, Closeable{
 	@Deprecated
 	void init();
 
-	int getResourceId();
-
 	default void bind(IDepender depender) {
+		if(depender.getResourceId() == getResourceId()){
+			throw new IllegalArgumentException("Can't bind ["+this+"] to itself");
+		}
 		RESOURCE_MANAGER.bind(depender, this);
 	}
 	
 	default void unbind(IDepender depender) {
+		if(depender.getResourceId() == getResourceId()){
+			throw new IllegalArgumentException("Can't unbind ["+this+"] to itself");
+		}
 		RESOURCE_MANAGER.unbind(depender, this);
 	}
 }

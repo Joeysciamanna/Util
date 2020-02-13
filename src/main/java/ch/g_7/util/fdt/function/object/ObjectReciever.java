@@ -7,7 +7,7 @@ import ch.g_7.util.fdt.data.Request;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.FDTException;
 import ch.g_7.util.fdt.function.Receiver;
-import ch.g_7.util.parse.SerializationParserUtil;
+import ch.g_7.util.parse.ParserUtil;
 
 /**
  * Receiver to handle object requests with objects of type T 
@@ -22,7 +22,7 @@ public abstract class ObjectReciever<T> extends Receiver {
 
 	
 	public ObjectReciever(Class<T> clazz) {
-		parser = SerializationParserUtil.getFromStringParser(clazz);
+		parser = ParserUtil.getFromStringParser(clazz);
 		className = clazz.getSimpleName();
 	}
 	

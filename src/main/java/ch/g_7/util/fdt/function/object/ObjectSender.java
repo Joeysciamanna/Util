@@ -8,7 +8,7 @@ import ch.g_7.util.fdt.FDTConnection;
 import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.exception.ServerException;
 import ch.g_7.util.fdt.function.Sender;
-import ch.g_7.util.parse.SerializationParserUtil;
+import ch.g_7.util.parse.ParserUtil;
 
 /**
  * Sender to send objects of type T
@@ -23,13 +23,13 @@ public class ObjectSender<T> extends Sender {
 	
 	public ObjectSender(FDTConnection connection, String endpoint, Class<T> clazz) {
 		super(connection, endpoint);
-		parser = SerializationParserUtil.getToStringParser(clazz);
+		parser = ParserUtil.getToStringParser(clazz);
 		className = clazz.getSimpleName();
 	}
 	
 	public ObjectSender(FDTConnection connection, Class<T> clazz) {
 		super(connection);
-		parser = SerializationParserUtil.getToStringParser(clazz);
+		parser = ParserUtil.getToStringParser(clazz);
 		className = clazz.getSimpleName();
 	}
 	
