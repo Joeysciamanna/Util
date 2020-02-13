@@ -20,7 +20,7 @@ public class ResourceManager implements IResourceManager {
 
 
 	private ResourceManager() {
-		this.dependencies = new HashMap<IResource, List<IDepender>>();
+		this.dependencies = new HashMap<>();
 	}
 
 	public static IResourceManager getInstance() {
@@ -34,7 +34,7 @@ public class ResourceManager implements IResourceManager {
 			if(dependencies.containsKey(resource)) {
 				dependencies.get(resource).add(depender);
 			} else {
-				List<IDepender> dependers = new ArrayList<IDepender>();
+				List<IDepender> dependers = new ArrayList<>();
 				dependers.add(depender);
 				dependencies.put(resource, dependers);
 				resource.init();
@@ -53,10 +53,9 @@ public class ResourceManager implements IResourceManager {
 				dependencies.remove(resource);
 			}
 		} else {
-			throw new IllegalStateException("There is no closable dependency betwen resourec [" + resource+ "] and depender [" + depender + "]");
+			throw new IllegalStateException("There is no closable dependency between resource [" + resource+ "] and depender [" + depender + "]");
 		}
 	}
-
 	@Override
 	public void unbindAll(IDepender depender) {
 		for (IResource resource : getDependencies(depender)) {
@@ -81,7 +80,7 @@ public class ResourceManager implements IResourceManager {
 
 	@Override
 	public List<IDepender> getDependers(IResource resource) {
-		return dependencies.containsKey(resource) ? dependencies.get(resource) : new ArrayList<IDepender>();
+		return dependencies.containsKey(resource) ? dependencies.get(resource) : new ArrayList<>();
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class ResourceManager implements IResourceManager {
 	public String getUnclosedResources() {
 		StringBuilder builder = new StringBuilder();
 		for(Entry<IResource, List<IDepender>> entry : dependencies.entrySet()) {
-			builder.append(entry.getValue().size()).append(" x Resource [").append(entry.getKey().getResourceId()).append("]:\n");
+			builder.append(entry.getValue().size()).append(" x Resource [").append(entry.getKey()).append("]:\n");
 			for(IDepender depender : entry.getValue()) {
 				builder.append("\t").append(depender).append("\n");
 			}
