@@ -17,47 +17,37 @@ public class Notifier<T extends IEvent> {
 	
 	public void reportAll() {
 		while (!events.isEmpty()) {
-			T event = events.poll();
-			for (IListner<T> listner : listners) {
-				listner.onAction(event);
-			}
+			report(events.poll());
 		}
 	}
 	
 	public void reportLatest() {
-		T event = events.poll();
-		for (IListner<T> listner : listners) {
-			listner.onAction(event);
-		}
+		report(events.poll());
 		events.clear();
 	}
-	
+
+	public void report(T event) {
+		for (IListner<T> listner : new ArrayList<>(listners)) {
+			listner.onAction(event);
+		}
+	}
+
 	/**
-	 * Adds the given Event to the event queue
+	 * Adds the event to the event queue
 	 * @param event
 	 */
-	public void addEvent(T event) {
+	public void addToQueue(T event) {
 		events.add(event);
 	}
-	
-	public void addAndNotify(T event) {
-		addEvent(event);
-		reportAll();
-	}
-	
+
 	/**
 	 * Clears the event queue, and adds the given event to it
 	 */
-	public void putEvent(T event) {
+	public void overrideQueue(T event) {
 		events.clear();
-		addEvent(event);
+		addToQueue(event);
 	}
-	
-	public void putEventAndNotifiy(T event) { 
-		events.clear();
-		addAndNotify(event);
-	}
-	
+
 	public void addListner(IListner<T> listner) {
 		listners.add(listner);
 	}
