@@ -67,6 +67,11 @@ public abstract class Resource implements IResource, IDepender {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		return hashCode() == o.hashCode();
+	}
+
+	@Override
 	public int getResourceId() {
 		return resourceId;
 	}
