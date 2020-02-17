@@ -2,7 +2,6 @@ package ch.g_7.util.helper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import ch.g_7.util.logging.LogLevel;
@@ -16,16 +15,14 @@ public final class AppInitializer {
 
 	private static final Logger LOGGER = Logger.getInstance();
 
-	private final String appRootFolder;
 	private final boolean debugMode;
 	private final String appRootPath;
 	private final Object sourceLocator;
 	
 	public AppInitializer(boolean debugMode, String name, Object sourceLocator) {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LOGGER));
-		this.appRootFolder  = System.getenv("APPDATA") + "/name/";
+		this.appRootPath  = System.getenv("APPDATA") + "/name/";
 		this.debugMode = debugMode;
-		this.appRootPath = name;
 		this.sourceLocator = sourceLocator;
 	}
 
