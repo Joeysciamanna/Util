@@ -1,4 +1,4 @@
-package ch.g_7.util.helper;
+package ch.g_7.util.io;
 
 import java.io.File;
 import java.io.FileInputStream;

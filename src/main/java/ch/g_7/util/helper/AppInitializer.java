@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ch.g_7.util.io.IOUtil;
 import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
 import ch.g_7.util.logging.adapter.UncaughtExceptionHandlerAdapter;

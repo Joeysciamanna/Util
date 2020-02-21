@@ -3,7 +3,7 @@ package ch.g_7.util.properties;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ch.g_7.util.helper.IOUtil;
+import ch.g_7.util.io.IOUtil;
 
 public class PropertyProducer {
 
