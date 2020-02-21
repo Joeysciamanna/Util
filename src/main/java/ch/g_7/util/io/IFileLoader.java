@@ -1,8 +1,8 @@
 package ch.g_7.util.io;
 
-import java.io.File;
+import java.io.InputStream;
 
 public interface IFileLoader {
 
-    File loadFile(String path);
+    InputStream loadFile(String path);
 }

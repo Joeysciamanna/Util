@@ -1,13 +1,13 @@
 package ch.g_7.util.io;
 
 
-import java.io.File;
+import java.io.InputStream;
 
 
 public abstract class LocalFileLoader implements IFileLoader {
 
     @Override
-    public File loadFile(String path) {
-        return new File(getClass().getResource("/" + path).getFile());
+    public InputStream loadFile(String path) {
+        return getClass().getResourceAsStream("/" + path);
     }
 }
