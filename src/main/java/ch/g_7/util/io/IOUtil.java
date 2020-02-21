@@ -45,17 +45,6 @@ public final class IOUtil {
 		return bytes;
 	}
 	
-	public static int[] toUBytes(InputStream inputStream) throws IOException {
-		byte[] bytes = new byte[inputStream.available()];
-		int[] uBytes = new int [inputStream.available()];
-		inputStream.read(bytes);
-		for (int i = 0; i < bytes.length; i++) {
-			uBytes[i] = bytes[i] & 0xff;
-		}
-		inputStream.close();
-		return uBytes;
-	}
-	
 	
 	public static String toString(InputStream inputStream) throws IOException {
 		return new String(toBytes(inputStream));
