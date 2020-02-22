@@ -1,5 +1,9 @@
 package ch.g_7.util.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 public final class Formator {
 	
 	
