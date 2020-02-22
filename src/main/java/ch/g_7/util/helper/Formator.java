@@ -42,6 +42,56 @@ public final class Formator {
 		return textBuilder.toString();
 	}
 
+	/**
+	 * % include til next match
+	 * # include one
+	 * * skip til next match
+	 * ? skip one
+	 * Do not use * or % at the end of the pattern
+	 * @param from
+	 * @param pattern
+	 */
+	public static List<String> extract(String from, String pattern){
+		int fromIndex=0;
+		int patternIndex=0;
+		StringBuilder keyBuilder = new StringBuilder();
+		List<String> keys = new ArrayList<>();
+		for(int i = 0; i < from.length(); i++){
+			if(patternIndex >= pattern.length() || fromIndex >= from.length()){
+				return  keys;
+			}
+			if(from.charAt(fromIndex) == pattern.charAt(patternIndex)){
+				fromIndex++;
+				patternIndex++;
+			}else if(pattern.charAt(patternIndex) == '\\'){
+				patternIndex+=2;
+				fromIndex++;
+			} else if(pattern.charAt(patternIndex) == '%'){
+				while (pattern.charAt(patternIndex+1) != from.charAt(fromIndex)){
+					keyBuilder.append(from.charAt(fromIndex++));
+				}
+				patternIndex++;
+				keys.add(keyBuilder.toString());
+				keyBuilder.setLength(0);
+			}else if(pattern.charAt(patternIndex) == '#'){
+				keyBuilder.append(from.charAt(fromIndex));
+				fromIndex++;
+				patternIndex++;
+				keys.add(keyBuilder.toString());
+				keyBuilder.setLength(0);
+			}else if(pattern.charAt(patternIndex) == '*'){
+				while (pattern.charAt(patternIndex+1) != from.charAt(fromIndex)){
+					fromIndex++;
+				}
+				patternIndex++;
+			}else if(pattern.charAt(patternIndex) == '?'){
+				fromIndex++;
+				patternIndex++;
+			}
+		}
+		return keys;
+	}
+
 
 	public static String formatLine(String text) {
 		if(text.endsWith("\n")) {
