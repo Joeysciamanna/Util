@@ -30,11 +30,11 @@ public abstract class AbstractLogWriter implements ILogWriter {
 	}
 
 	@Override
-	public void write(LogLevel level, LogMessage message) throws IOException {
-		write(level, formator.format(level, message));
+	public void write(LogMessage message) throws IOException {
+		write(formator.format(message));
 	}
 	
-	public abstract void write(LogLevel level, String log) throws IOException;
+	public abstract void write(String log) throws IOException;
 	
 	@Override
 	public void setFormator(ILogFormator formator) {

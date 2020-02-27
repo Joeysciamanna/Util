@@ -18,11 +18,11 @@ public final class LogFormatorFactory {
 	public static ILogFormator getDefault() {
 		return new ILogFormator() {
 			@Override
-			public String format(LogLevel level, LogMessage message) {
-				String details = message.getDetails();
+			public String format(LogMessage message) {
+				String details = message.getStackTrace();
 				String simpleMessage = message.getSimpleMessage();
 				String date = new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date());
-				return  "[" + level + "] " + "["+ date +"]  " +
+				return  "[" + message.getLevel() + "] " + "["+ date +"]  " +
 				simpleMessage + (details.isBlank() ? "\n" : (":\n" + details));
 			}
 		};
@@ -36,8 +36,8 @@ public final class LogFormatorFactory {
 	public static ILogFormator getOneLiner() {
 		return new ILogFormator() {
 			@Override
-			public String format(LogLevel level, LogMessage message) {
-				return "[" + level + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
+			public String format(LogMessage message) {
+				return "[" + message.getLevel() + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
 						message.getSimpleMessage();
 			}
 		};
@@ -52,8 +52,8 @@ public final class LogFormatorFactory {
 	public static ILogFormator getTimeLose() {
 		return new ILogFormator() {
 			@Override
-			public String format(LogLevel level, LogMessage message) {
-				return "[" + level + "] " + message.getSimpleMessage() + ":\n" + message.getDetails();
+			public String format(LogMessage message) {
+				return "[" + message.getLevel() + "] " + message.getSimpleMessage() + ":\n" + message.getStackTrace();
 			}
 		};
 	}
@@ -70,10 +70,10 @@ public final class LogFormatorFactory {
 	public static ILogFormator getCustom(String pattern) {
 		return new ILogFormator() {
 			@Override
-			public String format(LogLevel level, LogMessage message) {
-				return Formator.format(pattern, "log.level", level.toString(),
+			public String format(LogMessage message) {
+				return Formator.format(pattern, "log.level", message.getLevel().toString(),
 												"log.simpleMessage", message.getSimpleMessage(),
-												"log.details", message.getDetails(),
+												"log.details", message.getStackTrace(),
 												"log.message", message.getMessage(),
 												"log.throwableMessage", message.getThrowable().getMessage());
 			}
@@ -90,9 +90,9 @@ public final class LogFormatorFactory {
 	public static ILogFormator getDetailed() {
 		return new ILogFormator() {
 			@Override
-			public String format(LogLevel level, LogMessage message) {
-				return "[" + level + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
-						message.getSimpleMessage() + ":\n" + message.getDetails();
+			public String format(LogMessage message) {
+				return "[" + message.getLevel() + "] " + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
+						message.getSimpleMessage() + ":\n" + message.getStackTrace();
 			}
 		};
 	}

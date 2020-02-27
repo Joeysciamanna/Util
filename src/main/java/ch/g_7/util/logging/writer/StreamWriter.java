@@ -16,7 +16,7 @@ public class StreamWriter extends AbstractLogWriter implements Closeable {
 	}
 
 	@Override
-	public void write(LogLevel level, String log) throws IOException {
+	public void write(String log) throws IOException {
 		outputStream.write(log.getBytes());
 		outputStream.flush();
 	}

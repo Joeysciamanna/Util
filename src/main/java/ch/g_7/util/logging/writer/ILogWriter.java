@@ -11,7 +11,7 @@ public interface ILogWriter extends Closeable {
 
 	boolean isWriting(LogLevel level);
 	
-	void write(LogLevel level, LogMessage message) throws IOException;
+	void write(LogMessage message) throws IOException;
 	
 	default void setFormator(ILogFormator formator) {
 		throw new IllegalStateException("Formator is not supported on " + getName());
