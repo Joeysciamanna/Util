@@ -5,23 +5,25 @@ import java.io.StringWriter;
 
 public class LogMessage {
 
+	private final LogLevel level;
 	private final String message;
 	private final Throwable throwable;
 	
-	public LogMessage(String message, Throwable throwable) {
+	public LogMessage(String message, Throwable throwable, LogLevel level) {
 		this.message = message;
 		this.throwable = throwable;
+		this.level = level;
 	}
 
-	public LogMessage(String message) {
-		this(message, null);
+	public LogMessage(String message, LogLevel level) {
+		this(message, null, level);
 	}
 	
-	public LogMessage(Throwable throwable) {
-		this(null, throwable);
+	public LogMessage(Throwable throwable, LogLevel level) {
+		this(null, throwable, level);
 	}
 	
-	public String getDetails() {
+	public String getStackTrace() {
 		if(throwable != null) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
@@ -43,5 +45,9 @@ public class LogMessage {
 		return throwable;
 	}
 	
+	
+	public LogLevel getLevel() {
+		return level;
+	}
 
 }

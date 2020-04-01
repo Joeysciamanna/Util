@@ -2,7 +2,6 @@ package ch.g_7.util.helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public final class Formator {
 	
@@ -47,11 +46,12 @@ public final class Formator {
 	 * # include one
 	 * * skip til next match
 	 * ? skip one
-	 * Do not use * or % at the end of the pattern
 	 * @param from
 	 * @param pattern
 	 */
 	public static List<String> extract(String from, String pattern){
+		from = from + "[";
+		pattern = pattern + "[";
 		int fromIndex=0;
 		int patternIndex=0;
 		StringBuilder keyBuilder = new StringBuilder();

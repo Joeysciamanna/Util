@@ -20,33 +20,33 @@ public class Logger implements Closeable {
 		return instance;
 	}
 	
-	public void log(LogLevel level, LogMessage message) {
-		logExept(level, message, new ArrayList<ILogWriter>());
+	public void log(LogMessage message) {
+		logExept(message, new ArrayList<ILogWriter>());
 	}
 	
-	private void logExept(LogLevel level, LogMessage message, List<ILogWriter> logWriters) {
+	private void logExept(LogMessage message, List<ILogWriter> logWriters) {
 		for (ILogWriter logWriter : writers) {
-			if(logWriter.isWriting(level) && !logWriters.contains(logWriter)) {
+			if(logWriter.isWriting(message.getLevel()) && !logWriters.contains(logWriter)) {
 				try {
-					logWriter.write(level, message);
+					logWriter.write(message);
 				} catch (IOException e) {
 					logWriters.add(logWriter);
-					logExept(level, new LogMessage("Error at writing log message", e), logWriters);
+					logExept(new LogMessage("Error at writing log message", e, LogLevel.ERROR), logWriters);
 				}
 			}
 		}
 	}
 
 	public void log(LogLevel level, String message) {
-		log(level, new LogMessage(message));
+		log(new LogMessage(message, level));
 	}
 
 	public void log(LogLevel level, Throwable throwable) {
-		log(level, new LogMessage(throwable));
+		log(new LogMessage(throwable, level));
 	}
 
 	public void log(LogLevel level, String message, Throwable throwable) {
-		log(level, new LogMessage(message, throwable));
+		log(new LogMessage(message, throwable, level));
 	}
 
 	public void addWriter(ILogWriter writer) {
@@ -56,7 +56,6 @@ public class Logger implements Closeable {
 	public void removeWriter(ILogWriter writer) {
 		writers.removeIf((w)->w.getName().equals(writer.getName()));
 	}
-	
 
 	
 	@Override
