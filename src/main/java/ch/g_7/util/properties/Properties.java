@@ -156,7 +156,17 @@ public class Properties implements IProperties, Stringifyable {
 		}
 		return false;
 	}
-	
+
+	@Override
+	public void fill(Set<Prop> properties){
+		this.properties.addAll(properties);
+	}
+
+	@Override
+	public Set<Prop> getAllProperties() {
+		return new HashSet<>(properties);
+	}
+
 	@Override
 	public boolean isEmpty() {
 		return properties.isEmpty();

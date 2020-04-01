@@ -1,6 +1,7 @@
 package ch.g_7.util.properties;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public interface IProperties {
@@ -34,7 +35,11 @@ public interface IProperties {
 	void remove(PropKey<?> key) throws IllegalArgumentException;
 	
 	void remove(String key) throws IllegalArgumentException;
-	
+
+	Set<Prop> getAllProperties();
+
+	void fill(Set<Prop> properties);
+
 	boolean isEmpty();
 	
 	boolean contains(String key);
@@ -46,4 +51,6 @@ public interface IProperties {
 	boolean isSet(PropKey<?> key, String value);
 	
 	boolean isSet(Prop prop);
+
+
 }

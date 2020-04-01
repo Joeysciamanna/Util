@@ -8,7 +8,7 @@ import ch.g_7.util.io.IOUtil;
 public class PropertyProducer {
 
 	private final static IProperties APP_CONFIG = new Properties();
-	private static IProperties DEFAULT_PROPERTIES;
+	private static IProperties DEFAULT_PROPERTIES = new Properties();
 	
 	public static IProperties getProperties(InputStream inputStream) throws IOException {
 		return new Properties(PropertyParser.fromString(IOUtil.toString(inputStream)));
@@ -19,10 +19,10 @@ public class PropertyProducer {
 	}
 	
 	public static void setDefaultProperties(IProperties properties) {
-		if(DEFAULT_PROPERTIES != null) {
+		if(!DEFAULT_PROPERTIES.isEmpty()) {
 			throw new IllegalStateException("Default Properties alredy set");
 		}
-		DEFAULT_PROPERTIES = properties;
+		DEFAULT_PROPERTIES.fill(properties.getAllProperties());
 	}
 	
 	public static IProperties getDefaultProperties() {

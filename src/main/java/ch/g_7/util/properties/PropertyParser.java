@@ -13,7 +13,7 @@ public class PropertyParser {
 		StringBuilder comment = new StringBuilder();
 		for (String line : lines) {
 			if (!line.startsWith("#") && !line.startsWith("%") && !line.trim().isEmpty()) {
-				String[] data = line.split("\\=");
+				String[] data = line.split("=");
 				if (data.length == 2) {
 					properties.add(new Prop(data[0], data[1], comment.toString()));
 					comment.setLength(0);
