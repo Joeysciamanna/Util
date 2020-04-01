@@ -1,10 +1,12 @@
 package ch.g_7.util.helper;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ch.g_7.util.io.IOUtil;
+import ch.g_7.util.io.IResourceLoader;
 import ch.g_7.util.logging.LogLevel;
 import ch.g_7.util.logging.Logger;
 import ch.g_7.util.logging.adapter.UncaughtExceptionHandlerAdapter;
@@ -18,22 +20,26 @@ public final class AppInitializer {
 
 	private final boolean debugMode;
 	private final String appRootPath;
-	private final Object sourceLocator;
-	
-	public AppInitializer(boolean debugMode, String name, Object sourceLocator) {
+	private final IResourceLoader resourceLoader;
+
+
+	public AppInitializer(boolean debugMode, String name, IResourceLoader resourceLoader) {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LOGGER));
 		this.appRootPath  = System.getenv("APPDATA") + "/name/";
 		this.debugMode = debugMode;
-		this.sourceLocator = sourceLocator;
+		this.resourceLoader = resourceLoader;
 	}
 
+	public void runDefaults(String defaultPropertiesFile){
+		runDefaults(resourceLoader.loadResourceThrowRuntime(defaultPropertiesFile));
+	}
 
-	public void runDefaults() {
+	public void runDefaults(InputStream defaultProperties) {
 		try {
 			if(debugMode)
 				addConsoleLoggers();
 			addFileLoggers();
-			initPropFiles("properties.prop");
+			initPropFiles(defaultProperties);
 			addAppConfigParams();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -42,11 +48,11 @@ public final class AppInitializer {
 			LOGGER.log(LogLevel.WARNING, "Starting in debug mode");
 	}
 
-	public void initPropFiles(String internalPropertiesFilePath) throws IOException {
+	public void initPropFiles(InputStream defaultProperties) throws IOException {
 		String properties = "";
 		if (!IOUtil.doesFileExist(appRootPath + "/properties.prop")) {
 			LOGGER.log(LogLevel.DEBUG, "No existing properties file, new will be created");
-			properties = IOUtil.readInternalString(internalPropertiesFilePath, sourceLocator);
+			properties = IOUtil.toString(defaultProperties);
 			IOUtil.writeExternalString(appRootPath + "/properties.prop", properties);
 		} else {
 			LOGGER.log(LogLevel.DEBUG, "existing properties file found");

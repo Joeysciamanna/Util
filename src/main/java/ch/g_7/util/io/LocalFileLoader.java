@@ -8,7 +8,7 @@ import java.io.InputStream;
 public abstract class LocalFileLoader implements IResourceLoader {
 
     @Override
-    public InputStream loadFile(String path) throws IOException {
+    public InputStream loadResource(String path) throws IOException {
         InputStream inputStream = getClass().getResourceAsStream("/" + path);
         if(inputStream == null) {
             throw new IOException("File [/"+path+"] not found");
