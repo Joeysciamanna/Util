@@ -24,8 +24,7 @@ public final class AppInitializer {
 
 
 	public AppInitializer(boolean debugMode, String name, IResourceLoader resourceLoader) {
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LOGGER));
-		this.appRootPath  = System.getenv("APPDATA") + "/name/";
+		this.appRootPath  = System.getenv("APPDATA") + "/"+name+"/";
 		this.debugMode = debugMode;
 		this.resourceLoader = resourceLoader;
 	}
@@ -35,6 +34,7 @@ public final class AppInitializer {
 	}
 
 	public void runDefaults(InputStream defaultProperties) {
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandlerAdapter(LOGGER));
 		try {
 			if(debugMode)
 				addConsoleLoggers();
@@ -75,8 +75,8 @@ public final class AppInitializer {
 	
 	public void addFileLoggers() throws IOException {
 		String dateTime = new SimpleDateFormat("HH꞉mm dd-MM-yyyy").format(new Date());
-		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/ERROR "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
-		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/DEBUG "+dateTime+".log"), "DEBUG_FILE", LogLevel.INFO, LogLevel.DEBUG));
+		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/error "+dateTime+".log"), "ERROR_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR));
+		LOGGER.addWriter(new StreamWriter(IOUtil.getExternalOutputStream(appRootPath + "/logs/debug "+dateTime+".log"), "DEBUG_FILE", LogLevel.FATAL, LogLevel.WARNING, LogLevel.ERROR, LogLevel.INFO, LogLevel.DEBUG));
 	}
 
 }
