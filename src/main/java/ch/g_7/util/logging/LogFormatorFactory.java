@@ -22,7 +22,7 @@ public final class LogFormatorFactory {
 				String details = message.getStackTrace();
 				String simpleMessage = message.getSimpleMessage();
 				String date = new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date());
-				return  Formator.fill("[" + message.getLevel() + "] ",' ', 9) + "["+ date +"]  " +
+				return  Formator.fillEnd("[" + message.getLevel() + "] ",' ', 9) + "["+ date +"]  " +
 				simpleMessage + (details.isBlank() ? "\n" : (":\n" + details));
 			}
 		};
@@ -37,7 +37,7 @@ public final class LogFormatorFactory {
 		return new ILogFormator() {
 			@Override
 			public String format(LogMessage message) {
-				return Formator.fill("[" + message.getLevel() + "] ",' ', 9) + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
+				return Formator.fillEnd("[" + message.getLevel() + "] ",' ', 9) + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
 						message.getSimpleMessage();
 			}
 		};
@@ -53,7 +53,7 @@ public final class LogFormatorFactory {
 		return new ILogFormator() {
 			@Override
 			public String format(LogMessage message) {
-				return Formator.fill("[" + message.getLevel() + "] ",' ', 9) + message.getSimpleMessage() + ":\n" + message.getStackTrace();
+				return Formator.fillEnd("[" + message.getLevel() + "] ",' ', 9) + message.getSimpleMessage() + ":\n" + message.getStackTrace();
 			}
 		};
 	}
@@ -91,7 +91,7 @@ public final class LogFormatorFactory {
 		return new ILogFormator() {
 			@Override
 			public String format(LogMessage message) {
-				return Formator.fill("[" + message.getLevel() + "] ",' ', 9) + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
+				return Formator.fillEnd("[" + message.getLevel() + "] ",' ', 9) + "["+ new SimpleDateFormat("dd-MM-yyy HH:mm").format(new Date()) +"]  " +
 						message.getSimpleMessage() + ":\n" + message.getStackTrace();
 			}
 		};

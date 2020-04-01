@@ -101,10 +101,19 @@ public final class Formator {
 		}
 	}
 	
-	public static String fill(String s, char c, int len){
-		while (s.length()<len) {
-			s = c + s;
+	public static String fillStart(String s, char c, int len){
+		StringBuilder b = new StringBuilder(s);
+		while (b.length()<len) {
+			b.insert(0, c);
 		}
-		return s;
+		return b.toString();
+	}
+
+	public static String fillEnd(String s, char c, int len){
+		StringBuilder b = new StringBuilder(s);
+		while (b.length()<len) {
+			b.append(c);
+		}
+		return b.toString();
 	}
 }
