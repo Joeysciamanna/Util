@@ -5,7 +5,7 @@
 
 	<groupId>ch.g_7</groupId>
 	<artifactId>Util</artifactId>
-	<version>0.3.13</version>
+	<version>0.3.14</version>
 	<packaging>jar</packaging>
 
 	<name>Util</name>
