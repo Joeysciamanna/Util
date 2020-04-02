@@ -26,11 +26,10 @@ public abstract class CanIReceiver<T> extends Receiver {
         String[] args = request.getData().split("\\|");
         T newValue = parser.apply(args[0]);
         T oldValue = parser.apply(args[1]);
-
-        return new Response(canHe(newValue, oldValue, request.getMetadata()) ? "1" : "0");
+        return new Response(canHe(newValue, oldValue, args[2], request.getMetadata()) ? "1" : "0");
     }
 
-    protected abstract boolean canHe(T newValue, T oldValue, Metadata metadata);
+    protected abstract boolean canHe(T newValue, T oldValue, String additionalData, Metadata metadata);
 
     @Override
     protected String getName() {

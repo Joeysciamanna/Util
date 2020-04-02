@@ -14,14 +14,14 @@ public class CanISender<T> extends Sender {
     private Function<T, String> parser;
     private IEvent<?> event;
 
-    public CanISender(FDTConnection connection, String endpoint, Class<T> clazz, IEvent<?> event) {
-        super(connection, endpoint);
+    public CanISender(FDTConnection connection, Class<T> clazz, IEvent<?> event) {
+        super(connection);
         this.parser = ParserUtil.getToStringParser(clazz);
         this.event = event;
     }
 
-    protected final boolean canI(T newValue, T oldValue){
-        return send(parser.apply(newValue) +"|"+ parser.apply(oldValue)).getData().equals("1");
+    protected final boolean canI(T newValue, T oldValue, String additionalData){
+        return send(parser.apply(newValue) + "|" + parser.apply(oldValue) + "|" + additionalData).getData().equals("1");
     }
 
 
