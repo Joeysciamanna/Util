@@ -15,7 +15,7 @@ public abstract class StringReceiver extends Receiver{
 
 	
 	@Override
-	public final Response recieve(Request request) throws FDTException {
+	public final Response receive(Request request) throws FDTException {
 		return recieveString(request.getData(), request.getMetadata());
 	}
 	

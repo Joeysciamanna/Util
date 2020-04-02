@@ -43,7 +43,7 @@ public class FDTServerListner implements IServer{
 			if(reciever == null) {
 				throw new FDTException("No function listening on path " + request.getPath() + " found", StatusCode.RECEIVER_NOT_FOUND);
 			}
-			response = reciever.recieve(request);
+			response = reciever.receive(request);
 			response.setMetadata(metadata);
 			
 		}catch (FDTException e) {

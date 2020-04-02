@@ -30,7 +30,7 @@ public abstract class ObjectReciever<T> extends Receiver {
 	 * Handles incoming requests and invokes receiveObject with the received object
 	 */
 	@Override
-	public Response recieve(Request request) throws FDTException {
+	public Response receive(Request request) throws FDTException {
 		return recieveObject(parser.apply(request.getData()), request.getMetadata());
 	}
 	
@@ -44,7 +44,7 @@ public abstract class ObjectReciever<T> extends Receiver {
 	
 	@Override
 	public String getName() {
-		return "object-"+className;
+		return "object_"+className;
 	}
 
 }
