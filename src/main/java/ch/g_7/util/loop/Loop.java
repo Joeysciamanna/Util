@@ -21,7 +21,7 @@ public abstract class Loop implements Runnable {
 			timer.loop();
 			if(!paused) {
 				run(timer.getDeltaMillis());
-				if(sleepTime != 0){
+				if(sleepTimeMillis != 0){
 					timer.sleep(sleepTimeMillis);
 				}
 			}
