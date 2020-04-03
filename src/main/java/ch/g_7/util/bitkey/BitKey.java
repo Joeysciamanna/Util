@@ -8,38 +8,41 @@ package ch.g_7.util.bitkey;
 public class BitKey {
 
 	private final int value;
-	
+
+
 	public BitKey(int value) {
 		this.value = value;
 	}
-	
+
+
 	public BitKey merge(BitKey bitKey) {
-		return merge(bitKey.getValue());
+		return new BitKey(value | bitKey.getValue());
 	}
 	
 	public BitKey merge(int bitKey) {
-		return new BitKey(merge(value, bitKey));
+		return new BitKey(value | bitKey);
 	}
-	
-	public static int merge(int bitKey1, int bitKey2) {
-		return bitKey1 | bitKey2;
+
+	public BitKey remove(BitKey bitKey) {
+		return new BitKey(value & (~bitKey.getValue()));
 	}
-	
+
+	public BitKey remove(int bitKey) {
+		return new BitKey(value & (~bitKey));
+	}
+
 	public boolean contains(BitKey bitKey) {
-		return contains(bitKey.getValue());
+		return (value & bitKey.getValue()) != 0;
 	}
 	
 	public boolean contains(int bitKey) {
-		return contains(value, bitKey);
+		return (value & bitKey) != 0;
 	}
-	
-	public static boolean contains(int bitKey1, int bitKey2) {
-		return (bitKey1 & bitKey2) != 0;
-	}
+
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof BitKey ? ((BitKey)obj).value == value : false;
+		return obj instanceof BitKey && ((BitKey) obj).value == value;
 	}
 	
 	@Override

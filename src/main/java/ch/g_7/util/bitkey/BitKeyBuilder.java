@@ -19,4 +19,7 @@ public class BitKeyBuilder {
 		return new BitKey(key);
 	}
 
+	public int getInt() {
+		return key;
+	}
 }
