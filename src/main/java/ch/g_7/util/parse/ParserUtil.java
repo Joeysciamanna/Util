@@ -25,7 +25,7 @@ import ch.g_7.util.task.SecureRunner;
  */
 public class ParserUtil {
 
-	private static IDestringifyer destringifyer;
+	private static IDestringifier destringifyer;
 	private static Map<String, Method> WRAPPER_PARSER_METHODS = new HashMap<>();
 	
 	/**
@@ -60,7 +60,7 @@ public class ParserUtil {
 	public static <O> Function<String, O> getFromStringParser(Class<O> to) {
 		if (Stringifyable.class.isAssignableFrom(to)) {
 			for(Constructor<?> constructor : to.getConstructors()){
-				if(constructor.getAnnotation(Destringifyable.class) != null && constructor.getParameterCount() == 1) {
+				if(constructor.getAnnotation(Destringifiable.class) != null && constructor.getParameterCount() == 1 && constructor.getParameterTypes()[0].equals(String.class)) {
 					constructor.setAccessible(true);
 					return new SecureRunner<>((String s) -> (O) constructor.newInstance(s));
 				}
@@ -128,7 +128,7 @@ public class ParserUtil {
 	 * which don't have a Constructor with argument String and Destringifyable annotation
 	 * @param destringifyer the global Destringifyer
 	 */
-	public static void setDestringifyer(IDestringifyer destringifyer) {
+	public static void setDestringifyer(IDestringifier destringifyer) {
 		ParserUtil.destringifyer = destringifyer;
 	}
 }

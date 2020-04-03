@@ -14,6 +14,14 @@ public class Timer {
 		lastloopTime = System.nanoTime();
 		return deltaMillis;
 	}
+
+	public void sleep(int millis){
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public float getDeltaMillis() {
 		return deltaMillis;

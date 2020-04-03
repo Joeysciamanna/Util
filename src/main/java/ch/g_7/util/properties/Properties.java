@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import ch.g_7.util.parse.Destringifyable;
+import ch.g_7.util.parse.Destringifiable;
 import ch.g_7.util.parse.Stringifyable;
 
 public class Properties implements IProperties, Stringifyable {
@@ -21,7 +21,7 @@ public class Properties implements IProperties, Stringifyable {
 	}
 	
 	@Deprecated
-	@Destringifyable
+	@Destringifiable
 	public Properties(String txt) {
 		this(PropertyParser.fromString(txt));
 	}

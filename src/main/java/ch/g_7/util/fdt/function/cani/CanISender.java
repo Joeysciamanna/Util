@@ -1,11 +1,8 @@
 package ch.g_7.util.fdt.function.cani;
 
 import ch.g_7.util.fdt.FDTConnection;
-import ch.g_7.util.fdt.data.Response;
 import ch.g_7.util.fdt.function.Sender;
-import ch.g_7.util.parse.Destringifyable;
 import ch.g_7.util.parse.ParserUtil;
-import ch.g_7.util.parse.Stringifyable;
 
 import java.util.function.Function;
 

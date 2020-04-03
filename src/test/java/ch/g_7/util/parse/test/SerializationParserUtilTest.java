@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import ch.g_7.util.helper.ReflectionUtil;
-import ch.g_7.util.parse.IDestringifyer;
+import ch.g_7.util.parse.IDestringifier;
 import ch.g_7.util.parse.ParserUtil;
 import ch.g_7.util.parse.Stringifyable;
 
@@ -14,7 +14,7 @@ public class SerializationParserUtilTest {
 	@Test
 	public void getStringifyParserTest() {
 		Stringifyable stringifyable = ReflectionUtil.implemment(Stringifyable.class, (m, args) -> "this string identifiese the stringifyable");
-		ParserUtil.setDestringifyer(ReflectionUtil.implemment(IDestringifyer.class, (m, args) -> stringifyable));
+		ParserUtil.setDestringifyer(ReflectionUtil.implemment(IDestringifier.class, (m, args) -> stringifyable));
 		
 		String value = parseString(Stringifyable.class, stringifyable);
 		Stringifyable stringifyable2 = parseObject(Stringifyable.class, value);

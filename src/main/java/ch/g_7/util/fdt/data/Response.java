@@ -3,7 +3,7 @@ package ch.g_7.util.fdt.data;
 import org.json.JSONObject;
 
 import ch.g_7.util.fdt.exception.StatusCode;
-import ch.g_7.util.parse.Destringifyable;
+import ch.g_7.util.parse.Destringifiable;
 import ch.g_7.util.parse.Stringifyable;
 
 /**
@@ -29,7 +29,7 @@ public class Response implements Stringifyable{
 	 * Create a response object from JSON string
 	 * @param jsonString The JSON string
 	 */
-	@Destringifyable
+	@Destringifiable
 	public Response(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
 		this.metadata = new Metadata(json.getString("metadata")); 

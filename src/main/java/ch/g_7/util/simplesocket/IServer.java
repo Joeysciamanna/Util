@@ -2,5 +2,6 @@ package ch.g_7.util.simplesocket;
 
 public interface IServer {
 
-	byte[] recive(byte[] data);
+	byte[] receive(byte[] data);
+
 }

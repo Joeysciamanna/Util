@@ -9,7 +9,7 @@ public final class Formator {
 	/**
 	 *
 	 * @param text
-	 * @param values lenght must be %2==0, pattern: key, value, key, value...
+	 * @param values length must be %2==0, pattern: key, value, key, value...
 	 * @return
 	 */
 	public static String format(String text, String... values){
@@ -42,9 +42,9 @@ public final class Formator {
 	}
 
 	/**
-	 * % include til next match
+	 * % include until next match
 	 * # include one
-	 * * skip til next match
+	 * * skip until next match
 	 * ? skip one
 	 * @param from
 	 * @param pattern

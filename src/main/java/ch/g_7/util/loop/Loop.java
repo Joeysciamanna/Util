@@ -6,6 +6,8 @@ public abstract class Loop implements Runnable {
 	private Timer timer;
 	private boolean running;
 	private boolean paused;
+
+	private int sleepTimeMillis;
 	
 	public Loop() {
 		this.timer = new Timer();
@@ -19,6 +21,9 @@ public abstract class Loop implements Runnable {
 			timer.loop();
 			if(!paused) {
 				run(timer.getDeltaMillis());
+				if(sleepTime != 0){
+					timer.sleep(sleepTimeMillis);
+				}
 			}
 		}
 		onStop();
@@ -70,5 +75,13 @@ public abstract class Loop implements Runnable {
 	
 	public Timer getTimer() {
 		return timer;
+	}
+
+	public void setSleepTimeMillis(int sleepTimeMillis) {
+		this.sleepTimeMillis = sleepTimeMillis;
+	}
+
+	public int getSleepTimeMillis() {
+		return sleepTimeMillis;
 	}
 }

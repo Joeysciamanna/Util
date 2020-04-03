@@ -50,12 +50,16 @@ public final class AppInitializer {
 
 	public void initPropFiles(InputStream defaultProperties) throws IOException {
 		String properties = "";
-		if (!IOUtil.doesFileExist(appRootPath + "/properties.prop")) {
-			LOGGER.log(LogLevel.DEBUG, "No existing properties file, new will be created");
+		if (debugMode || !IOUtil.doesFileExist(appRootPath + "/properties.prop")) {
+			if(debugMode)
+				LOGGER.log(LogLevel.DEBUG, "Debug mode enabled, property file will be overwritten");
+			else
+				LOGGER.log(LogLevel.DEBUG, "No existing property file, new will be created");
+
 			properties = IOUtil.toString(defaultProperties);
 			IOUtil.writeExternalString(appRootPath + "/properties.prop", properties);
 		} else {
-			LOGGER.log(LogLevel.DEBUG, "existing properties file found");
+			LOGGER.log(LogLevel.DEBUG, "existing property file found");
 			properties = IOUtil.readExternalString(appRootPath + "/properties.prop");
 		}
 		PropertyProducer.setDefaultProperties(PropertyProducer.getProperties(properties));

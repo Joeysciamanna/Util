@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class Notifier<T extends IEvent> {
 
-	private List<IListner<T>> listners;
+	private List<IListener<T>> listners;
 	private Queue<T> events;
 	
 	public Notifier() {
@@ -27,7 +27,7 @@ public class Notifier<T extends IEvent> {
 	}
 
 	public void report(T event) {
-		for (IListner<T> listner : new ArrayList<>(listners)) {
+		for (IListener<T> listner : new ArrayList<>(listners)) {
 			listner.onAction(event);
 		}
 	}
@@ -48,11 +48,11 @@ public class Notifier<T extends IEvent> {
 		addToQueue(event);
 	}
 
-	public void addListner(IListner<T> listner) {
+	public void addListner(IListener<T> listner) {
 		listners.add(listner);
 	}
 	
-	public void removeListner(IListner<T> listner) {
+	public void removeListner(IListener<T> listner) {
 		listners.remove(listner);
 	}
 	

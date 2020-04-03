@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 import org.json.JSONObject;
 
-import ch.g_7.util.parse.Destringifyable;
+import ch.g_7.util.parse.Destringifiable;
 import ch.g_7.util.parse.Stringifyable;
 
 /**
@@ -30,7 +30,7 @@ public class Metadata implements Stringifyable{
 	 * Create a metadata object from JSON string
 	 * @param jsonString The JSON string
 	 */
-	@Destringifyable
+	@Destringifiable
 	public Metadata(String jsonString) {
 		json = new JSONObject(jsonString);
 		dynamicData = new HashMap<>();

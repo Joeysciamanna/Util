@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  */
 public class GenericProducerType<T> {
 
-	private Supplier<T> supplier;
+	private final Supplier<T> supplier;
 	private T instance;
 	
 	public GenericProducerType(Supplier<T> supplier) {

@@ -25,7 +25,7 @@ public class FDTServerListner implements IServer{
 	private Metadata metadata;
 
 	public FDTServerListner() {
-		recievers = new HashMap<String, Receiver>();
+		recievers = new HashMap<>();
 		metadata = new Metadata();
 	}
 	
@@ -35,7 +35,7 @@ public class FDTServerListner implements IServer{
 	 * @return the response
 	 */
 	@Override
-	public byte[] recive(byte[] data) {
+	public byte[] receive(byte[] data) {
 		Response response = null;
 		try {
 			Request request = new Request(new String(data, StandardCharsets.UTF_8));

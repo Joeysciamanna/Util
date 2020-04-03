@@ -44,7 +44,7 @@ public class SimpleServerSocketListner extends Loop {
 			int dataLenght = inputStream.readInt();
 			byte[] request = inputStream.readNBytes(dataLenght);
 			
-			byte[] response = server.recive(request);
+			byte[] response = server.receive(request);
 			
 			//WRITING
 			outputStream = new DataOutputStream(socket.getOutputStream());
