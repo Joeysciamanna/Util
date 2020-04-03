@@ -24,12 +24,16 @@ public abstract class CanIReceiver<T> extends Receiver {
     @Override
     public Response receive(Request request) throws FDTException {
         String[] args = request.getData().split("\\|");
+        if(args.length == 1)
+            return new Response(canHe(args[0], request.getMetadata()) ? "1" : "0");
         T newValue = parser.apply(args[0]);
         T oldValue = parser.apply(args[1]);
         return new Response(canHe(newValue, oldValue, args[2], request.getMetadata()) ? "1" : "0");
     }
 
     protected abstract boolean canHe(T newValue, T oldValue, String additionalData, Metadata metadata);
+
+    protected abstract boolean canHe(String ata, Metadata metadata);
 
     @Override
     protected String getName() {

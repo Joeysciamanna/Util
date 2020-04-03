@@ -24,6 +24,9 @@ public class CanISender<T> extends Sender {
         return send(parser.apply(newValue) + "|" + parser.apply(oldValue) + "|" + additionalData).getData().equals("1");
     }
 
+    protected final boolean canI(String data){
+        return send(data).getData().equals("1");
+    }
 
     @Override
     protected String getName() {
