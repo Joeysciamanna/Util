@@ -22,9 +22,7 @@ public class TaskInputQueue<T> {
 	}
 
 	public synchronized void runAsync() {
-		CompletableFuture.runAsync(() -> {
-			run();
-		});
+		CompletableFuture.runAsync(this::run);
 	}
 	
 	public synchronized void add(T input) {

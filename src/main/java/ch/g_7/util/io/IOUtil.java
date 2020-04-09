@@ -17,6 +17,7 @@ public final class IOUtil {
 		}
 	}
 
+	//TODO change to ResourceLocator
 	public static String readInternalString(String path, Object resourceLocator) {
 		return new String(readInternalBytes(path, resourceLocator));
 	}

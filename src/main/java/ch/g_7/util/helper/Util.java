@@ -26,7 +26,6 @@ public class Util {
 			consumer.accept(t);
     	}
 	}
-
     
 	@SuppressWarnings("unchecked")
 	public static <T> T cast(Object object) {

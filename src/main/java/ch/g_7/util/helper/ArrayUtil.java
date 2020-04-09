@@ -8,12 +8,16 @@ import java.util.function.Supplier;
 public class ArrayUtil {
 
 
+    @Deprecated
     @SafeVarargs
     public static <T> T[] genArrayOfNullables(Supplier<T>... suppliers){
         List<T> ts = new ArrayList<>();
         for (Supplier<T> supplier : suppliers) {
             try {
-                ts.add(supplier.get());
+                T t = supplier.get();
+                if(t != null){
+                    ts.add(t);
+                }
             }catch (NullPointerException e){ }
         }
         @SuppressWarnings("unchecked")
