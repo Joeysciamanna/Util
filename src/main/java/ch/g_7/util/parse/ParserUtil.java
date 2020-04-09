@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import ch.g_7.util.helper.ReflectionUtil;
-import ch.g_7.util.task.SecureRunner;
+import ch.g_7.util.task.checked.Checked;
 
 /**
  * Class used to generate parsers to pars all kind of Objects to String and back.
@@ -41,7 +41,7 @@ public class ParserUtil {
 			return (I i) -> ((Stringifyable) i).stringify();
 		}
 		if (ReflectionUtil.isPrimitiveOrWrapper(from) || String.class.isAssignableFrom(from)) {
-			return (I i) -> Objects.toString(i);
+			return Objects::toString;
 		}
 		return (I i) -> serialize(i);
 	}
@@ -62,7 +62,7 @@ public class ParserUtil {
 			for(Constructor<?> constructor : to.getConstructors()){
 				if(constructor.getAnnotation(Destringifiable.class) != null && constructor.getParameterCount() == 1 && constructor.getParameterTypes()[0].equals(String.class)) {
 					constructor.setAccessible(true);
-					return new SecureRunner<>((String s) -> (O) constructor.newInstance(s));
+					return Checked.checkedFunction((String s)->(O) constructor.newInstance(s));
 				}
 			}
 			return (String s) -> (O) destringifyer.destringify(s);
@@ -80,7 +80,7 @@ public class ParserUtil {
 				}else {
 					 method = WRAPPER_PARSER_METHODS.get(to.getSimpleName());
 				}
-				return new SecureRunner<>((String s) -> (O) method.invoke(null, s));
+				return Checked.checkedFunction((String s) -> (O) method.invoke(null, s));
 			} catch (NoSuchMethodException | SecurityException e) {
 				throw new RuntimeException(e);
 			}

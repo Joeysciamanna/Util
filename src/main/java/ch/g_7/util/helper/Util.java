@@ -1,10 +1,9 @@
 package ch.g_7.util.helper;
 
-import java.util.ArrayList;
-import java.util.List;
+import ch.g_7.util.task.checked.Checked;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class Util {
 
@@ -32,5 +31,11 @@ public class Util {
 	@SuppressWarnings("unchecked")
 	public static <T> T cast(Object object) {
 		return (T) object;
+	}
+
+	public static void close(AutoCloseable... closeables){
+		for (AutoCloseable closeable : closeables) {
+			Checked.run(closeable::close);
+		}
 	}
 }

@@ -1,11 +1,11 @@
 package ch.g_7.util.loop;
 
-import ch.g_7.util.task.SecureRunner;
+import ch.g_7.util.task.checked.Checked;
 
 public abstract class ActionChecker extends Loop {
 
 
-	private SecureRunner<Void,Void> sleeper;
+	private Runnable sleeper;
 	
 	
 	public ActionChecker() {
@@ -13,7 +13,7 @@ public abstract class ActionChecker extends Loop {
 	}
 	
 	public ActionChecker(int intervallMillis) {
-		sleeper = new SecureRunner<Void, Void>(()->Thread.sleep(intervallMillis)).throwException(null);
+		sleeper = Checked.checkedRunnable(()->Thread.sleep(intervallMillis));
 	}
 	
 	@Override
@@ -21,7 +21,7 @@ public abstract class ActionChecker extends Loop {
 		if(actionOccured()) {
 			onAction();
 		}
-		sleeper.get();
+		sleeper.run();
 	}
 	
 	protected abstract void onAction();

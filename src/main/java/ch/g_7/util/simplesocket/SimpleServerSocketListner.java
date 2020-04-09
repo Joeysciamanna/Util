@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import ch.g_7.util.helper.Util;
+import ch.g_7.util.task.checked.Checked;
 import ch.g_7.util.loop.Loop;
-import ch.g_7.util.task.SecureRunner;
 
 public class SimpleServerSocketListner extends Loop {
 
@@ -26,12 +27,12 @@ public class SimpleServerSocketListner extends Loop {
 
 	@Override
 	protected void onStart() {
-		serverSocket = new SecureRunner<>(() -> new ServerSocket(port)).get();
+		serverSocket = Checked.get(()->new ServerSocket(port));
 	}
 
 	@Override
 	protected void onStop() {
-		new SecureRunner<>(() -> serverSocket.close()).get();
+		Checked.run(serverSocket::close);
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class SimpleServerSocketListner extends Loop {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
-			new SecureRunner<>(()->null).close(outputStream,inputStream, socket).get();
+			Util.close(outputStream, inputStream, socket);
 		}
 	}
 

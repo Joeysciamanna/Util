@@ -1,11 +1,12 @@
 package ch.g_7.util.simplesocket;
 
+import ch.g_7.util.helper.Util;
+import ch.g_7.util.task.checked.Checked;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
-import ch.g_7.util.task.SecureRunner;
 
 public class SimpleSocketConnection implements IConnection{
 
@@ -24,12 +25,12 @@ public class SimpleSocketConnection implements IConnection{
 	
 	@Override
 	public void close() {
-		new SecureRunner<>(()->socket.close()).get();
+		Checked.run(socket::close);
 	}
 
 	@Override
 	public void open() {
-		socket = new SecureRunner<>(()->new Socket(domain, port)).get();
+		socket = Checked.get(()->new Socket(domain, port));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class SimpleSocketConnection implements IConnection{
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
-			new SecureRunner<>(()->null).close(outputStream,inputStream).get();
+			Util.close(inputStream, outputStream);
 		}
 	}
 

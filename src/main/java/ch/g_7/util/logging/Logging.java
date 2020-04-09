@@ -2,7 +2,7 @@ package ch.g_7.util.logging;
 
 import java.util.ArrayList;
 
-public class StaticLogger {
+public class Logging {
 
     private final static Logger LOGGER = Logger.getInstance();
 
