@@ -7,12 +7,14 @@ import java.util.Queue;
 
 public class Notifier<T extends Event> {
 
-	private List<IListener<T>> listeners;
-	private Queue<T> events;
+	private final IActionIdentifier<?> actionId;
+	private final List<IListener<T>> listeners;
+	private final Queue<T> events;
 	
-	public Notifier() {
-		listeners = new ArrayList<>();
-		events = new LinkedList<>();
+	public Notifier(IActionIdentifier<?> actionId) {
+		this.actionId = actionId;
+		this.listeners = new ArrayList<>();
+		this.events = new LinkedList<>();
 	}
 	
 	public void reportAll() {
@@ -29,7 +31,7 @@ public class Notifier<T extends Event> {
 	public void report(T event) {
 		for (IListener<T> listner : new ArrayList<>(listeners)) {
 			while (!event.isConsumed()){
-				listner.onAction(event);
+				listner.handle(event);
 			}
 		}
 	}
@@ -38,16 +40,16 @@ public class Notifier<T extends Event> {
 	 * Adds the event to the event queue
 	 * @param event
 	 */
-	public void addToQueue(T event) {
+	public void register(T event) {
 		events.add(event);
 	}
 
 	/**
 	 * Clears the event queue, and adds the given event to it
 	 */
-	public void overrideQueue(T event) {
+	public void override(T event) {
 		events.clear();
-		addToQueue(event);
+		register(event);
 	}
 
 	public void addListner(IListener<T> listner) {
@@ -60,5 +62,9 @@ public class Notifier<T extends Event> {
 	
 	public void clear() {
 		listeners.clear();
+	}
+
+	public IActionIdentifier<?> getActionId() {
+		return actionId;
 	}
 }
