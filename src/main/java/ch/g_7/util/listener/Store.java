@@ -1,4 +1,4 @@
-package ch.g_7.util.listner;
+package ch.g_7.util.listener;
 
 
 import java.util.ArrayList;
@@ -8,21 +8,21 @@ import java.util.function.Consumer;
 
 public class Store {
 
-    private final List<Notifier<?>> notifiers;
+    private final List<StoreNotifier<?>> notifiers;
 
     public Store() {
         this.notifiers = new ArrayList<>();
     }
 
-    public <T extends Event> void register(T event){
+    public <T extends StoreEvent> void register(T event){
         apply(event.getActionId(), (n)->n.register(event));
     }
 
-    public <T extends Event> void report(T event){
+    public <T extends StoreEvent> void report(T event){
         apply(event.getActionId(), (n)->n.report(event));
     }
 
-    public <T extends Event> void override(T event){
+    public <T extends StoreEvent> void override(T event){
         apply(event.getActionId(), (n)->n.override(event));
     }
 
@@ -56,16 +56,16 @@ public class Store {
         }
     }
 
-    public <T extends Event> void addListener(IListener<T> listener, IActionIdentifier<?> actionId){
+    public <T extends StoreEvent> void addListener(IListener<T> listener, IActionIdentifier<?> actionId){
         if(!apply(actionId, (Notifier<T> n)->n.addListner(listener))){
-            Notifier<T> notifier = new Notifier<>(actionId);
+            StoreNotifier<T> notifier = new StoreNotifier<>(actionId);
             notifier.addListner(listener);
             notifiers.add(notifier);
         }
     }
 
-    private <T extends Event> boolean apply(IActionIdentifier<?> actionId, Consumer<Notifier<T>> handler){
-        for (Notifier<?> notifier : notifiers) {
+    private <T extends StoreEvent> boolean apply(IActionIdentifier<?> actionId, Consumer<Notifier<T>> handler){
+        for (StoreNotifier<?> notifier : notifiers) {
             if(notifier.getActionId().equals(actionId)){
                 handler.accept((Notifier<T>)notifier);
                 return true;

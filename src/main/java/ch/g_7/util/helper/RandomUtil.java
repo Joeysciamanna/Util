@@ -18,13 +18,12 @@ public class RandomUtil {
     }
 
     public static <T> T randomFormList(List<T> list){
-        int i = random(0, list.size() - 1);
-        return list.get(i);
+        return list.get(random(0, list.size() - 1));
     }
 
     @SafeVarargs
     public static <T> T randomFormArray(T... ts){
-        return randomFormList(Arrays.asList(ts));
+        return ts[random(0, ts.length - 1)];
     }
 
 
