@@ -1,6 +1,6 @@
 package ch.g_7.util.listner;
 
-public interface IListener<T extends IEvent> {
+public interface IListener<T extends Event> {
 
 	void onAction(T event);
 	

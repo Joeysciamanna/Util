@@ -5,13 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Notifier<T extends IEvent> {
+public class Notifier<T extends Event> {
 
-	private List<IListener<T>> listners;
+	private List<IListener<T>> listeners;
 	private Queue<T> events;
 	
 	public Notifier() {
-		listners = new ArrayList<>();
+		listeners = new ArrayList<>();
 		events = new LinkedList<>();
 	}
 	
@@ -27,8 +27,10 @@ public class Notifier<T extends IEvent> {
 	}
 
 	public void report(T event) {
-		for (IListener<T> listner : new ArrayList<>(listners)) {
-			listner.onAction(event);
+		for (IListener<T> listner : new ArrayList<>(listeners)) {
+			while (!event.isConsumed()){
+				listner.onAction(event);
+			}
 		}
 	}
 
@@ -49,14 +51,14 @@ public class Notifier<T extends IEvent> {
 	}
 
 	public void addListner(IListener<T> listner) {
-		listners.add(listner);
+		listeners.add(listner);
 	}
 	
 	public void removeListner(IListener<T> listner) {
-		listners.remove(listner);
+		listeners.remove(listner);
 	}
 	
 	public void clear() {
-		listners.clear();
+		listeners.clear();
 	}
 }
