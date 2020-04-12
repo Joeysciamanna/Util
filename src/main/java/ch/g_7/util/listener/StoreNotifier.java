@@ -1,14 +1,14 @@
 package ch.g_7.util.listener;
 
-public class StoreNotifier<T extends Event> extends Notifier<T> {
+public class StoreNotifier<K extends IActionIdentifier<?>, T extends StoreEvent<K>> extends Notifier<T> {
 
-    private final IActionIdentifier<?> actionId;
+    private final K actionId;
 
-    public StoreNotifier(IActionIdentifier<?> actionId) {
+    public StoreNotifier(K actionId) {
         this.actionId = actionId;
     }
 
-    public IActionIdentifier<?> getActionId() {
+    public K getActionId() {
         return actionId;
     }
 }

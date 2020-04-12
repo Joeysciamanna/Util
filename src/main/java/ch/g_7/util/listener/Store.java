@@ -6,27 +6,27 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-public class Store {
+public abstract class Store<K extends IActionIdentifier<?>> {
 
-    private final List<StoreNotifier<?>> notifiers;
+    private final List<StoreNotifier<K, ?>> notifiers;
 
     public Store() {
         this.notifiers = new ArrayList<>();
     }
 
-    public <T extends StoreEvent> void register(T event){
+    public <T extends StoreEvent<K>> void register(T event){
         apply(event.getActionId(), (n)->n.register(event));
     }
 
-    public <T extends StoreEvent> void report(T event){
+    public <T extends StoreEvent<K>> void report(T event){
         apply(event.getActionId(), (n)->n.report(event));
     }
 
-    public <T extends StoreEvent> void override(T event){
+    public <T extends StoreEvent<K>> void override(T event){
         apply(event.getActionId(), (n)->n.override(event));
     }
 
-    public void reportLatest(IActionIdentifier<?> actionId){
+    public void reportLatest(K actionId){
         apply(actionId, Notifier::reportLatest);
     }
 
@@ -36,7 +36,7 @@ public class Store {
         }
     }
 
-    public void reportAll(IActionIdentifier<?> actionId){
+    public void reportAll(K actionId){
         apply(actionId, Notifier::reportAll);
     }
 
@@ -46,7 +46,7 @@ public class Store {
         }
     }
 
-    public void clear(IActionIdentifier<?> actionId){
+    public void clear(K actionId){
         apply(actionId, Notifier::clear);
     }
 
@@ -56,16 +56,16 @@ public class Store {
         }
     }
 
-    public <T extends StoreEvent> void addListener(IListener<T> listener, IActionIdentifier<?> actionId){
+    public <T extends StoreEvent<K>> void addListener(IListener<T> listener, K actionId){
         if(!apply(actionId, (Notifier<T> n)->n.addListner(listener))){
-            StoreNotifier<T> notifier = new StoreNotifier<>(actionId);
+            StoreNotifier<K,T> notifier = new StoreNotifier<>(actionId);
             notifier.addListner(listener);
             notifiers.add(notifier);
         }
     }
 
-    private <T extends StoreEvent> boolean apply(IActionIdentifier<?> actionId, Consumer<Notifier<T>> handler){
-        for (StoreNotifier<?> notifier : notifiers) {
+    private <T extends StoreEvent<K>> boolean apply(K actionId, Consumer<Notifier<T>> handler){
+        for (StoreNotifier<K, ?> notifier : notifiers) {
             if(notifier.getActionId().equals(actionId)){
                 handler.accept((Notifier<T>)notifier);
                 return true;
