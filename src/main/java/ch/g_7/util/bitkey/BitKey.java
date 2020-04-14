@@ -1,11 +1,13 @@
 package ch.g_7.util.bitkey;
 
+import ch.g_7.util.common.IIdentifier;
+
 /**
  * A Key that can be multiple values in the same time.
  * 
  * @author Joey Sciamanna
  */
-public class BitKey {
+public class BitKey implements IIdentifier {
 
 	private final int value;
 
@@ -58,4 +60,6 @@ public class BitKey {
 	public int getValue() {
 		return value;
 	}
+
+
 }
