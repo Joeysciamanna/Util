@@ -37,7 +37,7 @@ public abstract class CanIReceiver<T> extends Receiver {
 
     @Override
     protected String getName() {
-        return "cani_" + event.name();
+        return "cani_" + event;
     }
 
     public IEvent<?> getEvent() {

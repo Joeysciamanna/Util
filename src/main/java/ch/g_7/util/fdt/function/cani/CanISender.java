@@ -27,7 +27,7 @@ public class CanISender<T> extends Sender {
 
     @Override
     protected String getName() {
-        return "cani_" + event.name();
+        return "cani_" + event;
     }
 
     public IEvent<?> getEvent() {
