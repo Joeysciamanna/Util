@@ -21,12 +21,15 @@ public class Util {
     }
 
 
-    public static <T> void ifNotNull(Consumer<T> consumer, T... ts) {
+    public static <T> void ifNotNulls(Consumer<T> consumer, T... ts) {
         for (T t : ts) {
             if (t != null) consumer.accept(t);
         }
     }
 
+    public static <T> void ifNotNull(Consumer<T> consumer, T t) {
+        if (t != null) consumer.accept(t);
+    }
 
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object object) {
