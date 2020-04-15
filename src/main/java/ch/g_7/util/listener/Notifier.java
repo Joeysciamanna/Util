@@ -28,8 +28,10 @@ public class Notifier<T extends Event> {
 
 	public void report(T event) {
 		for (IListener<T> listner : new ArrayList<>(listeners)) {
-			while (!event.isConsumed()){
+			if (!event.isConsumed()){
 				listner.handle(event);
+			} else {
+				return;
 			}
 		}
 	}
